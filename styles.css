@@ -20,10 +20,11 @@ header {
 }
 
 .logo {
-  height: 100px; /* 
-  margin-bottom: 0.5rem;
-  border-radius: 50%; /
-  background: transparent;
+  max-width: 200px;     /* Prevents logo from being too wide */
+  width: 100%;          /* Makes it responsive */
+  height: auto;         /* Maintains aspect ratio */
+  display: block;
+  margin: 10px auto;    /* Centers logo with some margin */
 }
 
 header h1 {
