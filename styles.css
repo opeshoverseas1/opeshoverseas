@@ -72,7 +72,7 @@ footer {
   font-size: 0.9rem;
   margin-top: auto;
 }
-@media (max-width: 600px) {
+@media (max-width: 100px) {
   .logo {
     height: 70px; /* Adjust this if needed */
   }
