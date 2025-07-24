@@ -20,9 +20,9 @@ header {
 }
 
 .logo {
-  height: 80px;
+  height: 100px; /* 
   margin-bottom: 0.5rem;
-  border-radius: 50%;
+  border-radius: 50%; /
   background: transparent;
 }
 
@@ -69,4 +69,9 @@ footer {
   padding: 1rem 0;
   font-size: 0.9rem;
   margin-top: auto;
+}
+@media (max-width: 600px) {
+  .logo {
+    height: 70px; /* Adjust this if needed */
+  }
 }
