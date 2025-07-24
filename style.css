@@ -82,18 +82,17 @@ footer {
   display: block;
   margin: 10px auto;
 }
-/* ✅ Logo Styling Fix */
 .logo {
-  height: 75px;
+  height: 75px !important;
   width: auto;
   display: block;
   margin: 10px auto;
   object-fit: contain;
 }
 
-/* ✅ Responsive Logo Size */
 @media (max-width: 600px) {
   .logo {
-    height: 55px;
+    height: 55px !important;
   }
+}
 }
