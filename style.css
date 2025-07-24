@@ -69,30 +69,19 @@ footer {
   font-size: 0.9rem;
   margin-top: auto;
 }
-@media (max-width: 600px) {
-  .logo {
-    height: 70px; /* Adjust this if needed */
-  }
-}
+/* ✅ FINAL LOGO SIZE FIX */
 .logo {
   height: 80px !important;
   width: auto !important;
-  max-width: 40px !important;
-  object-fit: contain;
-  display: block;
-  margin: 10px auto;
-}
-.logo {
-  height: 75px !important;
-  width: auto;
-  display: block;
-  margin: 10px auto;
-  object-fit: contain;
+  max-width: 90% !important;
+  display: block !important;
+  margin: 10px auto !important;
+  object-fit: contain !important;
 }
 
 @media (max-width: 600px) {
   .logo {
-    height: 55px !important;
+    height: 60px !important;
   }
 }
 }
