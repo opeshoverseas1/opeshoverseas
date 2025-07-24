@@ -74,3 +74,11 @@ footer {
     height: 70px; /* Adjust this if needed */
   }
 }
+.logo {
+  height: 40px !important;
+  width: auto !important;
+  max-width: 40px !important;
+  object-fit: contain;
+  display: block;
+  margin: 10px auto;
+}
