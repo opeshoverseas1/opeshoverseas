@@ -199,15 +199,66 @@
       </p>
       <a href="contact.html" class="button">Start a Conversation</a>
     </section>
+    <section style="padding: 50px 20px; background-color: #f5faff;">
+  <div style="
+    max-width: 600px;
+    margin: auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  ">
+    <h2 style="text-align:center; margin-bottom: 25px;">Send Us an Enquiry</h2>
+    
     <form action="https://formsubmit.co/your@email.com" method="POST">
-  <input type="text" name="name" required>
-  <input type="email" name="email" required>
-  <textarea name="message" required></textarea>
-  <button type="submit">Send</button>
+      
+      <label for="name" style="display:block; margin-bottom: 5px; font-weight: 500;">Name</label>
+      <input type="text" id="name" name="name" required style="
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      ">
 
-  <!-- Hidden fields -->
-  <input type="hidden" name="_next" value="https://yourdomain.com/thankyou.html">
+      <label for="email" style="display:block; margin-bottom: 5px; font-weight: 500;">Email</label>
+      <input type="email" id="email" name="email" required style="
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      ">
+
+      <label for="message" style="display:block; margin-bottom: 5px; font-weight: 500;">Message</label>
+      <textarea id="message" name="message" rows="5" required style="
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        resize: vertical;
+      "></textarea>
+
+      <!-- Optional: Redirect to thank you page after submit -->
+      <input type="hidden" name="_next" value="https://opeshoverseas.com/thankyou.html">
+
+      <button type="submit" style="
+        width: 100%;
+        padding: 12px;
+        background-color: #007acc;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      " onmouseover="this.style.backgroundColor='#005fa3'" onmouseout="this.style.backgroundColor='#007acc'">
+        Send Enquiry
+      </button>
     </form>
+  </div>
+    </section>
   </main>
 <!-- Footer Banner -->
 <div style="text-align:center; margin-top:40px;">
