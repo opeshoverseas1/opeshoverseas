@@ -199,17 +199,14 @@
       </p>
       <a href="contact.html" class="button">Start a Conversation</a>
     </section>
-    <form action="https://formspree.io/f/yourFormID" method="POST">
-  <label>Your Name:</label><br>
-  <input type="text" name="name" required><br><br>
+    <form action="https://formsubmit.co/your@email.com" method="POST">
+  <input type="text" name="name" required>
+  <input type="email" name="email" required>
+  <textarea name="message" required></textarea>
+  <button type="submit">Send</button>
 
-  <label>Email:</label><br>
-  <input type="email" name="_replyto" required><br><br>
-
-  <label>Message:</label><br>
-  <textarea name="message" rows="4" required></textarea><br><br>
-
-  <button type="submit">Send Enquiry</button>
+  <!-- Hidden fields -->
+  <input type="hidden" name="_next" value="https://yourdomain.com/thankyou.html">
     </form>
   </main>
 <!-- Footer Banner -->
