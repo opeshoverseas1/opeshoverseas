@@ -18,15 +18,15 @@
       padding: 20px;
     }
     .box {
-      max-width: 500px;
+      max-width: 600px;
       background: #ffffff;
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     }
     .box img {
-      height: 210px;
-      margin-bottom: 15px;
+      height: 420px;
+      margin-bottom: 20px;
     }
     .box h1 {
       margin: 10px 0;
@@ -34,6 +34,12 @@
     .box a {
       color: #007acc;
       text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .box img {
+        height: 220px;
+      }
     }
   </style>
 </head>
