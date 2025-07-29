@@ -22,6 +22,17 @@
     text-align: center;
   }
 
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header img {
+    height: 50px;
+    margin-bottom: 0.5rem;
+  }
+
   header h1 {
     font-size: 2.5rem;
     margin: 0;
@@ -86,10 +97,6 @@
   @media screen and (max-width: 768px) {
     header h1 {
       font-size: 1.8rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
     }
 
     header p {
@@ -123,28 +130,18 @@
       font-size: 0.85rem;
       padding: 1rem;
     }
-
-    header img {
-  height: 50px;
-  margin-bottom: 0.5rem;
-}
-
-.header-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
   }
   </style>
 </head>
 <body>
   <header>
-  <div class="header-content">
-    <img src="logo.png" alt="Opésh Overseas Logo" />
-    <h1>Opésh Overseas</h1>
-    <p>~From India to the World</p>
-  </div>
-</header>
+    <div class="header-content">
+      <img src="logo.png" alt="Opésh Overseas Logo" />
+      <h1>Opésh Overseas</h1>
+      <p>~From India to the World</p>
+    </div>
+  </header>
+
   <nav>
     <a href="index.html">Home</a>
     <a href="about.html">About Us</a>
@@ -155,6 +152,7 @@
     <a href="careers.html">Careers</a>
     <a href="contact.html">Contact</a>
   </nav>
+
   <section>
     <h2>Certifications & Compliance Roadmap</h2>
     <p>At Opésh Overseas, we are committed to full regulatory compliance and international credibility. Our certifications are a reflection of our dedication to quality, trust, and transparency. While some are underway, we will continue updating this section as we acquire new credentials and clearances.</p>
@@ -171,6 +169,7 @@
 
     <p><em>Note: We do not claim possession of any partner company’s certification unless officially authorized in writing.</em></p>
   </section>
+
   <footer>
     © 2025 Opésh Overseas. A Sharma and Sons Ventures Co. All rights reserved.
   </footer>
