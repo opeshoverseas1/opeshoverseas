@@ -81,32 +81,7 @@
     margin-top: 3rem;
   }
 
-  @media (max-width: 768px) {
-    header h1 {
-      font-size: 2rem;
-    }
 
-    header p {
-      font-size: 1rem;
-    }
-
-    nav {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    nav a {
-      padding: 0.3rem 0;
-      font-size: 1rem;
-    }
-
-    section {
-      padding: 1.2rem;
-    }
-
-    header img {
-      height: 55px;
-    }
   }
   </style>
 </head>
@@ -114,7 +89,35 @@
   <header>
     <div class="header-content">
       <img src="logo.png" alt="Opésh Overseas Logo" />
-      <h1>Opésh Overseas</h1>
+      <h1>Opésh Overseas</h1>@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  header p {
+    font-size: 1rem;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: flex-start; /* Align tabs to the left */
+    padding: 0.6rem 1rem;
+    gap: 0.3rem; /* Reduced spacing between links */
+  }
+
+  nav a {
+    padding: 0.2rem 0;
+    font-size: 0.95rem;
+  }
+
+  section {
+    padding: 1.2rem;
+  }
+
+  header img {
+    height: 55px;
+  }
+      }
       <p>~From India to the World</p>
     </div>
   </header>
