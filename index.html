@@ -22,60 +22,19 @@
       background-color: #d0eaff;
     }
 
-    header .branding {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      max-width: 1200px;
-      margin: auto;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    header img {
-      height: 218px;
-      width: auto;
-      filter: drop-shadow(0 0 6px rgba(0,128,255,0.3));
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 34px;
-      color: #000;
-    }
-
-    header p {
-      margin: 0;
-      font-size: 17px;
-      font-style: italic;
-      color: #000;
-    }
-
-    nav.responsive-nav {
+    nav {
       background-color: #a7d3f5;
+      padding: 10px 0;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 18px;
-      padding: 12px 10px;
-      max-width: 1000px;
-      margin: auto;
+      gap: 15px;
     }
 
-    nav.responsive-nav a {
+    nav a {
       text-decoration: none;
       font-weight: bold;
       color: #000;
-      text-align: center;
-      padding: 10px;
-      min-width: 110px;
-      flex: 1 0 28%;
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
-
-    nav.responsive-nav a:hover {
-      background-color: #cfe9ff;
     }
 
     .hero {
@@ -119,27 +78,70 @@
       font-size: 14px;
     }
 
+    .highlight-cards {
+      background: #e6f4ff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(360px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 180px;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    }
+
     @media screen and (max-width: 768px) {
-      header .branding {
+      header div {
         flex-direction: column;
-        gap: 6px;
         text-align: center;
       }
 
       header img {
-        height: 110px !important;
-        margin-bottom: 5px;
+        height: 140px !important;
+        margin-bottom: 10px;
       }
 
-      nav.responsive-nav {
-        gap: 12px;
-        padding: 14px 10px;
+      nav a {
+        display: block;
+        margin: 10px 0;
       }
 
-      nav.responsive-nav a {
-        flex: 1 0 30%;
-        padding: 12px 6px;
-        font-size: 14px;
+      .card-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .card {
+        height: auto !important;
+        padding: 20px !important;
+        font-size: 15px;
+      }
+
+      .card h3 {
+        font-size: 18px !important;
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        font-size: 14px !important;
+        line-height: 1.5;
       }
 
       .hero h1 {
@@ -149,39 +151,127 @@
       .hero p {
         font-size: 16px;
       }
+
+      form {
+        padding: 20px !important;
+      }
+
+      footer img {
+        height: 180px !important;
+        object-fit: cover;
+      }
     }
   </style>
 </head>
-<body>
 
-  <!-- Header -->
-  <header>
-    <div class="branding">
-      <img src="logo.png" alt="Opésh Overseas Logo">
-      <div>
-        <h1>Opésh Overseas</h1>
-        <p>~From India to the World~</p>
+<body>
+<!-- Header with 2x size transparent logo (top-left) -->
+<header>
+  <div style="display: flex; align-items: center; gap: 20px; max-width: 1200px; margin: auto;">
+    <img src="logo.png" alt="Opésh Overseas Logo" style="height: 218px; width: auto; filter: drop-shadow(0 0 6px rgba(0,128,255,0.3));">
+    <div>
+      <h1 style="margin: 0; font-size: 34px; color: #000000;">Opésh Overseas</h1>
+      <p style="margin: 0; font-size: 17px; font-style: italic; color: #000000;">~From India to the World~</p>
+    </div>
+  </div>
+</header>
+
+<!-- Navigation Bar -->
+
+
+<!-- Cover Banner -->
+<div style="text-align:center;">
+  <img src="cover.png" alt="Opésh Overseas Banner" style="width:100%; max-height:500px; object-fit:cover;">
+</div>
+
+<!-- Homepage Content -->
+<main>
+  <section class="hero">
+    <h1>Welcome to Opésh Overseas</h1>
+    <p>Where fair trade practices Meet Global expansion</p>
+  </section>
+
+  <sect<nav style="background-color: #a7d3f5; padding: 10px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 900px; margin: auto;">
+  <a href="index.html" style="flex: 1 0 30%; text-align: center; min-width: 120px; font-weight: bold; color: #000; text-decoration: none; padding: 10px;">Home</a>
+  <a href="about.html" style="flex: 1 0 30%; text-align: center; min-width: 120px; font-weight: bold; color: #000; text-decoration: none; padding: 10px;">About Us</a>
+  <a href="products.html" style="flex: 1 0 30%; text-align: center; min-width: 120px; font-weight: bold; color: #000; text-decoration: none; padding: 10px;">Products & Science</a>
+  <a href="certifications.html" style="flex: 1 0 30%; text-align: center; min-width: 120px; font-weight: bold; color: #000; text-decoration: none; padding: 10px;">Certifications</a>
+  <a href="export.html" style="flex: 1 0 30%; text-align: center; min-width: 120px; font-weight: bold; color: #000; text-decoration: none; padding: 10px;">Export</a>
+  <a href="partners.html" style="flex: 1 0 30%; text-align: center; min-width: 120px; font-weight: bold; color: #000; text-decoration: none; padding: 10px;">Partners</a>
+  <a href="careers.html" style="flex: 1 0 30%; text-align: center; min-width: 120px; font-weight: bold; color: #000; text-decoration: none; padding: 10px;">Careers</a>
+  <a href="contact.html" style="flex: 1 0 30%; text-align: center; min-width: 120px; font-weight: bold; color: #000; text-decoration: none; padding: 10px;">Contact</a>
+  </nav>ion class="intro">
+    <p>
+      Opésh Overseas isn’t just a company — it’s a bridge between timeless Indian Ayurvedic heritage and the world’s growing demand for clean, effective, plant-powered wellness.
+    </p>
+    <p>
+      Headquartered in India and committed to excellence, we serve as your trusted export partner, offering curated Ayurvedic solutions crafted with care, science, and global vision.
+    </p>
+  </section>
+
+  <section class="highlight">
+    <div class="highlight-cards">
+      <h2 style="text-align:center; margin-bottom: 30px;">What Sets Us Apart</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>🌍 International-Grade Professionalism</h3>
+          <p>World-class processes, clean documentation, and regulatory precision.</p>
+        </div>
+        <div class="card">
+          <h3>🧪 Science-Backed Formulations</h3>
+          <p>Pure Ayurvedic ingredients, supported by research and integrity.</p>
+        </div>
+        <div class="card">
+          <h3>📜 Export-Ready Compliance</h3>
+          <p>All paperwork and approvals prepared with global regulations in mind.</p>
+        </div>
+        <div class="card">
+          <h3>🤝 Transparent Partnerships</h3>
+          <p>We believe in scalable, long-term, and ethical collaborations.</p>
+        </div>
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- Navigation -->
-  <nav class="responsive-nav">
-    <a href="index.html">Home</a>
-    <a href="about.html">About Us</a>
-    <a href="products.html">Products & Science</a>
-    <a href="certifications.html">Certifications</a>
-    <a href="export.html">Export</a>
-    <a href="partners.html">Partners</a>
-    <a href="careers.html">Careers</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+  <section class="mission-call">
+    <p>
+      As we continue building a globally respected Ayurvedic export house, we invite wellness brands, distributors, and innovators across the world to connect with us and discover what sets Opésh Overseas apart.
+    </p>
+    <a href="contact.html" class="button">Start a Conversation</a>
+  </section>
 
-  <!-- Optional: Add your main content below -->
+  <section style="padding: 50px 20px; background-color: #f5faff;">
+    <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 40px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.05);">
+      <h2 style="text-align:center; margin-bottom: 25px;">Send Us an Enquiry</h2>
+      <form action="https://formsubmit.co/exports@opeshoverseas.com" method="POST">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 20px;">
 
-  <!-- Footer -->
-  <footer>
-    © 2025 Opésh Overseas. All rights reserved.
-  </footer>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 20px;">
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 25px;"></textarea>
+
+        <input type="hidden" name="_next" value="https://opeshoverseas.com/thankyou.html">
+
+        <button type="submit" style="width: 100%; padding: 12px; background-color: #007acc; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">Send Enquiry</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer style="margin-top: 60px;">
+  <img src="banner.jpg" alt="Opésh Overseas Footer Banner" style="width: 100%; height: 290px; object-fit: cover;">
+</footer>
+<footer>
+  © 2025 Opésh Overseas. All rights reserved.
+</footer>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/+917976529421" target="_blank" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background-color: #25D366; padding: 12px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+  <img src="whatsapp-icon.png" alt="Chat on WhatsApp" style="height: 32px; width: 32px;">
+</a>
 </body>
 </html>
