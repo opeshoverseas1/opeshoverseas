@@ -7,7 +7,6 @@
   <title>Opésh Overseas | Ayurvedic Exports</title>
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <link rel="icon" type="favicon.png" href="favicon.png" />
-  <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <style>
     body {
@@ -26,11 +25,14 @@
     nav {
       background-color: #a7d3f5;
       padding: 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
     }
 
     nav a {
       text-decoration: none;
-      margin: 0 15px;
       font-weight: bold;
       color: #000;
     }
@@ -75,48 +77,96 @@
       padding: 15px;
       font-size: 14px;
     }
-@media screen and (max-width: 768px) {
-  header div {
-    flex-direction: column;
-    text-align: center;
-  }
 
-  header img {
-    height: 140px !important;
-    margin-bottom: 10px;
-  }
+    .highlight-cards {
+      background: #e6f4ff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
 
-  nav a {
-    display: block;
-    margin: 10px 0;
-  }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(360px, 1fr));
+      gap: 25px;
+    }
 
-  .highlight div {
-    grid-template-columns: 1fr !important;
-  }
+    .card {
+      background: #ffffff;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 180px;
+    }
 
-  .hero h1 {
-    font-size: 24px;
-  }
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    }
 
-  .hero p {
-    font-size: 16px;
-  }
+    @media screen and (max-width: 768px) {
+      header div {
+        flex-direction: column;
+        text-align: center;
+      }
 
-  form {
-    padding: 20px !important;
-  }
+      header img {
+        height: 140px !important;
+        margin-bottom: 10px;
+      }
 
-  footer img {
-    height: 180px !important;
-    object-fit: cover;
-  }
-    </style>
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .card {
+        height: auto !important;
+        padding: 20px !important;
+        font-size: 15px;
+      }
+
+      .card h3 {
+        font-size: 18px !important;
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        font-size: 14px !important;
+        line-height: 1.5;
+      }
+
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      form {
+        padding: 20px !important;
+      }
+
+      footer img {
+        height: 180px !important;
+        object-fit: cover;
+      }
+    }
+  </style>
 </head>
 
 <body>
 <!-- Header with 2x size transparent logo (top-left) -->
-<header style="background-color: #d0eaff; padding: 20px;">
+<header>
   <div style="display: flex; align-items: center; gap: 20px; max-width: 1200px; margin: auto;">
     <img src="logo.png" alt="Opésh Overseas Logo" style="height: 218px; width: auto; filter: drop-shadow(0 0 6px rgba(0,128,255,0.3));">
     <div>
@@ -126,202 +176,102 @@
   </div>
 </header>
 
-  <!-- Navigation Bar -->
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About Us</a>
-    <a href="products.html">Products & Science</a>
-    <a href="certifications.html">Certifications</a>
-    <a href="export.html">Export</a>
-    <a href="partners.html">Partners</a>
-    <a href="careers.html">Careers</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+<!-- Navigation Bar -->
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="products.html">Products & Science</a>
+  <a href="certifications.html">Certifications</a>
+  <a href="export.html">Export</a>
+  <a href="partners.html">Partners</a>
+  <a href="careers.html">Careers</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
 <!-- Cover Banner -->
 <div style="text-align:center;">
   <img src="cover.png" alt="Opésh Overseas Banner" style="width:100%; max-height:500px; object-fit:cover;">
 </div>
-  <!-- New Homepage Content -->
-  <main>
-    <section class="hero">
-      <h1>Welcome to Opésh Overseas</h1>
-      <p>Where fair trade practices Meets Global expansion </p>
-    </section>
 
-    <section class="intro">
-      <p>
-        Opésh Overseas isn’t just a company — it’s a bridge between timeless Indian Ayurvedic heritage and the world’s growing demand for clean, effective, plant-powered wellness.
-      </p>
-      <p>
-        Headquartered in India and committed to excellence, we serve as your trusted export partner, offering curated Ayurvedic solutions crafted with care, science, and global vision.
-      </p>
-    </section>
+<!-- Homepage Content -->
+<main>
+  <section class="hero">
+    <h1>Welcome to Opésh Overseas</h1>
+    <p>Where fair trade practices Meet Global expansion</p>
+  </section>
 
-    <section class="highlight" style="padding: 40px 20px;">
-  <div style="background: #e6f4ff; padding: 40px 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);">
-    <h2 style="text-align:center; margin-bottom: 30px;">What Sets Us Apart</h2>
-    <div style="
-      display: grid;
-      grid-template-columns: repeat(2, minmax(360px, 1fr));
-      justify-content: center;
-      gap: 25px;
-    ">
-      <div style="
-        background: #ffffff;
-        padding: 15px 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 180px;
-      " onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 6px 14px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.04)'">
-        <h3>🌍 International-Grade Professionalism</h3>
-        <p style="margin: 0;">World-class processes, clean documentation, and regulatory precision.</p>
-      </div>
+  <section class="intro">
+    <p>
+      Opésh Overseas isn’t just a company — it’s a bridge between timeless Indian Ayurvedic heritage and the world’s growing demand for clean, effective, plant-powered wellness.
+    </p>
+    <p>
+      Headquartered in India and committed to excellence, we serve as your trusted export partner, offering curated Ayurvedic solutions crafted with care, science, and global vision.
+    </p>
+  </section>
 
-      <div style="
-        background: #ffffff;
-        padding: 15px 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 180px;
-      " onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 6px 14px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.04)'">
-        <h3>🧪 Science-Backed Formulations</h3>
-        <p style="margin: 0;">Pure Ayurvedic ingredients, supported by research and integrity.</p>
-      </div>
-
-      <div style="
-        background: #ffffff;
-        padding: 15px 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 180px;
-      " onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 6px 14px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.04)'">
-        <h3>📜 Export-Ready Compliance</h3>
-        <p style="margin: 0;">All paperwork and approvals prepared with global regulations in mind.</p>
-      </div>
-
-      <div style="
-        background: #ffffff;
-        padding: 15px 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 180px;
-      " onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 6px 14px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.04)'">
-        <h3>🤝 Transparent Partnerships</h3>
-        <p style="margin: 0;">We believe in scalable, long-term, and ethical collaborations.</p>
+  <section class="highlight">
+    <div class="highlight-cards">
+      <h2 style="text-align:center; margin-bottom: 30px;">What Sets Us Apart</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>🌍 International-Grade Professionalism</h3>
+          <p>World-class processes, clean documentation, and regulatory precision.</p>
+        </div>
+        <div class="card">
+          <h3>🧪 Science-Backed Formulations</h3>
+          <p>Pure Ayurvedic ingredients, supported by research and integrity.</p>
+        </div>
+        <div class="card">
+          <h3>📜 Export-Ready Compliance</h3>
+          <p>All paperwork and approvals prepared with global regulations in mind.</p>
+        </div>
+        <div class="card">
+          <h3>🤝 Transparent Partnerships</h3>
+          <p>We believe in scalable, long-term, and ethical collaborations.</p>
+        </div>
       </div>
     </div>
-  </div>
-    </section>
-    <section class="mission-call">
-      <p>
-        As we continue building a globally respected Ayurvedic export house, we invite wellness brands, distributors, and innovators across the world to connect with us and discover what sets Opésh Overseas apart.
-      </p>
-      <a href="contact.html" class="button">Start a Conversation</a>
-    </section>
-    <section style="padding: 50px 20px; background-color: #f5faff;">
-  <div style="
-    max-width: 600px;
-    margin: auto;
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-  ">
-    <h2 style="text-align:center; margin-bottom: 25px;">Send Us an Enquiry</h2>
-    
-    <form action="https://formsubmit.co/exports@opeshoverseas.com" method="POST">
-      
-      <label for="name" style="display:block; margin-bottom: 5px; font-weight: 500;">Name</label>
-      <input type="text" id="name" name="name" required style="
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin-bottom: 20px;
-      ">
+  </section>
 
-      <label for="email" style="display:block; margin-bottom: 5px; font-weight: 500;">Email</label>
-      <input type="email" id="email" name="email" required style="
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin-bottom: 20px;
-      ">
+  <section class="mission-call">
+    <p>
+      As we continue building a globally respected Ayurvedic export house, we invite wellness brands, distributors, and innovators across the world to connect with us and discover what sets Opésh Overseas apart.
+    </p>
+    <a href="contact.html" class="button">Start a Conversation</a>
+  </section>
 
-      <label for="message" style="display:block; margin-bottom: 5px; font-weight: 500;">Message</label>
-      <textarea id="message" name="message" rows="5" required style="
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin-bottom: 25px;
-        resize: vertical;
-      "></textarea>
+  <section style="padding: 50px 20px; background-color: #f5faff;">
+    <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 40px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.05);">
+      <h2 style="text-align:center; margin-bottom: 25px;">Send Us an Enquiry</h2>
+      <form action="https://formsubmit.co/exports@opeshoverseas.com" method="POST">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 20px;">
 
-      <!-- Optional: Redirect to thank you page after submit -->
-      <input type="hidden" name="_next" value="https://opeshoverseas.com/thankyou.html">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 20px;">
 
-      <button type="submit" style="
-        width: 100%;
-        padding: 12px;
-        background-color: #007acc;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      " onmouseover="this.style.backgroundColor='#005fa3'" onmouseout="this.style.backgroundColor='#007acc'">
-        Send Enquiry
-      </button>
-    </form>
-  </div>
-    </section>
-  </main>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 25px;"></textarea>
+
+        <input type="hidden" name="_next" value="https://opeshoverseas.com/thankyou.html">
+
+        <button type="submit" style="width: 100%; padding: 12px; background-color: #007acc; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">Send Enquiry</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
 <footer style="margin-top: 60px;">
-  <img src="banner.jpg" alt="Opésh Overseas Footer Banner" style="
-    width: 100%;
-    height: 290px;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    border-radius: 0;
-  ">
+  <img src="banner.jpg" alt="Opésh Overseas Footer Banner" style="width: 100%; height: 290px; object-fit: cover;">
 </footer>
-  <!-- Floating WhatsApp Button -->
-<a href="https://wa.me/+917976529421" target="_blank" style="
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
-  background-color: #25D366;
-  padding: 12px;
-  border-radius: 50%;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-">
+<footer>
+  © 2025 Opésh Overseas. All rights reserved.
+</footer>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/+917976529421" target="_blank" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background-color: #25D366; padding: 12px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
   <img src="whatsapp-icon.png" alt="Chat on WhatsApp" style="height: 32px; width: 32px;">
 </a>
-  <!-- Footer -->
-  <footer>
-    © 2025 Opésh Overseas. All rights reserved.
-  </footer>
-
 </body>
 </html>
