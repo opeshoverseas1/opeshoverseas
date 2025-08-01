@@ -9,132 +9,162 @@
   <link rel="icon" type="favicon.png" href="favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <style>
-  body {
-    font-family: 'Playfair Display', serif;
-    background-color: #f0f8ff;
-    margin: 0;
-    padding: 0;
-  }
-
-  header {
-    text-align: center;
-    padding: 20px;
-    background-color: #d0eaff;
-  }
-
-  nav {
-    background-color: #a7d3f5;
-    padding: 10px 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-  }
-
-  nav a {
-    text-decoration: none;
-    font-weight: bold;
-    color: #000;
-  }
-
-  .highlight-cards {
-    background: #e6f4ff;
-    padding: 40px 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  }
-
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(360px, 1fr));
-    gap: 25px;
-  }
-
-  .card {
-    background: #ffffff;
-    padding: 15px 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 180px;
-  }
-
-  .card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-  }
-
-  @media screen and (max-width: 768px) {
-    header div {
-      flex-direction: column;
-      text-align: center;
-      gap: 10px;
+    body {
+      font-family: 'Playfair Display', serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
     }
 
-    header img {
-      height: 130px !important;
-      margin-bottom: 5px;
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: #d0eaff;
     }
 
     nav {
+      background-color: #a7d3f5;
+      padding: 10px 0;
+      display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      padding: 12px;
-      gap: 10px;
+      gap: 15px;
     }
 
     nav a {
-      flex: 1 1 28%;
+      text-decoration: none;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .hero {
       text-align: center;
-      padding: 10px;
-      font-size: 15px;
-      background-color: #cce5ff;
-      border-radius: 6px;
+      padding: 40px 20px;
+      background-color: #e0f4ff;
+    }
+
+    .intro, .highlight, .mission-call {
+      padding: 30px 20px;
+      max-width: 900px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin: 10px 0;
+      font-size: 17px;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #2a9d8f;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    footer {
+      background-color: #d0eaff;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    .highlight-cards {
+      background: #e6f4ff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     }
 
     .card-grid {
-      grid-template-columns: 1fr !important;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(360px, 1fr));
+      gap: 25px;
     }
 
     .card {
-      height: auto !important;
-      padding: 20px !important;
-      font-size: 15px;
+      background: #ffffff;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 180px;
     }
 
-    .card h3 {
-      font-size: 18px !important;
-      margin-bottom: 10px;
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
     }
 
-    .card p {
-      font-size: 14px !important;
-      line-height: 1.5;
-    }
+    @media screen and (max-width: 768px) {
+      header div {
+        flex-direction: column;
+        text-align: center;
+      }
 
-    .hero h1 {
-      font-size: 24px;
-    }
+      header img {
+        height: 140px !important;
+        margin-bottom: 10px;
+      }
 
-    .hero p {
-      font-size: 16px;
-    }
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
 
-    form {
-      padding: 20px !important;
-    }
+      .card-grid {
+        grid-template-columns: 1fr !important;
+      }
 
-    footer img {
-      height: 180px !important;
-      object-fit: cover;
+      .card {
+        height: auto !important;
+        padding: 20px !important;
+        font-size: 15px;
+      }
+
+      .card h3 {
+        font-size: 18px !important;
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        font-size: 14px !important;
+        line-height: 1.5;
+      }
+
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      form {
+        padding: 20px !important;
+      }
+
+      footer img {
+        height: 180px !important;
+        object-fit: cover;
+      }
     }
-  }
   </style>
 </head>
-  <body>
+
+<body>
 <!-- Header with 2x size transparent logo (top-left) -->
 <header>
   <div style="display: flex; align-items: center; gap: 20px; max-width: 1200px; margin: auto;">
