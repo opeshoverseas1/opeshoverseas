@@ -35,91 +35,32 @@
       text-decoration: none;
       font-weight: bold;
       color: #000;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 40px 20px;
-      background-color: #e0f4ff;
-    }
-
-    .intro, .highlight, .mission-call {
-      padding: 30px 20px;
-      max-width: 900px;
-      margin: auto;
-      font-size: 18px;
-      line-height: 1.7;
-    }
-
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-
-    ul li {
-      margin: 10px 0;
-      font-size: 17px;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background-color: #2a9d8f;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-    }
-
-    footer {
-      background-color: #d0eaff;
-      text-align: center;
-      padding: 15px;
-      font-size: 14px;
-    }
-
-    .highlight-cards {
-      background: #e6f4ff;
-      padding: 40px 30px;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(360px, 1fr));
-      gap: 25px;
-    }
-
-    .card {
-      background: #ffffff;
     @media screen and (max-width: 768px) {
   header div {
     flex-direction: column;
     text-align: center;
+    gap: 10px;
   }
 
   header img {
-    height: 140px !important;
+    height: 130px !important;
     margin-bottom: 5px;
   }
 
   nav {
-    flex-direction: row;
     flex-wrap: wrap;
-    gap: 12px;
     justify-content: center;
     padding: 12px;
+    gap: 10px;
   }
 
   nav a {
-    width: 28%;
-    margin: 5px 0;
+    flex: 1 1 28%;
     text-align: center;
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 6px;
+    padding: 10px;
+    font-size: 15px;
     background-color: #cce5ff;
+    border-radius: 6px;
   }
 
   .card-grid {
@@ -156,7 +97,8 @@
 
   footer img {
     height: 180px !important;
-    object-fit: cover;
+    object-fit: cover
+    
   }
     }  padding: 15px 25px;
       border-radius: 12px;
