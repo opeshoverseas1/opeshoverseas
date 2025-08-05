@@ -362,6 +362,44 @@ footer {
 .footer-banner {
   position: relative;
 }
+    .mobile-nav {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.menu-toggle {
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+    padding-top: 10px;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+}
   </style>
 </head>
 <body>
@@ -376,6 +414,11 @@ footer {
   </header>
 
   <nav>
+  <div class="mobile-nav">
+    <div class="logo">Opésh Overseas</div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
     <a href="about.html">About Us</a>
     <a href="products.html">Products & Science</a>
@@ -384,7 +427,8 @@ footer {
     <a href="partners.html">Partners</a>
     <a href="careers.html">Careers</a>
     <a href="contact.html">Contact</a>
-  </nav>
+  </div>
+</nav>
   
 <section class="video-hero">
   <video autoplay muted loop playsinline>
@@ -486,5 +530,11 @@ footer {
     easing: 'ease-in-out'
   });
 </script>
+  <script>
+  function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    nav.classList.toggle('show');
+  }
+  </script>
 </body>
 </html>
