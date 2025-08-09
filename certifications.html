@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -81,6 +82,34 @@
     margin-bottom: 1.2rem;
   }
 
+  .cert-badge {
+    display: inline-block;
+    background: #007acc;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  .cert-preview {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .cert-preview img {
+    max-width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    filter: blur(2.5px);
+  }
+
+  .note {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #555;
+  }
+
   footer {
     background-color: #d9ecff;
     text-align: center;
@@ -94,34 +123,27 @@
     header h1 {
       font-size: 1.8rem;
     }
-
     header p {
       font-size: 1rem;
     }
-
     nav {
       flex-direction: column;
       gap: 10px;
       padding: 1rem;
     }
-
     nav a {
       font-size: 1rem;
     }
-
     section {
       padding: 1.5rem 1rem;
     }
-
     section h2 {
       font-size: 1.4rem;
     }
-
     section p,
     li {
       font-size: 1rem;
     }
-
     footer {
       font-size: 0.85rem;
       padding: 1rem;
@@ -151,17 +173,28 @@
 
   <section>
     <h2>Certifications & Compliance Roadmap</h2>
-    <p>At Opésh Overseas, we are committed to full regulatory compliance and international credibility. Our certifications are a reflection of our dedication to quality, trust, and transparency. While some are underway, we will continue updating this section as we acquire new credentials and clearances.</p>
+    <p>At Opésh Overseas, we are committed to full regulatory compliance and international credibility. Our certifications are a reflection of our dedication to quality, trust, and transparency.</p>
 
-    <h3> Certifications – In Progress</h3>
+    <h3> ✅ Completed</h3>
     <ul>
-      <li><strong>MSME Registration</strong> – Application Submitted</li>
+      <li>
+        <strong>MSME (Udyam) Registration</strong>  
+        <span class="cert-badge">Proud MSME Registered</span>
+        <div class="cert-preview">
+          <img src="msme-certificate-blurred.png" alt="MSME Certificate (blurred)">
+          <p class="note">Blurred for security. Full certificate available upon request to verified partners.</p>
+        </div>
+      </li>
+    </ul>
+
+    <h3> ⏳ In Progress</h3>
+    <ul>
       <li><strong>Import Export Code (IEC)</strong> – Under Review</li>
       <li><strong>FSSAI</strong> – To be acquired post manufacturer collaboration</li>
       <li><strong>ISO / GMP / USFDA</strong> – Strategic certifications for global exports</li>
     </ul>
 
-    <p>Our aim is to align with the most rigorous global standards. This ensures that our offerings meet the expectations of importers, distributors, and healthcare professionals worldwide. For full transparency, all certificates will be displayed here once approved.</p>
+    <p>Our aim is to align with the most rigorous global standards. This ensures that our offerings meet the expectations of importers, distributors, and healthcare professionals worldwide.</p>
 
     <p><em>Note: We do not claim possession of any partner company’s certification unless officially authorized in writing.</em></p>
   </section>
