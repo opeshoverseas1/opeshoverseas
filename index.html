@@ -565,13 +565,52 @@ footer {
     </section>
   </main>
 
-  <footer>
+  <<footer>
   <div class="footer-wrapper">
-    <div class="footer-banner">
-  <img src="banner.png" alt="Opésh Overseas Footer Banner">
-  <a href="legal.html" class="terms-link">Terms & Policies</a>
+    <div class="footer-banner" style="position: relative;">
+      <img src="banner.png" alt="Opésh Overseas Footer Banner" />
+
+      <!-- Terms & Policies link - bottom left -->
+      <a href="legal.html" 
+         style="
+           position: absolute;
+           bottom: 20px;
+           left: 20px;
+           color: white;
+           font-weight: 600;
+           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+           font-size: 16px;
+           text-decoration: none;
+           transition: color 0.3s ease;
+           z-index: 10;
+         "
+         onmouseover="this.style.color='#aad8ff'" 
+         onmouseout="this.style.color='white'"
+      >
+        Terms & Policies
+      </a>
+
+      <!-- FAQs link - bottom right -->
+      <a href="/faq.html" 
+         style="
+           position: absolute;
+           bottom: 20px;
+           right: 20px;
+           color: white;
+           font-weight: 600;
+           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+           font-size: 16px;
+           text-decoration: none;
+           transition: color 0.3s ease;
+           z-index: 10;
+         "
+         onmouseover="this.style.color='#aad8ff'" 
+         onmouseout="this.style.color='white'"
+      >
+        FAQs
+      </a>
     </div>
-    <div class="footer-bottom">
+    <div class="footer-bottom" style="background-color: #d0eaff; padding: 15px; text-align: center; font-size: 14px; color: #000;">
       © 2025 Opésh Overseas. All rights reserved.
     </div>
   </div>
