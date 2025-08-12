@@ -41,6 +41,7 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Opésh Overseas",
+  "alternate name": "Opesh Overseas"
   "url": "https://opeshoverseas.com/",
   "logo": "https://opeshoverseas.com/logo.png",
   "description": "Opésh Overseas is a premium exporter of Ayurvedic and Herbal products from India, delivering pure, compliant, and science-backed formulations to global markets.",
@@ -337,13 +338,14 @@ footer {
 }
 @media screen and (min-width: 769px) {
   .footer-banner img {
-    height: 150px;
-    object-fit: cover;
-    object-position: center 10%;
+    height: auto;  /* changed from 150px */
+    max-height: 180px; /* max height limit to avoid too tall */
+    object-fit: contain;  /* instead of cover */
+    object-position: center center;
     display: block;
     margin: 0 auto;
-    border-radius: 12px; /* optional: for rounded edges */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* optional: adds soft border */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 }
 /* Text section */
@@ -451,7 +453,7 @@ footer {
     <a href="export.html">Export</a>
     <a href="partners.html">Partners</a>
     <a href="careers.html">Careers</a>
-    <li><a href="/faq.html">FAQs</a>
+    <a href="/faq.html">FAQs</a>
     <a href="contact.html">Contact</a>
   </div>
 </nav>
