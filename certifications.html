@@ -1,5 +1,4 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -58,56 +57,65 @@
 
   section {
     padding: 2rem;
-    max-width: 900px;
+    max-width: 1000px;
     margin: auto;
   }
 
   h2 {
     margin-bottom: 1rem;
     font-size: 1.8rem;
-  }
-
-  ul {
-    padding-left: 1.2rem;
-  }
-
-  li {
-    margin-bottom: 0.8rem;
-    font-size: 1.05rem;
+    text-align: center;
   }
 
   p {
     font-size: 1.05rem;
     line-height: 1.6;
     margin-bottom: 1.2rem;
-  }
-
-  .cert-badge {
-    display: inline-block;
-    background: #007acc;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: bold;
-    margin: 10px 0;
-  }
-
-  .cert-preview {
-    margin: 20px 0;
     text-align: center;
   }
 
-  .cert-preview img {
-    max-width: 100%;
-    border: 2px solid #ccc;
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .cert-card {
+    background: white;
+    padding: 1.5rem;
     border-radius: 12px;
-    filter: blur(2.5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+
+  .cert-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .cert-card img {
+    max-width: 80px;
+    margin-bottom: 1rem;
+  }
+
+  .cert-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cert-desc {
+    font-size: 0.95rem;
+    color: #555;
   }
 
   .note {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-style: italic;
     color: #555;
+    margin-top: 2rem;
+    text-align: center;
   }
 
   footer {
@@ -118,46 +126,29 @@
     margin-top: 3rem;
   }
 
-  /* ✅ Responsive Styling */
   @media screen and (max-width: 768px) {
     header h1 {
       font-size: 1.8rem;
-    }
-    header p {
-      font-size: 1rem;
     }
     nav {
       flex-direction: column;
       gap: 10px;
       padding: 1rem;
     }
-    nav a {
-      font-size: 1rem;
-    }
     section {
       padding: 1.5rem 1rem;
     }
-    section h2 {
-      font-size: 1.4rem;
-    }
-    section p,
-    li {
-      font-size: 1rem;
-    }
-    footer {
-      font-size: 0.85rem;
-      padding: 1rem;
+    h2 {
+      font-size: 1.5rem;
     }
   }
   </style>
 </head>
 <body>
   <header>
-    <div class="header-content">
-      <img src="logo.png" alt="Opésh Overseas Logo" />
-      <h1>Opésh Overseas</h1>
-      <p>~From India to the World</p>
-    </div>
+    <img src="logo.png" alt="Opésh Overseas Logo" />
+    <h1>Opésh Overseas</h1>
+    <p>~From India to the World</p>
   </header>
 
   <nav>
@@ -168,35 +159,43 @@
     <a href="export.html">Export</a>
     <a href="partners.html">Partners</a>
     <a href="careers.html">Careers</a>
+    <a href="faq.html">FAQ</a>
     <a href="contact.html">Contact</a>
   </nav>
 
   <section>
-    <h2>Certifications & Compliance Roadmap</h2>
-    <p>At Opésh Overseas, we are committed to full regulatory compliance and international credibility. Our certifications are a reflection of our dedication to quality, trust, and transparency.</p>
+    <h2>Global Certifications & Compliance Capabilities</h2>
+    <p>Opésh Overseas operates with a robust compliance framework. Through our own registrations and our network of accredited manufacturing partners, we ensure that every shipment meets the most rigorous global standards.</p>
 
-    <h3> ✅ Completed</h3>
-    <ul>
-      <li>
-        <strong>MSME (Udyam) Registration</strong>  
-        <span class="cert-badge">Proud MSME Registered</span>
-        <div class="cert-preview">
-          <img src="msme-certificate-blurred.png" alt="MSME Certificate (blurred)">
-          <p class="note">Blurred for security. Full certificate available upon request to verified partners.</p>
-        </div>
-      </li>
-    </ul>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <img src="icons/msme.png" alt="MSME Logo">
+        <div class="cert-title">MSME (Udyam) Registration</div>
+        <div class="cert-desc">Government of India registered for credibility and business facilitation.</div>
+      </div>
+      <div class="cert-card">
+        <img src="icons/iec.png" alt="IEC Logo">
+        <div class="cert-title">Import Export Code (IEC)</div>
+        <div class="cert-desc">Authorized for global trade, enabling smooth customs clearance.</div>
+      </div>
+      <div class="cert-card">
+        <img src="icons/fssai.png" alt="FSSAI Logo">
+        <div class="cert-title">FSSAI Compliance</div>
+        <div class="cert-desc">Products sourced from FSSAI-licensed and audited manufacturing facilities.</div>
+      </div>
+      <div class="cert-card">
+        <img src="icons/iso.png" alt="ISO Logo">
+        <div class="cert-title">ISO 22000 & GMP</div>
+        <div class="cert-desc">Manufacturing partners operate in ISO 22000-certified and GMP-compliant units.</div>
+      </div>
+      <div class="cert-card">
+        <img src="icons/haccp.png" alt="HACCP Logo">
+        <div class="cert-title">HACCP</div>
+        <div class="cert-desc">Hazard Analysis and Critical Control Points framework applied to ensure product safety.</div>
+      </div>
+    </div>
 
-    <h3> ⏳ In Progress</h3>
-    <ul>
-      <li><strong>Import Export Code (IEC)</strong> – Under Review</li>
-      <li><strong>FSSAI</strong> – To be acquired post manufacturer collaboration</li>
-      <li><strong>ISO / GMP / USFDA</strong> – Strategic certifications for global exports</li>
-    </ul>
-
-    <p>Our aim is to align with the most rigorous global standards. This ensures that our offerings meet the expectations of importers, distributors, and healthcare professionals worldwide.</p>
-
-    <p><em>Note: We do not claim possession of any partner company’s certification unless officially authorized in writing.</em></p>
+    <p class="note">*Certain certifications are maintained by our approved manufacturing partners and apply to all products sourced through them. Documentation available upon request to verified importers.*</p>
   </section>
 
   <footer>
