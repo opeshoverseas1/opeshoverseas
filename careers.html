@@ -41,7 +41,8 @@
     header p {
       font-size: 1.3rem;
       margin-top: 0.4rem;
-      font-style: italic;
+      font-style: normal;
+      color: #0d1a33;
     }
 
     nav {
@@ -59,18 +60,64 @@
       color: #1a1a1a;
     }
 
+    .hero {
+      background-color: #d9ecff;
+      text-align: center;
+      padding: 3rem 1rem;
+      margin-bottom: 2rem;
+      border-radius: 12px;
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
     section {
-      padding: 2rem;
+      padding: 2rem 1rem;
       max-width: 900px;
       margin: auto;
     }
 
-    h2 {
-      margin-bottom: 1rem;
+    .job-listings {
+      margin-bottom: 2rem;
     }
 
-    ul {
-      margin-left: 1.5rem;
+    .job-card {
+      background-color: #ffffff;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .job-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .job-card h4 {
+      margin-top: 0;
+    }
+
+    .apply-btn {
+      display: inline-block;
+      margin-top: 0.8rem;
+      background-color: #4a90e2;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .apply-btn:hover {
+      background-color: #357ab8;
     }
 
     footer {
@@ -118,7 +165,7 @@
     <div class="header-content">
       <img src="logo.png" alt="Opésh Overseas Logo" />
       <h1>Opésh Overseas</h1>
-      <p>~From India to the World</p>
+      <p>Global Leaders in Export Operations</p>
     </div>
   </header>
 
@@ -130,29 +177,55 @@
     <a href="export.html">Export</a>
     <a href="partners.html">Partners</a>
     <a href="careers.html">Careers</a>
+    <a href="faq.html">FAQ</a>
     <a href="contact.html">Contact</a>
   </nav>
 
-  <section>
+  <div class="hero">
     <h2>Careers at Opésh Overseas</h2>
-    <p>At Opésh Overseas, we are always on the lookout for passionate professionals who believe in the power of natural, plant-based wellness. Whether you're a researcher, marketing expert, logistics manager, or sales strategist, your work here will contribute to building a global legacy of Ayurvedic innovation.</p>
+    <p>Opésh Overseas is committed to excellence in global trade and business operations. Join a professional and collaborative environment where your skills in operations, sales, research, marketing, or design contribute to meaningful projects and career growth.</p>
+  </div>
 
-    <p>We provide a collaborative, inclusive, and growth-oriented environment, where ideas are valued, and every individual contributes to meaningful change in the health & wellness sector. Our people are our greatest asset, and we’re excited to bring on board individuals with integrity, ambition, and a global mindset.</p>
+  <section>
+    <div class="job-listings" id="openings">
+      <h3>Current Internship Openings</h3>
 
-    <h3>🌟 Current Openings for Internships</h3>
-    <ul>
-      <li>Export Operations Associate</li>
-      <li>International Sales & Business Development</li>
-      <li>Product Research Analyst (Ayurveda & Nutraceuticals)</li>
-      <li>Graphic Designer & Brand Strategist</li>
-    </ul>
+      <div class="job-card">
+        <h4>Export Operations Associate</h4>
+        <p><strong>Responsibilities:</strong> Handle international shipments, maintain compliance documentation, coordinate with logistics partners, and support export operations.</p>
+        <p><strong>Skills Required:</strong> Detail-oriented, organizational skills, familiarity with shipping processes, and proficiency in MS Office.</p>
+        <a href="mailto:info@opeshoverseas.com?subject=Application – Export Operations Associate" class="apply-btn">Apply Now</a>
+      </div>
 
-    <h3>📧 How to Apply</h3>
-    <p>Email your CV and a short cover letter to: <strong>info@opeshoverseas.com</strong></p>
-    <p>Use the subject line: <em>"Application – [Role Name]"</em></p>
-    <p>We will review all applications and reach out to shortlisted candidates within 7–10 working days.</p>
+      <div class="job-card">
+        <h4>International Sales & Business Development</h4>
+        <p><strong>Responsibilities:</strong> Identify potential clients, assist in market research, support sales strategies, and contribute to business growth.</p>
+        <p><strong>Skills Required:</strong> Communication, negotiation, market research, and client relationship management.</p>
+        <a href="mailto:info@opeshoverseas.com?subject=Application – International Sales & Business Development" class="apply-btn">Apply Now</a>
+      </div>
 
-    <p>Even if you don’t see a relevant role listed, feel free to drop in your profile for future opportunities!</p>
+      <div class="job-card">
+        <h4>Product Research Analyst</h4>
+        <p><strong>Responsibilities:</strong> Conduct research, analyze market trends, and support product development initiatives.</p>
+        <p><strong>Skills Required:</strong> Analytical skills, research experience, and knowledge of industry trends.</p>
+        <a href="mailto:info@opeshoverseas.com?subject=Application – Product Research Analyst" class="apply-btn">Apply Now</a>
+      </div>
+
+      <div class="job-card">
+        <h4>Graphic Designer & Brand Strategist</h4>
+        <p><strong>Responsibilities:</strong> Design visual content, maintain brand identity, support marketing campaigns, and contribute to creative strategies.</p>
+        <p><strong>Skills Required:</strong> Creativity, proficiency in Adobe Suite, brand awareness, and visual storytelling.</p>
+        <a href="mailto:info@opeshoverseas.com?subject=Application – Graphic Designer & Brand Strategist" class="apply-btn">Apply Now</a>
+      </div>
+    </div>
+
+    <div class="apply-info">
+      <h3>How to Apply</h3>
+      <p>Submit your CV and a brief cover letter highlighting your skills, experience, and interest in contributing to our business operations.</p>
+      <p><strong>Email:</strong> info@opeshoverseas.com</p>
+      <p><strong>Subject Line:</strong> "Application – [Role Name]"</p>
+      <p>Our recruitment team reviews all applications carefully. Shortlisted candidates will be contacted within 7–10 working days. We welcome speculative applications for future opportunities.</p>
+    </div>
   </section>
 
   <footer>
