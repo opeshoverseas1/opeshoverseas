@@ -390,8 +390,9 @@ footer {
 .footer-banner {
   position: relative;
 }
-    .mobile-nav {
-  display: none;
+    /* Mobile Nav */
+.mobile-nav {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
@@ -402,59 +403,71 @@ footer {
   background: none;
   border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
 }
 
-.nav-links {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 30px;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
-  overflow: hidden;
-  max-height: 1000px; /* default for desktop */
-  opacity: 1;
+/* Hamburger lines */
+.menu-toggle span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: #000;
+  margin: 5px 0;
+  transition: 0.3s ease;
 }
 
-@media (max-width: 768px) {
-  .mobile-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-  }
+/* Transform to cross */
+.menu-toggle.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
 
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Nav links */
 .nav-links {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 30px;
+  flex-direction: column;
+  text-align: center;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease;
+  transition: max-height 0.4s ease;
+  background: #a7d3f5;
 }
 
 .nav-links.show {
-  max-height: 500px; /* enough to show all links */
+  max-height: 500px; /* enough for all links */
 }
 
-.menu-toggle {
-  font-size: 26px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+.nav-links a {
+  padding: 12px 0;
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.3s;
 }
 
-.menu-toggle.open {
-  transform: rotate(90deg); /* simple rotation to indicate menu open */
+.nav-links a:hover {
+  color: #007acc;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 769px) {
+  .mobile-nav, .menu-toggle {
+    display: none;
+  }
   .nav-links {
-    flex-direction: column;
-    text-align: center;
-    gap: 16px;
-    padding-top: 10px;
+    display: flex !important;
+    max-height: none !important;
+    flex-direction: row;
+    gap: 30px;
+    background: none;
   }
 }
   </style>
