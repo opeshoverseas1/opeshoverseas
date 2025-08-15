@@ -661,10 +661,12 @@ footer {
   });
 </script>
   <script>
-  function toggleMenu() {
-    const nav = document.getElementById('navLinks');
-    nav.classList.toggle('show');
-  }
+function toggleMenu() {
+  const nav = document.getElementById('navLinks');
+  const btn = document.querySelector('.menu-toggle');
+  nav.classList.toggle('show');
+  btn.classList.toggle('open'); // optional for rotation effect
+}
   </script>
 </body>
 </html>
