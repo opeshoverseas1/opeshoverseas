@@ -409,23 +409,46 @@ footer {
   justify-content: center;
   flex-wrap: wrap;
   gap: 30px;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  overflow: hidden;
+  max-height: 1000px; /* default for desktop */
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
   .mobile-nav {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
   }
 
   .nav-links {
-    display: none;
+    display: flex;
     flex-direction: column;
     text-align: center;
     gap: 16px;
     padding-top: 10px;
+    max-height: 0;
+    opacity: 0;
   }
 
   .nav-links.show {
-    display: flex;
+    max-height: 500px; /* adjust based on number of links */
+    opacity: 1;
+  }
+
+  .menu-toggle {
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  /* Hamburger animation (optional) */
+  .menu-toggle.open {
+    transform: rotate(90deg);
   }
 }
   </style>
