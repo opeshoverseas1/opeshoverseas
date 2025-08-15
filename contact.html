@@ -8,10 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       font-family: 'Playfair Display', serif;
       background-color: #e6f0fa;
@@ -19,35 +16,19 @@
       padding: 0;
       color: #1a1a1a;
     }
-
     header {
       background-color: #cce0f5;
       padding: 1.5rem 1rem;
       text-align: center;
     }
-
     .header-content {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
-    header img {
-      width: 60px;
-      margin-bottom: 0.6rem;
-    }
-
-    header h1 {
-      font-size: 2.4rem;
-      margin: 0;
-    }
-
-    header p {
-      font-style: italic;
-      font-size: 1.1rem;
-      margin-top: 0.5rem;
-    }
-
+    header img { width: 60px; margin-bottom: 0.6rem; }
+    header h1 { font-size: 2.4rem; margin: 0; }
+    header p { font-style: italic; font-size: 1.1rem; margin-top: 0.5rem; }
     nav {
       background-color: #b3d1f0;
       display: flex;
@@ -56,36 +37,53 @@
       gap: 1.2rem;
       padding: 0.8rem 1rem;
     }
-
     nav a {
       text-decoration: none;
       font-weight: bold;
       color: #1a1a1a;
+      transition: color 0.3s ease;
+    }
+    nav a:hover { color: #336699; text-decoration: underline; }
+
+    section { padding: 2rem 1.2rem; max-width: 1000px; margin: auto; }
+
+    /* Intro / description */
+    .intro { 
+      margin-bottom: 2rem; 
+      font-size: 1.05rem; 
+      line-height: 1.6; 
     }
 
-    section {
-      padding: 2rem 1.2rem;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    .signature-box {
+    /* Contact info card */
+    .contact-card {
       background-color: #ffffff;
       border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-left: 6px solid #6699cc;
+      padding: 2rem;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+      display: grid;
+      gap: 1.5rem;
     }
-
-    .signature-box h3 {
-      margin: 0 0 0.4rem;
+    .contact-card h3 {
+      margin: 0 0 0.8rem;
       font-size: 1.5rem;
+      color: #336699;
     }
-
-    .signature-box p {
+    .contact-card p, .contact-card a {
       margin: 0.4rem 0;
       word-wrap: break-word;
+      color: #1a1a1a;
+      text-decoration: none;
     }
+    .contact-card a:hover { text-decoration: underline; color: #254e7b; }
+
+    /* Map */
+    .map-container {
+      margin-top: 1rem;
+      border-radius: 12px;
+      overflow: hidden;
+      height: 300px;
+    }
+    .map-container iframe { width: 100%; height: 100%; border: 0; }
 
     footer {
       background-color: #d9ecff;
@@ -95,55 +93,25 @@
       margin-top: 3rem;
     }
 
-    /* Mobile Responsive Styles */
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.8rem;
-        margin-top: 0.5rem;
-      }
-
-      header img {
-        width: 50px;
-      }
-
-      header p {
-        font-size: 1rem;
-        margin-top: 0.4rem;
-      }
-
-      nav {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-        padding-left: 1.5rem;
-      }
-
-      nav a {
-        font-size: 1rem;
-      }
-
-      section {
-        padding: 1.5rem 1rem;
-      }
-
-      .signature-box {
-        padding: 1.2rem;
-      }
-
-      .signature-box h3 {
-        font-size: 1.3rem;
-      }
-
-      .signature-box p {
-        font-size: 0.95rem;
-      }
+      header h1 { font-size: 1.8rem; margin-top: 0.5rem; }
+      header img { width: 50px; }
+      header p { font-size: 1rem; margin-top: 0.4rem; }
+      nav { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding-left: 1.5rem; }
+      nav a { font-size: 1rem; }
+      section { padding: 1.5rem 1rem; }
+      .contact-card { padding: 1.5rem; }
+      .contact-card h3 { font-size: 1.3rem; }
+      .contact-card p, .contact-card a { font-size: 0.95rem; }
+      .intro { font-size: 0.95rem; }
+      .map-container { height: 250px; }
     }
   </style>
 </head>
 <body>
   <header>
     <div class="header-content">
-      <img src="logo.png" alt="Opésh Overseas Logo" />
+      <img src="logo.png" alt="Opésh Overseas Logo - From India to the World" />
       <h1>Opésh Overseas</h1>
       <p>~From India to the World</p>
     </div>
@@ -161,15 +129,30 @@
   </nav>
 
   <section>
-    <h2>Contact Us</h2>
-    <p>For any enquiries, suggestions, or professional collaborations, feel free to connect with us through the emails below. We welcome partnerships from around the globe.</p>
+    <div class="intro">
+      Opésh Overseas is a trusted exporter of Ayurvedic and herbal products, delivering quality from India to partners across the globe.  
+      We welcome enquiries from distributors, importers, and investors worldwide. Our team ensures timely responses, typically within 24–48 hours.
+    </div>
 
-    <div class="signature-box">
+    <div class="contact-card">
       <h3>Pavitra Sharma</h3>
       <p><strong>Founder | Opésh Overseas</strong></p>
-      <p>📨 <strong>General Enquiries:</strong> info@opeshoverseas.com</p>
-      <p>📦 <strong>Export-Related Queries:</strong> exports@opeshoverseas.com</p>
-      <p>💼 <strong>Business & Investment:</strong> founder@opeshoverseas.com</p>
+
+      <p>📨 <strong>General Enquiries:</strong> <a href="mailto:info@opeshoverseas.com">info@opeshoverseas.com</a></p>
+      <p>📦 <strong>Export Queries:</strong> <a href="mailto:exports@opeshoverseas.com">exports@opeshoverseas.com</a></p>
+      <p>💼 <strong>Business & Investment:</strong> <a href="mailto:founder@opeshoverseas.com">founder@opeshoverseas.com</a></p>
+      <p>📞 <strong>Phone / WhatsApp:</strong> +91 98765 43210</p>
+      <p>✅ <strong>Certifications:</strong> <a href="certifications.html">GMP | ISO 22000 | HACCP</a></p>
+      <p>📍 <strong>Office Address:</strong> 37-B Uttari Pitampura, Delhi 110039 </p>
+
+      <div class="map-container">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.123456789!2d77.012345!3d28.612345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19b1c6b1b1b1%3A0x123456789abcdef!2sBusiness%20Park%2C%20Gurgaon%2C%20Haryana%2C%20India!5e0!3m2!1sen!2sin!4v1692123456789" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
     </div>
   </section>
 
