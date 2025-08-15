@@ -423,32 +423,38 @@ footer {
     padding: 0 20px;
   }
 
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.nav-links.show {
+  max-height: 500px; /* enough to show all links */
+}
+
+.menu-toggle {
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.menu-toggle.open {
+  transform: rotate(90deg); /* simple rotation to indicate menu open */
+}
+
+@media (max-width: 768px) {
   .nav-links {
-    display: flex;
     flex-direction: column;
     text-align: center;
     gap: 16px;
     padding-top: 10px;
-    max-height: 0;
-    opacity: 0;
-  }
-
-  .nav-links.show {
-    max-height: 500px; /* adjust based on number of links */
-    opacity: 1;
-  }
-
-  .menu-toggle {
-    font-size: 28px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-  }
-
-  /* Hamburger animation (optional) */
-  .menu-toggle.open {
-    transform: rotate(90deg);
   }
 }
   </style>
@@ -661,11 +667,10 @@ footer {
   });
 </script>
   <script>
-function toggleMenu() {
+function toggleMenu(button) {
   const nav = document.getElementById('navLinks');
-  const btn = document.querySelector('.menu-toggle');
   nav.classList.toggle('show');
-  btn.classList.toggle('open'); // optional for rotation effect
+  button.classList.toggle('open');
 }
   </script>
 </body>
