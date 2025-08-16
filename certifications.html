@@ -126,54 +126,75 @@
     margin-top: 3rem;
   }
 
-  @media screen and (max-width: 768px) {
-    header h1 {
-      font-size: 1.8rem;
-    }
-    nav {
-      flex-direction: column;
-      gap: 10px;
-      padding: 1rem;
-    }
-    section {
-      padding: 1.5rem 1rem;
-    }
-    h2 {
-      font-size: 1.5rem;
-    }
+  /* ==== HAMBURGER + MOBILE MENU ==== */
+  .menu-toggle {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    font-size: 28px;
+    background: none;
+    border: none;
+    z-index: 10000;
+    cursor: pointer;
+    display: none; /* hidden on desktop */
   }
-    .menu-toggle {
-  position: fixed !important;   /* pin to screen */
-  top: 15px !important;         /* adjust vertically */
-  left: 15px !important;        /* stick to left edge */
-  margin: 0 !important;
-  padding: 0 !important;
-  font-size: 28px !important;
-  background: none !important;
-  border: none !important;
-  z-index: 9999 !important;     /* keep above all */
-    }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100%;
+    background: #b3d1f0;
+    padding-top: 60px;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    z-index: 9999;
+  }
+
+  .mobile-menu a {
+    padding: 12px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #1a1a1a;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .mobile-menu a:hover {
+    background: #99c2e6;
+  }
+
+  @media screen and (max-width: 768px) {
+    nav { display: none; }          /* hide desktop nav */
+    .menu-toggle { display: block; } /* show hamburger */
+  }
   </style>
 </head>
 <body>
+  <!-- Hamburger button -->
   <button class="menu-toggle">&#9776;</button>
+
+  <!-- Mobile dropdown -->
   <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="about.html">About Us</a>
-  <a href="products.html">Products & Science</a>
-  <a href="certifications.html">Certifications</a>
-  <a href="export.html">Export</a>
-  <a href="partners.html">Partners</a>
-  <a href="careers.html">Careers</a>
-  <a href="faq.html">FAQ</a>
-  <a href="contact.html">Contact</a>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="products.html">Products & Science</a>
+    <a href="certifications.html">Certifications</a>
+    <a href="export.html">Export</a>
+    <a href="partners.html">Partners</a>
+    <a href="careers.html">Careers</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
   </div>
+
   <header>
     <img src="logo.png" alt="Opésh Overseas Logo" />
     <h1>Opésh Overseas</h1>
     <p>~From India to the World</p>
   </header>
 
+  <!-- Desktop Navigation -->
   <nav>
     <a href="index.html">Home</a>
     <a href="about.html">About Us</a>
@@ -224,13 +245,14 @@
   <footer>
     © 2025 Opésh Overseas. A Sharma and Sons Ventures Co. All rights reserved.
   </footer>
-  <script>
-  const toggle = document.querySelector('.menu-toggle');
-  const menu = document.getElementById('mobileMenu');
 
-  toggle.addEventListener('click', () => {
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-  });
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const menu = document.getElementById('mobileMenu');
+
+    toggle.addEventListener('click', () => {
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    });
   </script>
 </body>
 </html>
