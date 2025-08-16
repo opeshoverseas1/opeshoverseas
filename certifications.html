@@ -156,6 +156,18 @@
   </style>
 </head>
 <body>
+  <button class="menu-toggle">&#9776;</button>
+  <div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="products.html">Products & Science</a>
+  <a href="certifications.html">Certifications</a>
+  <a href="export.html">Export</a>
+  <a href="partners.html">Partners</a>
+  <a href="careers.html">Careers</a>
+  <a href="faq.html">FAQ</a>
+  <a href="contact.html">Contact</a>
+  </div>
   <header>
     <img src="logo.png" alt="Opésh Overseas Logo" />
     <h1>Opésh Overseas</h1>
@@ -212,5 +224,13 @@
   <footer>
     © 2025 Opésh Overseas. A Sharma and Sons Ventures Co. All rights reserved.
   </footer>
+  <script>
+  const toggle = document.querySelector('.menu-toggle');
+  const menu = document.getElementById('mobileMenu');
+
+  toggle.addEventListener('click', () => {
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  });
+  </script>
 </body>
 </html>
