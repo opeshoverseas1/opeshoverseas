@@ -742,9 +742,26 @@ footer {
     color: #66ccff !important;
   }
 </style>
-  <a href="https://wa.me/+917976529421" target="_blank" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background-color: #25D366; padding: 12px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-    <img src="whatsapp-icon.png" alt="Chat on WhatsApp" style="height: 32px; width: 32px;">
-  </a>
+  <a href="https://wa.me/+917976529421" target="_blank" 
+   style="
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 1000;
+      background-color: #25D366;
+      padding: 14px;
+      border-radius: 50%;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+   "
+   onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.35)'; this.style.backgroundColor='#1ebe5c';"
+   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.25)'; this.style.backgroundColor='#25D366';"
+>
+  <img src="whatsapp-icon.png" alt="Chat on WhatsApp" style="height: 28px; width: 28px;">
+</a>
   <!-- AOS Animation Scripts -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
