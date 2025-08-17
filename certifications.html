@@ -20,6 +20,7 @@
     background-color: #cce0f5;
     padding: 1.5rem;
     text-align: center;
+    position: relative;
   }
 
   header img {
@@ -128,13 +129,13 @@
 
   /* ==== HAMBURGER + MOBILE MENU ==== */
   .menu-toggle {
-    position: fixed;
+    position: absolute;
     top: 15px;
     left: 15px;
     font-size: 28px;
     background: none;
     border: none;
-    z-index: 10000;
+    z-index: 1000;
     cursor: pointer;
     display: none; /* hidden on desktop */
   }
@@ -142,23 +143,22 @@
   .mobile-menu {
     display: none;
     flex-direction: column;
-    position: fixed;
-    top: 0;
+    position: absolute;
+    top: 100%;
     left: 0;
-    width: 220px;
-    height: 100%;
+    width: 100%;
     background: #b3d1f0;
-    padding-top: 60px;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
-    z-index: 9999;
+    padding: 10px 0;
+    text-align: center;
+    z-index: 999;
   }
 
   .mobile-menu a {
-    padding: 12px 20px;
+    padding: 12px;
     text-decoration: none;
     font-weight: bold;
     color: #1a1a1a;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    display: block;
   }
 
   .mobile-menu a:hover {
@@ -172,26 +172,25 @@
   </style>
 </head>
 <body>
-  <!-- Hamburger button -->
-  <button class="menu-toggle">&#9776;</button>
-
-  <!-- Mobile dropdown -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="about.html">About Us</a>
-    <a href="products.html">Products & Science</a>
-    <a href="certifications.html">Certifications</a>
-    <a href="export.html">Export</a>
-    <a href="partners.html">Partners</a>
-    <a href="careers.html">Careers</a>
-    <a href="faq.html">FAQ</a>
-    <a href="contact.html">Contact</a>
-  </div>
-
   <header>
+    <!-- Hamburger button inside header -->
+    <button class="menu-toggle">&#9776;</button>
     <img src="logo.png" alt="Opésh Overseas Logo" />
     <h1>Opésh Overseas</h1>
     <p>~From India to the World</p>
+
+    <!-- Mobile dropdown -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="products.html">Products & Science</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="export.html">Export</a>
+      <a href="partners.html">Partners</a>
+      <a href="careers.html">Careers</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </header>
 
   <!-- Desktop Navigation -->
