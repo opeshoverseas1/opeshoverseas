@@ -16,46 +16,136 @@
     color: #1a1a1a;
   }
 
+  /* ==== HEADER (same as index) ==== */
   header {
     background-color: #d0eaff;
-    padding: 1.5rem;
-    text-align: center;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 18px;
+    max-width: 1200px;
+    margin: 0 auto 0 20px;
     position: relative;
   }
 
   header img {
-    width: 80px;
-    height: auto;
-    display: block;
-    margin: 0 auto 0.5rem;
+    height: 180px;
+    width: auto;
+    filter: drop-shadow(2px 2px 6px rgba(0,128,255,0.3));
   }
 
-  header h1 {
-    font-size: 2.5rem;
+  .header-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .header-text h1 {
+    font-size: 34px;
     margin: 0;
+    color: #000;
   }
 
-  header p {
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
+  .header-text p {
+    font-size: 17px;
+    margin: 0;
     font-style: italic;
+    color: #000;
   }
 
+  /* ==== DESKTOP NAV ==== */
   nav {
     background-color: #a7d3f5;
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
-    padding: 0.8rem 0;
+    gap: 30px;
+    padding: 10px 0;
     flex-wrap: wrap;
   }
 
   nav a {
     text-decoration: none;
     font-weight: bold;
-    color: #1a1a1a;
+    font-size: 16px;
+    color: #000;
+    position: relative;
   }
 
+  nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #007acc;
+    left: 0;
+    bottom: -3px;
+    transition: width 0.3s ease;
+  }
+
+  nav a:hover::after {
+    width: 100%;
+  }
+
+  nav a:hover {
+    color: #007acc;
+  }
+
+  /* ==== MOBILE NAV ==== */
+  .menu-toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 28px;
+    background: none;
+    border: none;
+    z-index: 1000;
+    cursor: pointer;
+    display: none; /* hidden on desktop */
+  }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #b3d1f0;
+    padding: 10px 0;
+    text-align: center;
+    z-index: 999;
+  }
+
+  .mobile-menu a {
+    padding: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+    color: #1a1a1a;
+    display: block;
+  }
+
+  .mobile-menu a:hover {
+    background: #99c2e6;
+  }
+
+  @media screen and (max-width: 768px) {
+    nav { display: none; }          /* hide desktop nav */
+    .menu-toggle { display: block; } /* show hamburger */
+    header {
+      flex-direction: column;
+      align-items: center;
+      margin-left: 0;
+    }
+    header img {
+      height: 120px;
+    }
+    .header-text h1 { font-size: 26px; }
+    .header-text p { font-size: 15px; }
+  }
+
+  /* ==== PAGE CONTENT ==== */
   section {
     padding: 2rem;
     max-width: 1000px;
@@ -126,58 +216,19 @@
     font-size: 0.9rem;
     margin-top: 3rem;
   }
-
-  /* ==== HAMBURGER + MOBILE MENU ==== */
-  .menu-toggle {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    font-size: 28px;
-    background: none;
-    border: none;
-    z-index: 1000;
-    cursor: pointer;
-    display: none; /* hidden on desktop */
-  }
-
-  .mobile-menu {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: #b3d1f0;
-    padding: 10px 0;
-    text-align: center;
-    z-index: 999;
-  }
-
-  .mobile-menu a {
-    padding: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    color: #1a1a1a;
-    display: block;
-  }
-
-  .mobile-menu a:hover {
-    background: #99c2e6;
-  }
-
-  @media screen and (max-width: 768px) {
-    nav { display: none; }          /* hide desktop nav */
-    .menu-toggle { display: block; } /* show hamburger */
-  }
   </style>
 </head>
 <body>
   <header>
-    <!-- Hamburger button inside header -->
+    <!-- Hamburger -->
     <button class="menu-toggle">&#9776;</button>
+
+    <!-- Logo + Title -->
     <img src="logo.png" alt="Opésh Overseas Logo" />
-    <h1>Opésh Overseas</h1>
-    <p>~From India to the World</p>
+    <div class="header-text">
+      <h1>Opésh Overseas</h1>
+      <p>~From India to the World</p>
+    </div>
 
     <!-- Mobile dropdown -->
     <div class="mobile-menu" id="mobileMenu">
@@ -212,7 +263,7 @@
 
     <div class="cert-grid">
       <div class="cert-card">
-        <img src="icons.msme.png" alt="MSME Logo">
+        <img src="icons/msme.png" alt="MSME Logo">
         <div class="cert-title">MSME (Udyam) Registration</div>
         <div class="cert-desc">Government of India registered for credibility and business facilitation.</div>
       </div>
@@ -248,7 +299,6 @@
   <script>
     const toggle = document.querySelector('.menu-toggle');
     const menu = document.getElementById('mobileMenu');
-
     toggle.addEventListener('click', () => {
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     });
