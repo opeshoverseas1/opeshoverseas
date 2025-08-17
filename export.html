@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -15,225 +14,264 @@
       padding: 0;
       color: #1a1a1a;
       line-height: 1.6;
-    }
+    }/* ---------------- HEADER ---------------- */
+header {
+  background-color: #d0eaff;
+  padding: 10px 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
 
-    /* ---------------- HEADER ---------------- */
-    header {
-      background-color: #d0eaff;
-      padding: 10px 20px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    }
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
 
-    .header-content {
-      max-width: 1200px;
-      margin: 0 auto 0 20px;
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
+.header-content img {
+  height: 180px;
+  filter: drop-shadow(2px 2px 5px rgba(0,128,255,0.3));
+}
 
-    .header-content img {
-      height: 180px;
-      filter: drop-shadow(2px 2px 5px rgba(0,128,255,0.3));
-    }
+.header-text h1 {
+  font-size: 34px;
+  color: #000000;
+  margin: 0;
+}
 
-    .header-text h1 {
-      font-size: 34px;
-      color: #000000;
-      margin: 0;
-    }
+.header-text p {
+  font-size: 17px;
+  font-style: italic;
+  color: #000000;
+  margin: 0;
+}
 
-    .header-text p {
-      font-size: 17px;
-      font-style: italic;
-      color: #000000;
-      margin: 0;
-    }
+/* ---------------- NAVBAR ---------------- */
+nav {
+  background-color: #a7d3f5;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 10px 0;
+  flex-wrap: wrap;
+}
 
-    /* ---------------- NAVBAR ---------------- */
-    nav {
-      background-color: #a7d3f5;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 10px 0;
-      flex-wrap: wrap;
-    }
+nav a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.3s;
+}
 
-    nav a {
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      color: #000;
-      position: relative;
-      padding-bottom: 4px;
-      transition: color 0.3s;
-    }
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: #007acc;
+  left: 0;
+  bottom: 0;
+  transition: width 0.3s;
+}
 
-    nav a::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 2px;
-      background: #007acc;
-      left: 0;
-      bottom: 0;
-      transition: width 0.3s;
-    }
+nav a:hover {
+  color: #007acc;
+}
 
-    nav a:hover {
-      color: #007acc;
-    }
+nav a:hover::after {
+  width: 100%;
+}
 
-    nav a:hover::after {
-      width: 100%;
-    }
+/* ---------------- HAMBURGER ---------------- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
 
-    /* ---------------- SECTION ---------------- */
-    section {
-      padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
+.hamburger span {
+  height: 3px;
+  width: 25px;
+  background: #000;
+  margin: 4px 0;
+  border-radius: 2px;
+}
 
-    .card {
-      background-color: #ffffff;
-      padding: 1.8rem;
-      margin-bottom: 1.8rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.3s;
-    }
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
 
-    .card:hover {
-      transform: translateY(-5px);
-    }
+.nav-links.active {
+  display: block;
+  text-align: center;
+  padding: 10px 0;
+}
 
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #003366;
-      text-align: center;
-    }
+/* ---------------- SECTION ---------------- */
+section {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
+}
 
-    section h3 {
-      margin-top: 1rem;
-      font-size: 1.5rem;
-      color: #004080;
-    }
+.card {
+  background-color: #ffffff;
+  padding: 1.8rem;
+  margin-bottom: 1.8rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s;
+}
 
-    section p {
-      font-size: 1.05rem;
-      margin-bottom: 1rem;
-    }
+.card:hover {
+  transform: translateY(-5px);
+}
 
-    ul {
-      padding-left: 1.2rem;
-    }
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #003366;
+  text-align: center;
+}
 
-    li {
-      margin-bottom: 0.8rem;
-      font-size: 1.05rem;
-      position: relative;
-      padding-left: 1.2rem;
-    }
+section h3 {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  color: #004080;
+}
 
-    li::before {
-      content: "✔";
-      position: absolute;
-      left: 0;
-      color: #004080;
-    }
+section p {
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
 
-    .cta-button {
-      display: inline-block;
-      padding: 0.8rem 1.5rem;
-      margin-top: 1rem;
-      background-color: #004080;
-      color: #fff;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
+ul {
+  padding-left: 1.2rem;
+}
 
-    .cta-button:hover {
-      background-color: #00264d;
-    }
+li {
+  margin-bottom: 0.8rem;
+  font-size: 1.05rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
 
-    /* ---------------- FOOTER ---------------- */
-    footer {
-      background-color: #d9ecff;
-      text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.95rem;
-      color: #003366;
-    }
+li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #004080;
+}
 
-    footer a {
-      color: #004080;
-      text-decoration: none;
-      margin: 0 0.5rem;
-    }
+.cta-button {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  margin-top: 1rem;
+  background-color: #004080;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
 
-    footer a:hover {
-      text-decoration: underline;
-    }
+.cta-button:hover {
+  background-color: #00264d;
+}
 
-    /* ---------------- RESPONSIVE ---------------- */
-    @media screen and (max-width: 768px) {
-      .header-content {
-        flex-direction: column;
-        text-align: center;
-      }
+/* ---------------- FOOTER ---------------- */
+footer {
+  background-color: #d9ecff;
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.95rem;
+  color: #003366;
+}
 
-      .header-content img {
-        height: 120px;
-      }
+footer a {
+  color: #004080;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
 
-      .header-text h1 {
-        font-size: 26px;
-      }
+footer a:hover {
+  text-decoration: underline;
+}
 
-      .header-text p {
-        font-size: 14px;
-      }
+/* ---------------- RESPONSIVE ---------------- */
+@media screen and (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
 
-      nav {
-        gap: 15px;
-      }
+  .header-content img {
+    height: 120px;
+  }
 
-      nav a {
-        font-size: 14px;
-      }
+  .header-text h1 {
+    font-size: 26px;
+  }
 
-      section h2 {
-        font-size: 1.6rem;
-      }
+  .header-text p {
+    font-size: 14px;
+  }
 
-      section h3 {
-        font-size: 1.3rem;
-      }
+  nav {
+    flex-direction: column;
+    display: none;
+  }
 
-      section p, li {
-        font-size: 1rem;
-      }
+  .hamburger {
+    display: flex;
+  }
 
-      .cta-button {
-        padding: 0.7rem 1.2rem;
-      }
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
+  }
 
-      footer {
-        font-size: 0.85rem;
-        padding: 1.5rem 1rem;
-      }
-    }
+  nav a {
+    font-size: 14px;
+    display: block;
+    padding: 8px 0;
+  }
+
+  section h2 {
+    font-size: 1.6rem;
+  }
+
+  section h3 {
+    font-size: 1.3rem;
+  }
+
+  section p, li {
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    padding: 0.7rem 1.2rem;
+  }
+
+  footer {
+    font-size: 0.85rem;
+    padding: 1.5rem 1rem;
+  }
+}
+
   </style>
 </head>
-<body>
-
-  <!-- HEADER -->
-  <header>
+<body>  <!-- HEADER -->  <header>
     <div class="header-content">
       <img src="logo.png" alt="Opésh Overseas Logo" />
       <div class="header-text">
@@ -241,77 +279,72 @@
         <p>~From India to the World</p>
       </div>
     </div>
-  </header>
-
-  <!-- NAVBAR -->
+  </header>  <!-- NAVBAR -->  <div class="hamburger" onclick="document.querySelector('nav').classList.toggle('active')">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
   <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About Us</a>
-    <a href="products.html">Products & Science</a>
-    <a href="certifications.html">Certification</a>
-    <a href="export.html">Export</a>
-    <a href="partners.html">Partners</a>
-    <a href="careers.html">Careers</a>
-    <a href="faq.html">FAQ</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-
-  <!-- CONTENT -->
-  <section>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="products.html">Products & Science</a>
+      <a href="certifications.html">Certification</a>
+      <a href="export.html">Export</a>
+      <a href="partners.html">Partners</a>
+      <a href="careers.html">Careers</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>  <!-- CONTENT -->  <section>
     <h2>Export Strategy & Global Vision</h2>
     <p>Opésh Overseas is a professionally managed export house specializing in nutraceuticals, herbal products, and wellness formulations. Our mission is to deliver scientifically validated, regulatory-compliant products from India to global markets while upholding the highest international quality and safety standards.</p>
-    <p>We operate on a B2B partnership model, supplying private label, white label, and bulk shipments under mutually agreed Incoterms (FOB, CIF) tailored to the buyer’s operational requirements.</p>
+    <p>We operate on a B2B partnership model, supplying private label, white label, and bulk shipments under mutually agreed Incoterms (FOB, CIF) tailored to the buyer’s operational requirements.</p><div class="card">
+  <h3>Export Process & Compliance</h3>
+  <ul>
+    <li><strong>Regulatory Adherence:</strong> FDA (U.S.), EFSA (EU), TGA (Australia), Health Canada, FSSAI (India)</li>
+    <li><strong>Documentation:</strong> Commercial Invoice, Packing List, Bill of Lading/Airway Bill, Certificate of Origin, Phytosanitary Certificate, GMP, ISO, HACCP, Third-Party Lab Reports</li>
+    <li><strong>Labeling Standards:</strong> Nutritional facts, allergen warnings, barcode integration as per destination market</li>
+    <li><strong>Product Traceability:</strong> Batch coding & QR-enabled trace systems for supply chain transparency</li>
+  </ul>
+</div>
 
-    <div class="card">
-      <h3>Export Process & Compliance</h3>
-      <ul>
-        <li><strong>Regulatory Adherence:</strong> FDA (U.S.), EFSA (EU), TGA (Australia), Health Canada, FSSAI (India)</li>
-        <li><strong>Documentation:</strong> Commercial Invoice, Packing List, Bill of Lading/Airway Bill, Certificate of Origin, Phytosanitary Certificate, GMP, ISO, HACCP, Third-Party Lab Reports</li>
-        <li><strong>Labeling Standards:</strong> Nutritional facts, allergen warnings, barcode integration as per destination market</li>
-        <li><strong>Product Traceability:</strong> Batch coding & QR-enabled trace systems for supply chain transparency</li>
-      </ul>
-    </div>
+<div class="card">
+  <h3>Key Markets & Expansion Plan</h3>
+  <p>We currently export to United States, Canada, Germany, UAE, and Australia through licensed importers and distributors. Our 2025 roadmap includes South East Asia, GCC expansion, and select African markets via strategic distribution partnerships.</p>
+</div>
 
-    <div class="card">
-      <h3>Key Markets & Expansion Plan</h3>
-      <p>We currently export to United States, Canada, Germany, UAE, and Australia through licensed importers and distributors. Our 2025 roadmap includes South East Asia, GCC expansion, and select African markets via strategic distribution partnerships.</p>
-    </div>
+<div class="card">
+  <h3>Competitive Advantages</h3>
+  <ul>
+    <li>Custom packaging and branding solutions</li>
+    <li>Dedicated compliance team for hassle-free clearance</li>
+    <li>Global logistics network with air & sea freight options</li>
+    <li>Certificates of Analysis and clinical study data available</li>
+    <li>Scalable production for small to high-volume orders</li>
+  </ul>
+  <a href="contact.html" class="cta-button">Request your Import Quotation</a>
+</div>
 
-    <div class="card">
-      <h3>Competitive Advantages</h3>
-      <ul>
-        <li>Custom packaging and branding solutions</li>
-        <li>Dedicated compliance team for hassle-free clearance</li>
-        <li>Global logistics network with air & sea freight options</li>
-        <li>Certificates of Analysis and clinical study data available</li>
-        <li>Scalable production for small to high-volume orders</li>
-      </ul>
-      <a href="contact.html" class="cta-button">Request your Import Quotation</a>
-    </div>
+<div class="card">
+  <h3>Logistics & Delivery Terms</h3>
+  <p>We offer flexible delivery arrangements under these Incoterms:</p>
+  <ul>
+    <li><strong>FOB:</strong> Buyer arranges shipping from Indian port</li>
+    <li><strong>CIF:</strong> We handle freight & insurance to buyer’s port</li>
+  </ul>
+</div>
 
-    <div class="card">
-      <h3>Logistics & Delivery Terms</h3>
-      <p>We offer flexible delivery arrangements under these Incoterms:</p>
-      <ul>
-        <li><strong>FOB:</strong> Buyer arranges shipping from Indian port</li>
-        <li><strong>CIF:</strong> We handle freight & insurance to buyer’s port</li>
-      </ul>
-    </div>
+<div class="card">
+  <h3>Future Outlook</h3>
+  <p>We aim to grow recurring B2B partnerships and explore direct-to-consumer exports. Our strategy includes expanding product lines, integrating blockchain-based traceability, and implementing eco-friendly packaging solutions.</p>
+</div>
 
-    <div class="card">
-      <h3>Future Outlook</h3>
-      <p>We aim to grow recurring B2B partnerships and explore direct-to-consumer exports. Our strategy includes expanding product lines, integrating blockchain-based traceability, and implementing eco-friendly packaging solutions.</p>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
+  </section>  <!-- FOOTER -->  <footer>
     © 2025 Opésh Overseas. All rights reserved. 
     <br/>
     <a href="mailto:exports@opesh.com">exports@opesh.com</a> | 
     <a href="contact.html">Contact Us</a> | 
     <a href="https://linkedin.com/company/opesh-overseas" target="_blank">LinkedIn</a>
-  </footer>
-
-</body>
+  </footer></body>
 </html>
