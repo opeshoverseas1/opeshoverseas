@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -10,57 +10,57 @@
   <style>
     body {
       font-family: 'Playfair Display', serif;
-      background-color: #f0f8ff;
+      background-color: #f0f8ff; 
       margin: 0;
       padding: 0;
       color: #1a1a1a;
     }
 
-    /* ===== Header ===== */
+    /* ===== Header (index identical) ===== */
     header {
       background-color: #d0eaff;
+      padding: 20px;
       position: relative;
-      padding: 20px 20px 10px 20px;
+      text-align: left;
     }
 
-    .header-container {
+    header > div {
       display: flex;
       align-items: center;
       gap: 18px;
       max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
+      margin: 0 auto 0 20px;
     }
 
-    .logo {
+    header img {
       height: 180px;
       width: auto;
       filter: drop-shadow(0 0 6px rgba(0,128,255,0.3));
     }
 
-    .title-container h1 {
+    header h1 {
       margin: 0;
       font-size: 34px;
       color: #000;
     }
 
-    .title-container p {
+    header p {
       margin: 0;
       font-size: 17px;
       font-style: italic;
       color: #000;
     }
 
-    /* ===== Nav ===== */
-    .nav-links {
+    /* ===== Desktop Nav ===== */
+    .desktop-nav {
       display: flex;
+      justify-content: center;
       gap: 30px;
-      list-style: none;
-      margin: 0;
-      padding: 0;
+      background-color: #a7d3f5;
+      padding: 10px 0;
     }
 
-    .nav-links li a {
+    .desktop-nav a {
       text-decoration: none;
       font-weight: bold;
       color: #000;
@@ -69,7 +69,7 @@
       padding: 5px 8px;
     }
 
-    .nav-links li a::after {
+    .desktop-nav a::after {
       content: '';
       position: absolute;
       left: 0;
@@ -82,18 +82,20 @@
       transition: transform 0.4s ease;
     }
 
-    .nav-links li a:hover {
-      color: #007acc;
-    }
+    .desktop-nav a:hover { color: #007acc; }
+    .desktop-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 
-    .nav-links li a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-
-    /* ===== Hamburger Toggle ===== */
-    .menu-toggle {
+    /* ===== Mobile Nav / Hamburger ===== */
+    .mobile-nav {
       display: none;
+      position: relative;
+      width: 100%;
+      background-color: #a7d3f5;
+      padding: 10px 20px;
+    }
+
+    .menu-toggle {
+      display: flex;
       flex-direction: column;
       justify-content: space-between;
       width: 28px;
@@ -101,17 +103,18 @@
       background: none;
       border: none;
       cursor: pointer;
-      position: absolute;
-      top: 20px;
-      left: 20px;
+      position: fixed;
+      top: 15px;
+      left: 15px;
       z-index: 1001;
     }
 
     .menu-toggle span {
       display: block;
-      width: 28px;
+      width: 100%;
       height: 3px;
       background: #000;
+      margin: 4px 0;
       transition: 0.3s ease;
     }
 
@@ -120,27 +123,41 @@
     }
     .menu-toggle.open span:nth-child(2) { opacity: 0; }
     .menu-toggle.open span:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
+      transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    /* ===== Page content ===== */
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      width: 100%;
+      background-color: #a7d3f5;
+      padding-left: 0;
+    }
+
+    .nav-links a {
+      padding: 10px 20px; /* identical spacing to index */
+      font-weight: bold;
+      color: #000;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover { color: #007acc; }
+
+    .nav-links.show { max-height: 500px; }
+
+    /* ===== Page Content ===== */
     section {
       padding: 2rem;
       max-width: 900px;
       margin: auto;
     }
 
-    section h2 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-    }
-
-    section p, li {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      margin-bottom: 1.2rem;
-    }
-
+    section h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    section p, li { font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.2rem; }
     ul { padding-left: 1.2rem; }
 
     footer {
@@ -151,104 +168,103 @@
       margin-top: 3rem;
     }
 
-    /* ===== Mobile Styles ===== */
+    /* ===== Responsive ===== */
     @media (max-width: 768px) {
-      /* stack header */
-      .header-container {
-        flex-direction: column;
-        text-align: center;
-      }
+      .desktop-nav { display: none; }
+      .mobile-nav { display: block; }
 
-      .logo { height: 120px; }
+      header > div { flex-direction: column; text-align: center; gap: 8px; }
+      header img { height: 120px; }
 
-      /* hide desktop nav, show hamburger */
-      .nav-links {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        background: #a7d3f5;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.4s ease-in-out;
-      }
+      section { padding: 1.5rem 1rem; }
+      section h2 { font-size: 1.4rem; }
+      section p, li { font-size: 1rem; }
 
-      .nav-links.active { max-height: 500px; }
-
-      .menu-toggle { display: flex; }
-
-      .nav-links li { margin: 12px 0; }
-      .nav-links li a { font-size: 15px; }
+      footer { font-size: 0.85rem; padding: 1rem; }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="header-container">
-      <img src="logo.png" alt="Opésh Overseas Logo" class="logo">
-      <div class="title-container">
+    <span style="position:absolute;left:-9999px;">Opesh Overseas</span>
+    <div>
+      <img src="logo.png" alt="Opésh Overseas Logo">
+      <div>
         <h1>Opésh Overseas</h1>
-        <p class="tagline">~From India to the World~</p>
+        <p>~From India to the World~</p>
       </div>
-
-      <!-- Hamburger Toggle -->
-      <button class="menu-toggle" id="mobile-menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </div>
+  </header>
 
-    <!-- Navigation -->
-    <nav>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="products.html">Products & Science</a></li>
-        <li><a href="certifications.html">Certifications</a></li>
-        <li><a href="export.html">Export</a></li>
-        <li><a href="partners.html">Partners</a></li>
-        <li><a href="careers.html">Careers</a></li>
-        <li><a href="faq.html">FAQs</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-  </nav>  
-    <section>  
-    <h2>Our Story</h2>  
-    <p>Opésh Overseas began as a vision to bring the heritage of Indian wellness to the world. Founded with the belief that Ayurveda holds timeless secrets to modern health, our journey started with a single idea — to merge traditional knowledge with scientific validation. We saw a growing demand globally for natural, sustainable, and clinically safe products. Inspired by this need, we curated a team of innovators, researchers, and wellness experts to build a portfolio of phytochemistry-based formulations that are both effective and ethical. From our very first prototype to our current expansion across borders, the path has been marked by learning, testing, and above all, a deep passion to serve humanity. Today, Opésh Overseas stands at the crossroads of ancient science and modern health — poised to impact lives across continents.</p>  <h2>Our Mission</h2>  
-<p>Our mission is to deliver natural, plant-based nutraceuticals that are backed by science, free from harmful excipients, and aligned with global health standards. We strive to be the bridge between traditional Ayurvedic wisdom and cutting-edge nutritional research. Through transparent sourcing, clinical validation, and sustainable practices, we want to create a healthier world, one supplement at a time. Whether it's managing chronic illnesses or supporting overall vitality, our mission is to provide solutions that are safe, effective, and universally trusted. We aim to not just export products — but to export wellness, integrity, and innovation to every corner of the globe.</p>  
+  <!-- Desktop Nav -->
+  <div class="desktop-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="products.html">Products & Science</a>
+    <a href="certifications.html">Certifications</a>
+    <a href="export.html">Export</a>
+    <a href="partners.html">Partners</a>
+    <a href="careers.html">Careers</a>
+    <a href="faq.html">FAQs</a>
+    <a href="contact.html">Contact</a>
+  </div>
 
-<h2>Our Values</h2>  
-<p>At the heart of Opésh Overseas lies a core set of values that guide every decision we make. We value integrity — doing what is right even when no one is watching. We value science — ensuring every product is thoroughly validated. We value nature — using plant-based ingredients that are gentle on the body and the planet. We believe in honesty, transparency, and long-term relationships. Our team upholds accountability in every shipment and stands committed to zero compromise in quality. These values are not just words — they are the foundation of our global promise.</p>  
+  <!-- Mobile Nav -->
+  <div class="mobile-nav">
+    <button class="menu-toggle" onclick="toggleMenu(this)">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="products.html">Products & Science</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="export.html">Export</a>
+      <a href="partners.html">Partners</a>
+      <a href="careers.html">Careers</a>
+      <a href="faq.html">FAQs</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
 
-<h2>Leadership</h2>  
-<p>Opésh Overseas is led by Pavitra Sharma, a young visionary and the strategic brain behind the brand. Although the business is legally governed under a woman-led sole proprietorship, the operational and strategic helm is driven by Pavitra’s entrepreneurial energy and international outlook. With a keen eye for innovation, an unwavering commitment to quality, and deep emotional intelligence, he has built Opésh Overseas as a reflection of modern global entrepreneurship rooted in ancient wisdom. Backed by industry mentors and future-ready collaborators, our leadership is determined to create a legacy of trust and transformation in global health exports.</p>  
+  <section>
+    <h2>Our Story</h2>
+    <p>Opésh Overseas began as a vision to bring the heritage of Indian wellness to the world. Founded with the belief that Ayurveda holds timeless secrets to modern health, our journey started with a single idea — to merge traditional knowledge with scientific validation. We saw a growing demand globally for natural, sustainable, and clinically safe products. Inspired by this need, we curated a team of innovators, researchers, and wellness experts to build a portfolio of phytochemistry-based formulations that are both effective and ethical. From our very first prototype to our current expansion across borders, the path has been marked by learning, testing, and above all, a deep passion to serve humanity. Today, Opésh Overseas stands at the crossroads of ancient science and modern health — poised to impact lives across continents.</p>
 
-<h2>Why Choose Us</h2>  
-<ul>  
-  <li><strong>Scientifically Validated Formulations:</strong> All products are clinically backed with documented phytochemistry and safety trials.</li>  
-  <li><strong>Excipient-Free, Plant-Based:</strong> Our entire range is free from harmful binders, additives, and fillers.</li>  
-  <li><strong>Custom Labeling & Compliance:</strong> We offer white labeling and FDA-aligned documentation for global buyers.</li>  
-  <li><strong>Transparency & Traceability:</strong> From farm to formula, we maintain full traceability and quality control.</li>  
-  <li><strong>Dedicated Export Expertise:</strong> Focused on meeting international regulatory and logistical standards.</li>  
-  <li><strong>Ethical Business Philosophy:</strong> We believe in conscious capitalism — where purpose meets profit.</li>  
-  <li><strong>Founder-Led Innovation:</strong> Young, bold leadership with future-ready thinking and customer-first execution.</li>  
-</ul>
+    <h2>Our Mission</h2>
+    <p>Our mission is to deliver natural, plant-based nutraceuticals that are backed by science, free from harmful excipients, and aligned with global health standards. We strive to be the bridge between traditional Ayurvedic wisdom and cutting-edge nutritional research. Through transparent sourcing, clinical validation, and sustainable practices, we want to create a healthier world, one supplement at a time. Whether it's managing chronic illnesses or supporting overall vitality, our mission is to provide solutions that are safe, effective, and universally trusted. We aim to not just export products — but to export wellness, integrity, and innovation to every corner of the globe.</p>
 
-  </section>    <footer>  
-    © 2025 Opésh Overseas. All rights reserved.  
-    A Sharma and Sons Ventures Co.  
-  </footer>  
-    <script>
-    const menuToggle = document.getElementById('mobile-menu');
-    const navLinks = document.getElementById('navLinks');
+    <h2>Our Values</h2>
+    <p>At the heart of Opésh Overseas lies a core set of values that guide every decision we make. We value integrity — doing what is right even when no one is watching. We value science — ensuring every product is thoroughly validated. We value nature — using plant-based ingredients that are gentle on the body and the planet. We believe in honesty, transparency, and long-term relationships. Our team upholds accountability in every shipment and stands committed to zero compromise in quality. These values are not just words — they are the foundation of our global promise.</p>
 
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      menuToggle.classList.toggle('open');
-    });
+    <h2>Leadership</h2>
+    <p>Opésh Overseas is led by Pavitra Sharma, a young visionary and the strategic brain behind the brand. Although the business is legally governed under a woman-led sole proprietorship, the operational and strategic helm is driven by Pavitra’s entrepreneurial energy and international outlook. With a keen eye for innovation, an unwavering commitment to quality, and deep emotional intelligence, he has built Opésh Overseas as a reflection of modern global entrepreneurship rooted in ancient wisdom. Backed by industry mentors and future-ready collaborators, our leadership is determined to create a legacy of trust and transformation in global health exports.</p>
+
+    <h2>Why Choose Us</h2>
+    <ul>
+      <li><strong>Scientifically Validated Formulations:</strong> All products are clinically backed with documented phytochemistry and safety trials.</li>
+      <li><strong>Excipient-Free, Plant-Based:</strong> Our entire range is free from harmful binders, additives, and fillers.</li>
+      <li><strong>Custom Labeling & Compliance:</strong> We offer white labeling and FDA-aligned documentation for global buyers.</li>
+      <li><strong>Transparency & Traceability:</strong> From farm to formula, we maintain full traceability and quality control.</li>
+      <li><strong>Dedicated Export Expertise:</strong> Focused on meeting international regulatory and logistical standards.</li>
+      <li><strong>Ethical Business Philosophy:</strong> We believe in conscious capitalism — where purpose meets profit.</li>
+      <li><strong>Founder-Led Innovation:</strong> Young, bold leadership with future-ready thinking and customer-first execution.</li>
+    </ul>
+  </section>
+
+  <footer>
+    © 2025 Opésh Overseas. All rights reserved. <br>
+    A Sharma and Sons Ventures Co.
+  </footer>
+
+  <script>
+    function toggleMenu(btn) {
+      btn.classList.toggle('open');
+      const links = document.getElementById('navLinks');
+      if (links) links.classList.toggle('show');
+    }
   </script>
 </body>
-</html>
+    </html>
