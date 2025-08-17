@@ -17,50 +17,79 @@
       line-height: 1.6;
     }
 
+    /* ---------------- HEADER ---------------- */
     header {
-      background: linear-gradient(135deg, #cce0f5, #b3d1f0);
-      padding: 2rem;
-      text-align: center;
+      background-color: #d0eaff;
+      padding: 10px 20px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     }
 
-    header img {
-      height: 80px;
-      margin-bottom: 0.5rem;
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
     }
 
-    header h1 {
-      font-size: 2.8rem;
+    .header-content img {
+      height: 180px;
+      filter: drop-shadow(2px 2px 5px rgba(0,128,255,0.3));
+    }
+
+    .header-text h1 {
+      font-size: 34px;
+      color: #000000;
       margin: 0;
     }
 
-    header p {
-      font-size: 1.2rem;
+    .header-text p {
+      font-size: 17px;
       font-style: italic;
-      margin-top: 0.5rem;
-      color: #0d1a33;
+      color: #000000;
+      margin: 0;
     }
 
+    /* ---------------- NAVBAR ---------------- */
     nav {
-      background-color: #b3d1f0;
+      background-color: #a7d3f5;
       display: flex;
       justify-content: center;
-      gap: 1.8rem;
-      padding: 1rem;
+      gap: 30px;
+      padding: 10px 0;
       flex-wrap: wrap;
     }
 
     nav a {
       text-decoration: none;
       font-weight: bold;
-      color: #1a1a1a;
+      font-size: 16px;
+      color: #000;
+      position: relative;
+      padding-bottom: 4px;
       transition: color 0.3s;
     }
 
-    nav a:hover {
-      color: #004080;
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #007acc;
+      left: 0;
+      bottom: 0;
+      transition: width 0.3s;
     }
 
+    nav a:hover {
+      color: #007acc;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* ---------------- SECTION ---------------- */
     section {
       padding: 2rem;
       max-width: 1000px;
@@ -132,6 +161,7 @@
       background-color: #00264d;
     }
 
+    /* ---------------- FOOTER ---------------- */
     footer {
       background-color: #d9ecff;
       text-align: center;
@@ -150,17 +180,31 @@
       text-decoration: underline;
     }
 
+    /* ---------------- RESPONSIVE ---------------- */
     @media screen and (max-width: 768px) {
-      header h1 {
-        font-size: 2rem;
+      .header-content {
+        flex-direction: column;
+        text-align: center;
       }
 
-      header p {
-        font-size: 1rem;
+      .header-content img {
+        height: 120px;
+      }
+
+      .header-text h1 {
+        font-size: 26px;
+      }
+
+      .header-text p {
+        font-size: 14px;
+      }
+
+      nav {
+        gap: 15px;
       }
 
       nav a {
-        font-size: 1rem;
+        font-size: 14px;
       }
 
       section h2 {
@@ -188,14 +232,18 @@
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
     <div class="header-content">
       <img src="logo.png" alt="Opésh Overseas Logo" />
-      <h1>Opésh Overseas</h1>
-      <p>~From India to the World</p>
+      <div class="header-text">
+        <h1>Opésh Overseas</h1>
+        <p>~From India to the World</p>
+      </div>
     </div>
   </header>
 
+  <!-- NAVBAR -->
   <nav>
     <a href="index.html">Home</a>
     <a href="about.html">About Us</a>
@@ -208,6 +256,7 @@
     <a href="contact.html">Contact</a>
   </nav>
 
+  <!-- CONTENT -->
   <section>
     <h2>Export Strategy & Global Vision</h2>
     <p>Opésh Overseas is a professionally managed export house specializing in nutraceuticals, herbal products, and wellness formulations. Our mission is to deliver scientifically validated, regulatory-compliant products from India to global markets while upholding the highest international quality and safety standards.</p>
@@ -255,6 +304,7 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
     © 2025 Opésh Overseas. All rights reserved. 
     <br/>
