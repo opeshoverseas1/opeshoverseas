@@ -1,307 +1,221 @@
-<!DOCTYPE html>  <html lang="en">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-  <title>About Us - Opésh Overseas</title>  
-  <link rel="preconnect" href="https://fonts.googleapis.com" />  
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />  
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />  
-  <style>  
-    body {  
-      font-family: 'Playfair Display', serif;  
-      background-color: #f0f8ff; /* match index */  
-      margin: 0;  
-      padding: 0;  
-      color: #1a1a1a;  
-    }  /* ===== Header (exact match to index) ===== */  
-header {  
-  text-align: center;  
-  padding: 20px;  
-  background-color: #d0eaff;  
-  position: relative;  
-}  
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Opésh Overseas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Playfair Display', serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+      color: #1a1a1a;
+    }
 
-/* ===== Nav (exact match to index) ===== */  
-nav {  
-  background-color: #a7d3f5;  
-  padding: 10px 0;           /* same thickness as index */  
-  display: flex;  
-  flex-wrap: wrap;  
-  justify-content: center;  
-  gap: 30px;                 /* same gap as index */  
-}  
+    /* ===== Header ===== */
+    header {
+      background-color: #d0eaff;
+      position: relative;
+      padding: 20px 20px 10px 20px;
+    }
 
-nav a {  
-  position: relative;  
-  text-decoration: none;  
-  font-weight: bold;  
-  color: #000;  
-  font-size: 16px;  
-  padding: 5px 8px;  
-  transition: color 0.3s ease;  
-}  
+    .header-container {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
 
-nav a::after {  
-  content: '';  
-  position: absolute;  
-  left: 0;  
-  bottom: -4px;  
-  width: 100%;  
-  height: 2px;  
-  background-color: #007acc;  
-  transform: scaleX(0);  
-  transform-origin: right;  
-  transition: transform 0.4s ease;  
-}  
+    .logo {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 0 6px rgba(0,128,255,0.3));
+    }
 
-nav a:hover { color: #007acc; }  
-nav a:hover::after { transform: scaleX(1); transform-origin: left; }  
+    .title-container h1 {
+      margin: 0;
+      font-size: 34px;
+      color: #000;
+    }
 
-/* ===== Desktop-only nav wrapper (like index) ===== */  
-.desktop-nav {  
-  display: flex;  
-  justify-content: center;  
-  gap: 30px;  
-}  
+    .title-container p {
+      margin: 0;
+      font-size: 17px;
+      font-style: italic;
+      color: #000;
+    }
 
-.desktop-nav a {  
-  text-decoration: none;  
-  font-weight: bold;  
-  color: #000;  
-  font-size: 16px;  
-  padding: 5px 8px;  
-  position: relative;  
-  transition: color 0.3s ease;  
-}  
+    /* ===== Nav ===== */
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
-.desktop-nav a::after {  
-  content: '';  
-  position: absolute;  
-  left: 0;  
-  bottom: -4px;  
-  width: 100%;  
-  height: 2px;  
-  background-color: #007acc;  
-  transform: scaleX(0);  
-  transform-origin: right;  
-  transition: transform 0.4s ease;  
-}  
+    .nav-links li a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #000;
+      font-size: 16px;
+      position: relative;
+      padding: 5px 8px;
+    }
 
-.desktop-nav a:hover { color: #007acc; }  
-.desktop-nav a:hover::after { transform: scaleX(1); transform-origin: left; }  
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background-color: #007acc;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s ease;
+    }
 
-/* ===== Mobile hamburger/dropdown (exactly like index) ===== */  
-.mobile-nav {  
-  display: flex;  
-  justify-content: flex-start;  
-  align-items: center;  
-  padding: 0 20px;  
-  position: relative;  
-  width: 100%;  
-}  
+    .nav-links li a:hover {
+      color: #007acc;
+    }
 
-.menu-toggle {  
-  position: fixed !important;  
-  top: 15px !important;  
-  left: 15px !important;  
-  margin: 0 !important;  
-  padding: 0 !important;  
-  font-size: 28px !important;  
-  background: none !important;  
-  border: none !important;  
-  z-index: 9999 !important;  
-  cursor: pointer;  
-}  
+    .nav-links li a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
 
-.menu-toggle span {  
-  display: block;  
-  width: 26px;  
-  height: 3px;  
-  background: #000;  
-  margin: 5px 0;  
-  transition: 0.3s ease;  
-}  
+    /* ===== Hamburger Toggle ===== */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 22px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+    }
 
-.menu-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }  
-.menu-toggle.open span:nth-child(2) { opacity: 0; }  
-.menu-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }  
+    .menu-toggle span {
+      display: block;
+      width: 28px;
+      height: 3px;
+      background: #000;
+      transition: 0.3s ease;
+    }
 
-.nav-links {  
-  display: flex;  
-  flex-direction: column;  
-  text-align: center;  
-  max-height: 0;  
-  overflow: hidden;  
-  transition: max-height 0.4s ease;  
-  background: #a7d3f5;  
-  width: 100%;  
-}  
+    .menu-toggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
 
-.nav-links.show { max-height: 500px; }  
+    /* ===== Page content ===== */
+    section {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
 
-.nav-links a {  
-  padding: 12px 0;  
-  font-weight: bold;  
-  color: #000;  
-  text-decoration: none;  
-  transition: color 0.3s;  
-}  
+    section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
 
-.nav-links a:hover { color: #007acc; }  
+    section p, li {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
 
-/* Hide desktop nav on mobile; show desktop on larger screens */  
-@media (min-width: 769px) {  
-  .mobile-nav, .menu-toggle { display: none; }  
-  .nav-links {  
-    display: flex !important;  
-    max-height: none !important;  
-    flex-direction: row;  
-    gap: 30px;  
-    background: none;  
-  }  
-}  
+    ul { padding-left: 1.2rem; }
 
-/* ===== Page content ===== */  
-section {  
-  padding: 2rem;  
-  max-width: 900px;  
-  margin: auto;  
-}  
+    footer {
+      background-color: #d9ecff;
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
 
-section h2 {  
-  font-size: 1.8rem;  
-  margin-bottom: 0.5rem;  
-}  
+    /* ===== Mobile Styles ===== */
+    @media (max-width: 768px) {
+      /* stack header */
+      .header-container {
+        flex-direction: column;
+        text-align: center;
+      }
 
-section p, li {  
-  font-size: 1.05rem;  
-  line-height: 1.6;  
-  margin-bottom: 1.2rem;  
-}  
+      .logo { height: 120px; }
 
-ul { padding-left: 1.2rem; }  
+      /* hide desktop nav, show hamburger */
+      .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        background: #a7d3f5;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out;
+      }
 
-footer {  
-  background-color: #d9ecff;  
-  text-align: center;  
-  padding: 1.2rem;  
-  font-size: 0.9rem;  
-  margin-top: 3rem;  
-}  
+      .nav-links.active { max-height: 500px; }
 
-/* ===== Mobile tweaks (match index proportions) ===== */  
-@media screen and (max-width: 768px) {  
-  /* header inner stack + logo size */  
-  header > div {  
-    flex-direction: column;  
-    text-align: center;  
-    gap: 8px !important;  
-  }  
-  header img { height: 120px !important; }  
+      .menu-toggle { display: flex; }
 
-  /* nav spacing like index */  
-  nav {  
-    gap: 12px 16px;  
-    flex-direction: column;  
-    align-items: center;  
-  }  
-  nav a { font-size: 15px; padding: 6px 0; }  
+      .nav-links li { margin: 12px 0; }
+      .nav-links li a { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <img src="logo.png" alt="Opésh Overseas Logo" class="logo">
+      <div class="title-container">
+        <h1>Opésh Overseas</h1>
+        <p class="tagline">~From India to the World~</p>
+      </div>
 
-  /* headings/body size on small screens */  
-  section { padding: 1.5rem 1rem; }  
-  section h2 { font-size: 1.4rem; }  
-  section p, li { font-size: 1rem; }  
+      <!-- Hamburger Toggle -->
+      <button class="menu-toggle" id="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
 
-  footer { font-size: 0.85rem; padding: 1rem; }  
-}
-/* Desktop default */
-.nav-links {
-  display: flex;
-  gap: 30px;
-}
-
-/* Hide hamburger button on desktop */
-.menu-toggle {
-  display: none;
-}
-
-/* Mobile view */
-@media (max-width: 768px) {
-  .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #a7d3f5;
-    width: 100%;
-    max-height: 0;
-    overflow: hidden;
-    flex-direction: column;
-    transition: max-height 0.3s ease-out;
-    z-index: 999;
-  }
-
-  .nav-links.active {
-    max-height: 300px; /* expands dropdown */
-  }
-
-  /* Show hamburger button */
-  .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 25px;
-    height: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
-
-  </style>  
-</head>  
-<body>  
-  <header>  
-    <span style="position:absolute;left:-9999px;">Opesh Overseas</span>  
-    <!-- exact header inner layout from index -->  
-    <div style="display: flex; align-items: center; gap: 18px; max-width: 1200px; margin: 0 auto 0 20px;">  
-      <img src="logo.png" alt="Opésh Overseas Logo" style="height: 180px; width: auto; filter: drop-shadow(0 0 6px rgba(0,128,255,0.3));">  
-      <div style="margin-left: -10px;">  
-        <h1 style="margin: 0; font-size: 34px; color: #000000;">Opésh Overseas</h1>  
-        <p style="margin: 0; font-size: 17px; font-style: italic; color: #000000;">~From India to the World~</p>  
-      </div>  
-    </div>  
-  </header>    <nav>  
-    <!-- Desktop Nav (same links, order, and hover) -->  
-    <div class="desktop-nav">  
-      <a href="index.html">Home</a>  
-      <a href="about.html">About Us</a>  
-      <a href="products.html">Products & Science</a>  
-      <a href="certifications.html">Certifications</a>  
-      <a href="export.html">Export</a>  
-      <a href="partners.html">Partners</a>  
-      <a href="careers.html">Careers</a>  
-      <a href="faq.html">FAQs</a>  
-      <a href="contact.html">Contact</a>  
-    </div>  <!-- Mobile Nav (hamburger + dropdown exactly like index) -->  
-<div class="mobile-nav">  
-  <button class="menu-toggle" onclick="toggleMenu(this)">  
-    <span></span>  
-    <span></span>  
-    <span></span>  
-  </button>  
-  <div class="nav-links" id="navLinks">  
-    <a href="index.html">Home</a>  
-    <a href="about.html">About Us</a>  
-    <a href="products.html">Products & Science</a>  
-    <a href="certifications.html">Certifications</a>  
-    <a href="export.html">Export</a>  
-    <a href="partners.html">Partners</a>  
-    <a href="careers.html">Careers</a>  
-    <a href="faq.html">FAQs</a>  
-    <a href="contact.html">Contact</a>  
-  </div>  
-</div>
-
-  </nav>    <section>  
+    <!-- Navigation -->
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="products.html">Products & Science</a></li>
+        <li><a href="certifications.html">Certifications</a></li>
+        <li><a href="export.html">Export</a></li>
+        <li><a href="partners.html">Partners</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="faq.html">FAQs</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+  </nav>  
+    <section>  
     <h2>Our Story</h2>  
     <p>Opésh Overseas began as a vision to bring the heritage of Indian wellness to the world. Founded with the belief that Ayurveda holds timeless secrets to modern health, our journey started with a single idea — to merge traditional knowledge with scientific validation. We saw a growing demand globally for natural, sustainable, and clinically safe products. Inspired by this need, we curated a team of innovators, researchers, and wellness experts to build a portfolio of phytochemistry-based formulations that are both effective and ethical. From our very first prototype to our current expansion across borders, the path has been marked by learning, testing, and above all, a deep passion to serve humanity. Today, Opésh Overseas stands at the crossroads of ancient science and modern health — poised to impact lives across continents.</p>  <h2>Our Mission</h2>  
 <p>Our mission is to deliver natural, plant-based nutraceuticals that are backed by science, free from harmful excipients, and aligned with global health standards. We strive to be the bridge between traditional Ayurvedic wisdom and cutting-edge nutritional research. Through transparent sourcing, clinical validation, and sustainable practices, we want to create a healthier world, one supplement at a time. Whether it's managing chronic illnesses or supporting overall vitality, our mission is to provide solutions that are safe, effective, and universally trusted. We aim to not just export products — but to export wellness, integrity, and innovation to every corner of the globe.</p>  
@@ -326,11 +240,15 @@ footer {
   </section>    <footer>  
     © 2025 Opésh Overseas. All rights reserved.  
     A Sharma and Sons Ventures Co.  
-  </footer>    <script>  
-    function toggleMenu(btn) {  
-      btn.classList.toggle('open');  
-      const links = document.getElementById('navLinks');  
-      if (links) links.classList.toggle('show');  
-    }  
-  </script>  </body>  
+  </footer>  
+    <script>
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      menuToggle.classList.toggle('open');
+    });
+  </script>
+</body>
 </html>
