@@ -85,40 +85,27 @@
     .desktop-nav a:hover { color: #007acc; }
     .desktop-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 
-    /* Hamburger menu for mobile */
-.menu-toggle {
-  display: none; /* default hidden */
-}
-    .mobile-nav {
-  display: none; /* hide mobile nav by default */
-    }
-
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 22px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 9999; /* ensure it's above all elements */
-  }
-
-  .menu-toggle span {
-    display: block;
-    width: 100%;
-    height: 3px;
-    background: #000; /* black bars */
-    margin: 4px 0;
-    transition: 0.3s ease;
-  }
-}
-
+    
+   <!-- Mobile Nav -->
+<div class="mobile-nav">
+  <button class="menu-toggle" onclick="toggleMenu(this)">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="products.html">Products & Science</a>
+    <a href="certifications.html">Certifications</a>
+    <a href="export.html">Export</a>
+    <a href="partners.html">Partners</a>
+    <a href="careers.html">Careers</a>
+    <a href="faq.html">FAQs</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
+    
     .menu-toggle.open span:nth-child(1) {
       transform: rotate(45deg) translate(5px, 5px);
     }
