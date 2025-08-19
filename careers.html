@@ -16,74 +16,127 @@
       color: #1a1a1a;
     }
 
+    /* ===== Header ===== */
     header {
       background-color: #d0eaff;
-      padding: 2rem 1rem;
-      text-align: center;
+      padding: 20px;
+      position: relative;
+      text-align: left;
+    }
+    header > div {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      max-width: 1200px;
+      margin: 0 auto 0 20px;
+    }
+    header img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 0 6px rgba(0,128,255,0.3));
+    }
+    header h1 {
+      margin: 0;
+      font-size: 34px;
+      color: #000;
+    }
+    header p {
+      margin: 0;
+      font-size: 17px;
+      font-style: italic;
+      color: #000;
     }
 
-    .header-content {
+    /* ===== Desktop Nav ===== */
+    .desktop-nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background-color: #a7d3f5;
+      padding: 10px 0;
+    }
+    .desktop-nav a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #000;
+      font-size: 16px;
+      position: relative;
+      padding: 5px 8px;
+    }
+    .desktop-nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background-color: #007acc;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s ease;
+    }
+    .desktop-nav a:hover { color: #007acc; }
+    .desktop-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    /* ===== Mobile Nav ===== */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 22px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9999;
+    }
+    .menu-toggle span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background: #000;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    .menu-toggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    .nav-links {
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    header img {
-      height: 66px;
-      margin-bottom: 0.7rem;
-    }
-
-    header h1 {
-      font-size: 2.75rem;
-      margin: 0;
-    }
-
-    header p {
-      font-size: 1.3rem;
-      margin-top: 0.4rem;
-      font-style: italic;
-    }
-
-    nav {
-      background-color: #a7d3f5;
-      display: flex;
-      justify-content: center;
-      gap: 2.2rem;
-      padding: 0.8rem 1rem;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      text-decoration: none;
-      font-weight: bold;
-      color: #1a1a1a;
-    }
-
-    footer {
-      background-color: #d9ecff;
       text-align: center;
-      padding: 1.5rem;
-      font-size: 0.9rem;
-      margin-top: 3rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      width: 100%;
+      background-color: #a7d3f5;
     }
+    .nav-links a {
+      padding: 10px 20px;
+      font-weight: bold;
+      color: #000;
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: #007acc; }
+    .nav-links.show { max-height: 500px; }
 
-    /* Careers page container */
+    /* ===== Careers Page ===== */
     .careers-page {
       padding: 2rem;
       max-width: 1000px;
       margin: 0 auto;
     }
-
-    .careers-content {
-      max-width: 850px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-
-    .career-title {
-      margin-bottom: 1rem;
-      white-space: nowrap;
-    }
+    .careers-content { max-width: 850px; margin: 0 auto; line-height: 1.7; }
+    .career-title { margin-bottom: 1rem; white-space: nowrap; }
 
     /* Cards Grid */
     .openings-grid {
@@ -92,7 +145,6 @@
       gap: 1.5rem;
       margin-top: 1rem;
     }
-
     .opening-card {
       background-color: #ffffff;
       border-radius: 12px;
@@ -103,29 +155,13 @@
       flex-direction: column;
       justify-content: space-between;
     }
-
     .opening-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     }
-
-    .opening-card h4 {
-      margin: 0 0 0.6rem 0;
-      font-size: 1.2rem;
-      color: #1a1a1a;
-    }
-
-    .opening-card h5 {
-      margin: 0.8rem 0 0.4rem;
-      font-size: 1rem;
-      color: #003366;
-    }
-
-    .opening-card ul {
-      margin: 0;
-      padding-left: 1.2rem;
-      font-size: 0.95rem;
-    }
+    .opening-card h4 { margin: 0 0 0.6rem; font-size: 1.2rem; }
+    .opening-card h5 { margin: 0.8rem 0 0.4rem; font-size: 1rem; color: #003366; }
+    .opening-card ul { margin: 0; padding-left: 1.2rem; font-size: 0.95rem; }
 
     .apply-btn {
       display: inline-block;
@@ -138,60 +174,42 @@
       border-radius: 6px;
       transition: background-color 0.2s ease;
     }
+    .apply-btn:hover { background-color: #145abd; }
 
-    .apply-btn:hover {
-      background-color: #145abd;
+    /* ===== Footer ===== */
+    footer {
+      background-color: #d9ecff;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      margin-top: 3rem;
     }
 
-    /* Mobile Styling */
+    /* ===== Responsive ===== */
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 2rem;
-      }
-
-      header p {
-        font-size: 1rem;
-      }
-
-      nav {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0.6rem 1rem;
-        gap: 0.6rem;
-      }
-
-      nav a {
-        padding: 0.2rem 0;
-        font-size: 0.95rem;
-      }
-
-      .careers-page {
-        padding: 1.2rem;
-      }
-
-      .career-title {
-        font-size: 1.25rem;
-      }
-
-      header img {
-        height: 55px;
-      }
+      .desktop-nav { display: none; }
+      .menu-toggle { display: flex; }
+      header > div { flex-direction: column; text-align: center; gap: 8px; }
+      header img { height: 120px; }
+      .careers-page { padding: 1.2rem; }
+      .career-title { font-size: 1.25rem; }
     }
   </style>
 </head>
 <body>
   <header>
     <span style="position:absolute;left:-9999px;">Opesh Overseas</span>
-  <div style="display: flex; align-items: center; gap: 18px; max-width: 1200px; margin: 0 auto 0 20px;">
-    <img src="logo.png" alt="Opésh Overseas Logo" style="height: 180px; width: auto; filter: drop-shadow(0 0 6px rgba(0,128,255,0.3));">
-    <div style="margin-left: -10px;">
-      <h1 style="margin: 0; font-size: 34px; color: #000000;">Opésh Overseas</h1>
-      <p style="margin: 0; font-size: 17px; font-style: italic; color: #000000;">~From India to the World~</p>
+    <div>
+      <img src="logo.png" alt="Opésh Overseas Logo">
+      <div>
+        <h1>Opésh Overseas</h1>
+        <p>~From India to the World~</p>
+      </div>
     </div>
-  </div>
   </header>
 
-  <nav>
+  <!-- Desktop Nav -->
+  <div class="desktop-nav">
     <a href="index.html">Home</a>
     <a href="about.html">About Us</a>
     <a href="products.html">Products & Science</a>
@@ -200,7 +218,24 @@
     <a href="partners.html">Partners</a>
     <a href="careers.html">Careers</a>
     <a href="contact.html">Contact</a>
-  </nav>
+  </div>
+
+  <!-- Mobile Nav -->
+  <button class="menu-toggle" onclick="toggleMenu(this)">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="products.html">Products & Science</a>
+    <a href="certifications.html">Certifications</a>
+    <a href="export.html">Export</a>
+    <a href="partners.html">Partners</a>
+    <a href="careers.html">Careers</a>
+    <a href="contact.html">Contact</a>
+  </div>
 
   <section class="careers-page">
     <div class="careers-content">
@@ -209,10 +244,10 @@
       <p>Join Opésh Overseas and be part of a dynamic team shaping the future of global business. We are looking for talented, motivated, and innovative individuals who want to make an impact and grow their careers. Here, your ideas are valued, your contributions are recognized, and your work directly influences our success on the international stage.</p>
 
       <p>Whether you are driving operations, building client relationships, analyzing data, or creating compelling content, every role plays a key part in achieving our mission. If you thrive in a collaborative, fast-paced, and growth-oriented environment, Opésh Overseas is the place to learn, excel, and leave your mark.</p>
+
       <h3>Current Openings for Internships</h3>
       <div class="openings-grid">
-
-        <!-- Card 1 -->
+        <!-- Opening cards (kept as in your original) -->
         <div class="opening-card">
           <div>
             <h4>Export Operations Associate</h4>
@@ -232,7 +267,6 @@
           <a class="apply-btn" href="mailto:info@opeshoverseas.com?subject=Application%20–%20Export%20Operations%20Associate">Apply Now</a>
         </div>
 
-        <!-- Card 2 -->
         <div class="opening-card">
           <div>
             <h4>International Sales & Business Development</h4>
@@ -252,7 +286,6 @@
           <a class="apply-btn" href="mailto:info@opeshoverseas.com?subject=Application%20–%20International%20Sales%20&%20Business%20Development">Apply Now</a>
         </div>
 
-        <!-- Card 3 -->
         <div class="opening-card">
           <div>
             <h4>Product Research Analyst (Ayurveda & Nutraceuticals)</h4>
@@ -272,7 +305,6 @@
           <a class="apply-btn" href="mailto:info@opeshoverseas.com?subject=Application%20–%20Product%20Research%20Analyst">Apply Now</a>
         </div>
 
-        <!-- Card 4 -->
         <div class="opening-card">
           <div>
             <h4>Graphic Designer & Brand Strategist</h4>
@@ -291,7 +323,6 @@
           </div>
           <a class="apply-btn" href="mailto:info@opeshoverseas.com?subject=Application%20–%20Graphic%20Designer%20&%20Brand%20Strategist">Apply Now</a>
         </div>
-
       </div>
 
       <div class="apply-section">
@@ -307,5 +338,13 @@
   <footer>
     © 2025 Opésh Overseas. A Sharma and Sons Ventures Co. All rights reserved.
   </footer>
+
+  <script>
+    function toggleMenu(btn) {
+      btn.classList.toggle('open');
+      const links = document.getElementById('navLinks');
+      if (links) links.classList.toggle('show');
+    }
+  </script>
 </body>
 </html>
