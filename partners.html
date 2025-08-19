@@ -8,8 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-
     body {
       font-family: 'Playfair Display', serif;
       background-color: #e6f0fa;
@@ -18,90 +16,141 @@
       color: #1a1a1a;
     }
 
-    /* Header */
+    /* ===== Header (index identical) ===== */
     header {
-      background-color: #cce0f5;
-      padding: 1.5rem;
-      text-align: center;
+      background-color: #d0eaff;
+      padding: 20px;
+      position: relative;
+      text-align: left;
     }
-
-    header img {
-      height: 60px;
-      margin-bottom: 0.6rem;
-    }
-
-    header h1 {
-      font-size: 2.2rem;
-      margin: 0;
-      color: #000000; /* Title in black */
-    }
-
-    header p {
-      font-size: 1rem;
-      margin-top: 0.5rem;
-      font-style: italic;
-    }
-
-    /* Navigation */
-    nav {
-      background-color: #b3d1f0;
+    header > div {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      padding: 0.8rem 1rem;
+      align-items: center;
+      gap: 18px;
+      max-width: 1200px;
+      margin: 0 auto 0 20px;
+    }
+    header img {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 0 6px rgba(0,128,255,0.3));
+    }
+    header h1 {
+      margin: 0;
+      font-size: 34px;
+      color: #000;
+    }
+    header p {
+      margin: 0;
+      font-size: 17px;
+      font-style: italic;
+      color: #000;
     }
 
-    nav a {
+    /* ===== Desktop Nav ===== */
+    .desktop-nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background-color: #a7d3f5;
+      padding: 10px 0;
+    }
+    .desktop-nav a {
       text-decoration: none;
       font-weight: bold;
-      color: #1a1a1a;
-      padding: 0.4rem 1rem;
-      border-radius: 5px;
-      transition: all 0.3s ease;
+      color: #000;
+      font-size: 16px;
+      position: relative;
+      padding: 5px 8px;
+    }
+    .desktop-nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background-color: #007acc;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s ease;
+    }
+    .desktop-nav a:hover { color: #007acc; }
+    .desktop-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    /* ===== Mobile Nav ===== */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 22px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9999;
+    }
+    .menu-toggle span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background: #000;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    .menu-toggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    nav a:hover {
-      background-color: #336699;
-      color: #ffffff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      width: 100%;
+      background-color: #a7d3f5;
     }
+    .nav-links a {
+      padding: 10px 20px;
+      font-weight: bold;
+      color: #000;
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: #007acc; }
+    .nav-links.show { max-height: 500px; }
 
-    /* Section */
+    /* ===== Section ===== */
     section {
       padding: 2rem 1rem;
       max-width: 1000px;
       margin: auto;
     }
-
     h2 {
       margin-bottom: 1rem;
       font-size: 2rem;
       color: #254e7b;
     }
-
     h3 {
       margin-top: 1.5rem;
       margin-bottom: 0.8rem;
       color: #336699;
     }
-
     p {
       margin-bottom: 1rem;
       line-height: 1.6;
     }
 
-    a {
-      color: #1a1a1a;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-      color: #254e7b;
-    }
-
-    /* Cards for lists */
+    /* Cards */
     .cards-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -109,7 +158,6 @@
       margin-top: 1rem;
       margin-bottom: 2rem;
     }
-
     .card {
       background-color: #ffffff;
       padding: 1.5rem;
@@ -117,22 +165,14 @@
       box-shadow: 0 3px 12px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
+    .card ul { padding-left: 1.2rem; margin: 0; }
+    .card li { margin-bottom: 0.6rem; }
 
-    .card ul {
-      padding-left: 1.2rem;
-      margin: 0;
-    }
-
-    .card li {
-      margin-bottom: 0.6rem;
-    }
-
-    /* CTA box */
+    /* CTA */
     .cta-box {
       background-color: #d0e8ff;
       padding: 1.5rem;
@@ -142,7 +182,6 @@
       margin-top: 2rem;
       box-shadow: 0 3px 12px rgba(0,0,0,0.1);
     }
-
     .cta-box a {
       display: inline-block;
       margin-top: 0.8rem;
@@ -153,10 +192,7 @@
       font-weight: bold;
       transition: background 0.3s;
     }
-
-    .cta-box a:hover {
-      background-color: #254e7b;
-    }
+    .cta-box a:hover { background-color: #254e7b; }
 
     /* Footer */
     footer {
@@ -167,12 +203,12 @@
       margin-top: 3rem;
     }
 
-    /* Mobile Responsive */
+    /* ===== Responsive ===== */
     @media (max-width: 768px) {
-      header h1 { font-size: 1.6rem; }
-      header img { height: 50px; }
-      nav { flex-direction: column; align-items: flex-start; padding-left: 1.2rem; gap: 0.3rem; }
-      nav a { font-size: 0.95rem; padding: 0.2rem 0; }
+      .desktop-nav { display: none; }
+      .menu-toggle { display: flex; }
+      header > div { flex-direction: column; text-align: center; gap: 8px; }
+      header img { height: 120px; }
       section { padding: 1.5rem 1rem; }
       h2 { font-size: 1.6rem; }
       h3 { font-size: 1.3rem; }
@@ -183,12 +219,18 @@
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Opésh Overseas Logo">
-    <h1>Opésh Overseas</h1>
-    <p>~From India to the World</p>
+    <span style="position:absolute;left:-9999px;">Opesh Overseas</span>
+    <div>
+      <img src="logo.png" alt="Opésh Overseas Logo">
+      <div>
+        <h1>Opésh Overseas</h1>
+        <p>~From India to the World~</p>
+      </div>
+    </div>
   </header>
 
-  <nav>
+  <!-- Desktop Nav -->
+  <div class="desktop-nav">
     <a href="index.html">Home</a>
     <a href="about.html">About Us</a>
     <a href="products.html">Products & Science</a>
@@ -196,9 +238,27 @@
     <a href="export.html">Export</a>
     <a href="partners.html">Partners</a>
     <a href="careers.html">Careers</a>
-    <a href="faq.html">FAQ</a>
+    <a href="faq.html">FAQs</a>
     <a href="contact.html">Contact</a>
-  </nav>
+  </div>
+
+  <!-- Mobile Nav -->
+  <button class="menu-toggle" onclick="toggleMenu(this)">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="products.html">Products & Science</a>
+    <a href="certifications.html">Certifications</a>
+    <a href="export.html">Export</a>
+    <a href="partners.html">Partners</a>
+    <a href="careers.html">Careers</a>
+    <a href="faq.html">FAQs</a>
+    <a href="contact.html">Contact</a>
+  </div>
 
   <section>
     <h2>Partners & Strategic Alliances</h2>
@@ -229,12 +289,20 @@
 
     <div class="cta-box">
       <strong>Interested in partnering with us?</strong><br>
-      Email us today at <a href="mailto: exports@opeshoverseas.com">exports@opeshoverseas.com</a>
+      Email us today at <a href="mailto:exports@opeshoverseas.com">exports@opeshoverseas.com</a>
     </div>
   </section>
 
   <footer>
     © 2025 Opésh Overseas. A Sharma and Sons Ventures Co. All rights reserved.
   </footer>
+
+  <script>
+    function toggleMenu(btn) {
+      btn.classList.toggle('open');
+      const links = document.getElementById('navLinks');
+      if (links) links.classList.toggle('show');
+    }
+  </script>
 </body>
 </html>
