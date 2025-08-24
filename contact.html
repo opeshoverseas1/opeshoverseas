@@ -2,71 +2,160 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact Us | Opésh Overseas</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
-    * { box-sizing: border-box; }
     body {
       font-family: 'Playfair Display', serif;
       background-color: #e6f0fa;
       margin: 0;
       padding: 0;
       color: #1a1a1a;
+      line-height: 1.6;
     }
+
+    /* ---------------- HEADER ---------------- */
     header {
       background-color: #d0eaff;
-      padding: 1.5rem 1rem;
-      text-align: center;
+      padding: 10px 20px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      position: relative;
     }
     .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      gap: 18px;
     }
-    header img { width: 60px; margin-bottom: 0.6rem; }
-    header h1 { font-size: 2.4rem; margin: 0; }
-    header p { font-style: italic; font-size: 1.1rem; margin-top: 0.5rem; }
+    .header-content img {
+      height: 180px;
+      filter: drop-shadow(2px 2px 5px rgba(0,128,255,0.3));
+    }
+    .header-text h1 {
+      font-size: 34px;
+      color: #000;
+      margin: 0;
+    }
+    .header-text p {
+      font-size: 17px;
+      font-style: italic;
+      color: #000;
+      margin: 0;
+    }
+
+    /* ---------------- NAVBAR ---------------- */
     nav {
       background-color: #a7d3f5;
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 1.2rem;
-      padding: 0.8rem 1rem;
+      gap: 30px;
+      padding: 10px 0;
+      flex-wrap: wrap;
     }
     nav a {
       text-decoration: none;
       font-weight: bold;
-      color: #1a1a1a;
-      transition: color 0.3s ease;
+      font-size: 16px;
+      color: #000;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s;
     }
-    nav a:hover { color: #336699; text-decoration: underline; }
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #007acc;
+      left: 0;
+      bottom: 0;
+      transition: width 0.3s;
+    }
+    nav a:hover {
+      color: #007acc;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
 
-    section { padding: 2rem 1.2rem; max-width: 1000px; margin: auto; }
+    /* ---------------- HAMBURGER ---------------- */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      z-index: 1001;
+    }
+    .hamburger span {
+      height: 3px;
+      width: 25px;
+      background: #000;
+      margin: 4px 0;
+      border-radius: 2px;
+    }
 
-    /* Intro / description */
+    /* default nav links */
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    /* hide nav on mobile until active */
+    @media screen and (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      nav.active {
+        display: flex;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .nav-links {
+        flex-direction: column;
+        gap: 15px;
+      }
+      nav a {
+        font-size: 14px;
+        display: block;
+        padding: 8px 0;
+      }
+    }
+
+    /* ---------------- SECTION ---------------- */
+    section {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
     .intro { 
       margin-bottom: 2rem; 
       font-size: 1.05rem; 
       line-height: 1.6; 
     }
-
-    /* Contact info card */
     .contact-card {
       background-color: #ffffff;
       border-radius: 12px;
       padding: 2rem;
-      box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       display: grid;
       gap: 1.5rem;
     }
     .contact-card h3 {
       margin: 0 0 0.8rem;
       font-size: 1.5rem;
-      color: #336699;
+      color: #004080;
     }
     .contact-card p, .contact-card a {
       margin: 0.4rem 0;
@@ -75,8 +164,6 @@
       text-decoration: none;
     }
     .contact-card a:hover { text-decoration: underline; color: #254e7b; }
-
-    /* Map */
     .map-container {
       margin-top: 1rem;
       border-radius: 12px;
@@ -85,50 +172,58 @@
     }
     .map-container iframe { width: 100%; height: 100%; border: 0; }
 
+    /* ---------------- FOOTER ---------------- */
     footer {
       background-color: #d9ecff;
       text-align: center;
-      padding: 1.2rem 1rem;
-      font-size: 0.9rem;
+      padding: 2rem 1rem;
+      font-size: 0.95rem;
+      color: #003366;
       margin-top: 3rem;
     }
-
-    @media (max-width: 768px) {
-      header h1 { font-size: 1.8rem; margin-top: 0.5rem; }
-      header img { width: 50px; }
-      header p { font-size: 1rem; margin-top: 0.4rem; }
-      nav { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding-left: 1.5rem; }
-      nav a { font-size: 1rem; }
-      section { padding: 1.5rem 1rem; }
-      .contact-card { padding: 1.5rem; }
-      .contact-card h3 { font-size: 1.3rem; }
-      .contact-card p, .contact-card a { font-size: 0.95rem; }
-      .intro { font-size: 0.95rem; }
-      .map-container { height: 250px; }
+    footer a {
+      color: #004080;
+      text-decoration: none;
+      margin: 0 0.5rem;
     }
+    footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
+  <!-- HEADER -->
   <header>
     <div class="header-content">
-      <img src="logo.png" alt="Opésh Overseas Logo - From India to the World" />
-      <h1>Opésh Overseas</h1>
-      <p>~From India to the World</p>
+      <img src="logo.png" alt="Opésh Overseas Logo" />
+      <div class="header-text">
+        <h1>Opésh Overseas</h1>
+        <p>~From India to the World</p>
+      </div>
     </div>
   </header>
 
+  <!-- HAMBURGER -->
+  <div class="hamburger" onclick="document.querySelector('nav').classList.toggle('active')">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- NAVBAR -->
   <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About Us</a>
-    <a href="products.html">Products & Science</a>
-    <a href="certifications.html">Certifications</a>
-    <a href="export.html">Export</a>
-    <a href="partners.html">Partners</a>
-    <a href="careers.html">Careers</a>
-    <a href="faq.html">FAQ</a>
-    <a href="contact.html">Contact</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="products.html">Products & Science</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="export.html">Export</a>
+      <a href="partners.html">Partners</a>
+      <a href="careers.html">Careers</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </nav>
 
+  <!-- CONTENT -->
   <section>
     <div class="intro">
       Opésh Overseas is a trusted exporter of Ayurvedic and herbal products, delivering quality from India to partners across the globe.  
@@ -138,7 +233,6 @@
     <div class="contact-card">
       <h3>Pavitra Sharma</h3>
       <p><strong>Founder | Opésh Overseas</strong></p>
-
       <p>📨 <strong>General Enquiries:</strong> <a href="mailto:info@opeshoverseas.com">info@opeshoverseas.com</a></p>
       <p>📦 <strong>Export Queries:</strong> <a href="mailto:exports@opeshoverseas.com">exports@opeshoverseas.com</a></p>
       <p>💼 <strong>Business & Investment:</strong> <a href="mailto:founder@opeshoverseas.com">founder@opeshoverseas.com</a></p>
@@ -156,6 +250,7 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
     © 2025 Opésh Overseas. All rights reserved. A Sharma and Sons Ventures Co.
   </footer>
