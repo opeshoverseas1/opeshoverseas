@@ -228,8 +228,7 @@ footer a:hover {
   }
 
   nav {
-    flex-direction: column;
-    display: flex;
+    display: block; /* ✅ Keep nav visible on mobile */
   }
 
   .hamburger {
@@ -237,8 +236,15 @@ footer a:hover {
   }
 
   .nav-links {
+    display: none;        /* ✅ Hide links by default */
     flex-direction: column;
     gap: 15px;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .nav-links.active {
+    display: flex;        /* ✅ Show when hamburger toggled */
   }
 
   nav a {
