@@ -520,53 +520,60 @@ footer {
     display: none;
   }
 }
-    /* Slideshow Wrapper */
-.slideshow-wrapper {
+    
+ /* Slideshow container */
+.slideshow {
   width: 100%;
-  height: 50vh;   /* half screen */
+  height: 50vh; /* Half screen height */
   overflow: hidden;
   position: relative;
 }
 
-/* Slideshow track */
-.slideshow-container {
+/* Track for sliding */
+.slideshow-track {
   display: flex;
-  width: 200%;    /* shows 2 slides at once */
   transition: transform 1s ease-in-out;
-  height: 100%;
 }
 
-/* Each Slide */
-.slide {
-  flex: 0 0 50%;  /* two slides visible */
-  position: relative;
+/* Individual slide */
+.slideshow-slide {
+  flex: 0 0 50%; /* show 2 at once by default */
+  box-sizing: border-box;
+  padding: 5px;
 }
 
-.slide img {
+.slideshow-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 12px;
 }
 
 /* Text overlay */
-.slide-text {
+.slideshow-slide .caption {
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   left: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 6px 12px;
-  border-radius: 6px;
-  opacity: 0;
-  animation: fadeInText 1s ease forwards;
+  color: white;
+  font-size: 1.2rem;
+  background: rgba(0,0,0,0.5);
+  padding: 5px 10px;
+  border-radius: 8px;
+  animation: fadeIn 1s ease-in-out;
 }
 
-@keyframes fadeInText {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* Fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+
+/* Mobile - 1 image at a time */
+@media (max-width: 768px) {
+  .slideshow-slide {
+    flex: 0 0 100%;
+  }
+} 
   </style>
 </head>
 <body>
@@ -661,23 +668,7 @@ footer {
     <div class="slide-text"> Range of Herbal Nutraceuticals </div>
   </div>
 </div>
-<script>
-let slideIndex = 0;
 
-function showSlides() {
-  const container = document.querySelector('.slideshow-container');
-  const totalPairs = 2; // since you have 4 images → 2 pairs
-
-  slideIndex++;
-  if (slideIndex >= totalPairs) {
-    slideIndex = 0;
-  }
-
-  container.style.transform = `translateX(-${slideIndex * 100}%)`;
-}
-
-setInterval(showSlides, 3000);
-</script>
     <section class="intro">
       <p>
         Opésh Overseas isn’t just a company — it’s a bridge between timeless Indian Ayurvedic heritage and the world’s growing demand for clean, effective, plant-powered wellness.
@@ -686,6 +677,24 @@ setInterval(showSlides, 3000);
         Headquartered in India and committed to excellence, we serve as your trusted export partner, offering curated Ayurvedic solutions crafted with care, science, and global vision.
       </p>
     </section>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const track = document.querySelector(".slideshow-track");
+  const slides = document.querySelectorAll(".slideshow-slide");
+  let index = 0;
+
+  function showSlide() {
+    let slidesPerView = window.innerWidth <= 768 ? 1 : 2;
+    index++;
+    if (index > slides.length - slidesPerView) {
+      index = 0; // loop back smoothly
+    }
+    track.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
+  }
+
+  setInterval(showSlide, 3000); // change every 3s
+});
+    </script>
 
     <section class="highlight">
       <div class="highlight-cards">
