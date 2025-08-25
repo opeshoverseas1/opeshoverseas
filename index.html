@@ -658,13 +658,15 @@ let slideIndex = 0;
 function showSlides() {
   const container = document.querySelector('.slideshow-container');
   const slides = document.querySelectorAll('.slide');
+
   slideIndex++;
-  if (slideIndex > slides.length - 2) { // loop back
-    slideIndex = 0;
+  if (slideIndex > Math.floor((slides.length - 1) / 2)) { 
+    slideIndex = 0; // reset after last pair
   }
-  container.style.transform = `translateX(-${slideIndex * 50}%)`;
+
+  container.style.transform = `translateX(-${slideIndex * 100}%)`;
 }
-setInterval(showSlides, 3000); // change every 3 seconds
+setInterval(showSlides, 3000); // change every 3 sec
 </script>
 
     <section class="intro">
