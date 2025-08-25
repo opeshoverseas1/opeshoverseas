@@ -520,18 +520,25 @@ footer {
     display: none;
   }
 }
-    /* Slideshow Styling */
-.slideshow-container {
-  display: flex;
-  width: 400%;              /* enough for 4 slides */
-  height: 50vh;             /* half screen height */
+    /* Slideshow Wrapper */
+.slideshow-wrapper {
+  width: 100%;
+  height: 50vh;   /* half screen */
   overflow: hidden;
   position: relative;
-  transition: transform 1s ease-in-out;
 }
 
+/* Slideshow track */
+.slideshow-container {
+  display: flex;
+  width: 200%;    /* shows 2 slides at once */
+  transition: transform 1s ease-in-out;
+  height: 100%;
+}
+
+/* Each Slide */
 .slide {
-  flex: 0 0 25%;            /* each slide = 25% */
+  flex: 0 0 50%;  /* two slides visible */
   position: relative;
 }
 
@@ -541,25 +548,25 @@ footer {
   object-fit: cover;
 }
 
+/* Text overlay */
 .slide-text {
   position: absolute;
   bottom: 20px;
   left: 20px;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   color: #fff;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 12px;
   border-radius: 6px;
   opacity: 0;
   animation: fadeInText 1s ease forwards;
 }
 
 @keyframes fadeInText {
-  from { opacity: 0; transform: translateY(15px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-    
   </style>
 </head>
 <body>
@@ -658,12 +665,12 @@ footer {
 let slideIndex = 0;
 
 function showSlides() {
-  const slides = document.querySelectorAll('.slide');
   const container = document.querySelector('.slideshow-container');
+  const totalPairs = 2; // since you have 4 images → 2 pairs
 
   slideIndex++;
-  if (slideIndex > Math.floor((slides.length - 1) / 2)) {
-    slideIndex = 0; // reset after last pair
+  if (slideIndex >= totalPairs) {
+    slideIndex = 0;
   }
 
   container.style.transform = `translateX(-${slideIndex * 100}%)`;
