@@ -531,7 +531,8 @@ footer {
 }
 
 .slide {
-  min-width: 50%; /* Two slides visible at once */
+  min-width: 50%; /* Two slides on desktop */
+  flex: 0 0 50%; /* Ensure consistent width */
   position: relative;
 }
 
@@ -604,6 +605,10 @@ footer {
 @media screen and (max-width: 768px) {
   .slideshow-container {
     height: 40vh; /* Shorter for mobile */
+  }
+  .slide {
+    min-width: 100%; /* One slide on mobile */
+    flex: 0 0 100%;
   }
   .slide-text {
     font-size: 16px;
@@ -698,7 +703,7 @@ footer {
   <p>Where Fair Trade Practices Meets Global Expansion</p>
     </section>
   <!-- Slideshow Section -->
-<div class="slideshow-container" role="region" aria-label="Featured Content Slideshow">
+<div class="slideshow-container" role="region" aria-label="Featured Content Slideshow" aria-live="polite">
   <div class="slide">
     <img src="assets/logistics.jpg" alt="Global Shipping Logistics" loading="lazy">
     <div class="slide-text">Global Shipping</div>
@@ -727,68 +732,120 @@ footer {
     <script>
       let slideIndex = 0;
 let isPaused = false;
-let slideshowInterval = setInterval(showSlides, 3000);
+let slideshowInterval;
+let totalSlides;
+let slidesPerView;
 
-function showSlides(index = null) {
+function initializeSlideshow() {
   const container = document.querySelector('.slideshow-container');
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.dot');
-  const slideTexts = document.querySelectorAll('.slide-text');
-
-  if (index !== null) {
-    slideIndex = index;
-    clearInterval(slideshowInterval); // Pause on manual navigation
-    if (!isPaused) {
-      slideshowInterval = setInterval(showSlides, 3000); // Restart if not paused
-    }
-  } else {
-    slideIndex++;
-  }
-
-  if (slideIndex > slides.length - 2) {
-    slideIndex = 0;
-  }
-  if (slideIndex < 0) {
-    slideIndex = slides.length - 2;
-  }
-
-  container.style.transform = `translateX(-${slideIndex * 50}%)`;
-
-  // Update active dot
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === slideIndex);
-  });
-
-  // Reset and replay text animation for visible slides
-  slideTexts.forEach((text, i) => {
-    if (i >= slideIndex && i < slideIndex + 2) {
-      text.style.animation = 'none';
-      text.offsetHeight; // Trigger reflow
-      text.style.animation = 'fadeInText 1s ease forwards';
-    }
-  });
-}
-
-function toggleSlideshow() {
-  isPaused = !isPaused;
   const button = document.querySelector('.slideshow-controls button');
-  if (isPaused) {
-    clearInterval(slideshowInterval);
-    button.textContent = 'Play';
-    button.setAttribute('aria-label', 'Play slideshow');
-  } else {
-    slideshowInterval = setInterval(showSlides, 3000);
-    button.textContent = 'Pause';
-    button.setAttribute('aria-label', 'Pause slideshow');
+
+  // Check for required elements
+  if (!container || slides.length < 1 || dots.length < 1 || !button) {
+    console.warn('Slideshow initialization failed: missing elements.');
+    return;
   }
+
+  // Store total slides
+  totalSlides = slides.length;
+
+  // Clone slides for seamless looping
+  const firstClone = slides[0].cloneNode(true);
+  const secondClone = slides[1] ? slides[1].cloneNode(true) : null;
+  container.appendChild(firstClone);
+  if (secondClone) container.appendChild(secondClone);
+
+  // Update slides after cloning
+  const allSlides = document.querySelectorAll('.slide');
+
+  function updateSlidesPerView() {
+    slidesPerView = window.innerWidth <= 768 ? 1 : 2;
+  }
+
+  function showSlides(index = null) {
+    updateSlidesPerView();
+    const maxIndex = totalSlides - slidesPerView;
+
+    if (index !== null) {
+      slideIndex = Math.max(0, Math.min(index, maxIndex));
+      clearInterval(slideshowInterval);
+      if (!isPaused) slideshowInterval = setInterval(showSlides, 4000);
+    } else {
+      slideIndex++;
+    }
+
+    // Calculate translation
+    const translateValue = slideIndex * (slidesPerView === 1 ? 100 : 50);
+
+    // Seamless loop: when reaching the last slide, jump to clones and reset
+    if (slideIndex >= totalSlides) {
+      container.style.transition = 'none'; // Disable transition for reset
+      slideIndex = 0;
+      container.style.transform = `translateX(0%)`;
+      setTimeout(() => {
+        container.style.transition = 'transform 0.5s ease'; // Re-enable transition
+        showSlides(); // Continue sliding
+      }, 50);
+      return;
+    }
+
+    // Apply translation
+    container.style.transform = `translateX(-${translateValue}%)`;
+
+    // Update active dot
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === slideIndex));
+
+    // Reset and replay text animation for visible slides
+    const slideTexts = document.querySelectorAll('.slide-text');
+    slideTexts.forEach((text, i) => {
+      if (i >= slideIndex && i < slideIndex + slidesPerView) {
+        text.style.animation = 'none';
+        text.offsetHeight; // Trigger reflow
+        text.style.animation = 'fadeInText 1s ease forwards';
+      }
+    });
+  }
+
+  function toggleSlideshow() {
+    isPaused = !isPaused;
+    button.textContent = isPaused ? 'Play' : 'Pause';
+    button.setAttribute('aria-label', isPaused ? 'Play slideshow' : 'Pause slideshow');
+    if (isPaused) clearInterval(slideshowInterval);
+    else slideshowInterval = setInterval(showSlides, 4000);
+  }
+
+  // Event listeners for dots
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => showSlides(i));
+    dot.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        showSlides(i);
+      }
+    });
+    dot.setAttribute('tabindex', '0');
+  });
+
+  // Event listener for play/pause button
+  button.addEventListener('click', toggleSlideshow);
+
+  // Handle resize to adjust slides per view
+  window.addEventListener('resize', () => {
+    updateSlidesPerView();
+    showSlides(slideIndex);
+  });
+
+  // Initialize
+  updateSlidesPerView();
+  slideshowInterval = setInterval(showSlides, 4000);
 }
 
-// Initialize dots
-document.querySelectorAll('.dot').forEach((dot, i) => {
-  dot.addEventListener('click', () => showSlides(i));
-});  
+// Start slideshow on page load
+document.addEventListener('DOMContentLoaded', initializeSlideshow);
 
-    </script>
+  </script>
 
     <section class="intro">
       <p>
