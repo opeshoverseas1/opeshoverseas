@@ -523,12 +523,16 @@ footer {
     /* Slideshow Styling */
 .slideshow-container {
   display: flex;
-  width: 400%;   /* 4 slides total */
-  transition: transform 0.5s ease-in-out;
+  width: 400%;              /* enough for 4 slides */
+  height: 50vh;             /* half screen height */
+  overflow: hidden;
+  position: relative;
+  transition: transform 1s ease-in-out;
 }
 
 .slide {
-  flex: 0 0 25%; /* each slide = 25% of container */
+  flex: 0 0 25%;            /* each slide = 25% */
+  position: relative;
 }
 
 .slide img {
@@ -553,7 +557,7 @@ footer {
 
 @keyframes fadeInText {
   from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
     
   </style>
@@ -667,7 +671,6 @@ function showSlides() {
 
 setInterval(showSlides, 3000);
 </script>
-
     <section class="intro">
       <p>
         Opésh Overseas isn’t just a company — it’s a bridge between timeless Indian Ayurvedic heritage and the world’s growing demand for clean, effective, plant-powered wellness.
