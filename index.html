@@ -520,60 +520,108 @@ footer {
     display: none;
   }
 }
-    
- /* Slideshow container */
-.slideshow {
+    /* Slideshow Styling */
+.slideshow-container {
+  display: flex;
   width: 100%;
   height: 50vh; /* Half screen height */
   overflow: hidden;
   position: relative;
+  transition: transform 0.5s ease; /* Smooth slide transition */
 }
 
-/* Track for sliding */
-.slideshow-track {
-  display: flex;
-  transition: transform 1s ease-in-out;
+.slide {
+  min-width: 50%; /* Two slides visible at once */
+  position: relative;
 }
 
-/* Individual slide */
-.slideshow-slide {
-  flex: 0 0 50%; /* show 2 at once by default */
-  box-sizing: border-box;
-  padding: 5px;
-}
-
-.slideshow-slide img {
+.slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px;
 }
 
-/* Text overlay */
-.slideshow-slide .caption {
+.slide-text {
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   left: 20px;
-  color: white;
-  font-size: 1.2rem;
-  background: rgba(0,0,0,0.5);
-  padding: 5px 10px;
-  border-radius: 8px;
-  animation: fadeIn 1s ease-in-out;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 14px;
+  border-radius: 6px;
+  opacity: 0;
+  animation: fadeInText 1s ease forwards;
 }
 
-/* Fade animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+@keyframes fadeInText {
+  from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Mobile - 1 image at a time */
-@media (max-width: 768px) {
-  .slideshow-slide {
-    flex: 0 0 100%;
+.dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dot.active {
+  background: #007acc;
+}
+
+.slideshow-controls {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.slideshow-controls button {
+  padding: 8px 16px;
+  background: #007acc;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.slideshow-controls button:hover {
+  background: #005fa3;
+}
+
+@media screen and (max-width: 768px) {
+  .slideshow-container {
+    height: 40vh; /* Shorter for mobile */
   }
-} 
+  .slide-text {
+    font-size: 16px;
+    padding: 6px 10px;
+    bottom: 10px;
+    left: 10px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+  }
+  .slideshow-controls button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+  
   </style>
 </head>
 <body>
@@ -650,24 +698,97 @@ footer {
   <p>Where Fair Trade Practices Meets Global Expansion</p>
     </section>
   <!-- Slideshow Section -->
-<div class="slideshow-container">
+<div class="slideshow-container" role="region" aria-label="Featured Content Slideshow">
   <div class="slide">
-    <img src="assets/logistics.jpg" alt="logistics">
+    <img src="assets/logistics.jpg" alt="Global Shipping Logistics" loading="lazy">
     <div class="slide-text">Global Shipping</div>
   </div>
   <div class="slide">
-    <img src="assets/team.jpg" alt="Team">
+    <img src="assets/team.jpg" alt="Dedicated Team" loading="lazy">
     <div class="slide-text">Dedicated Team</div>
   </div>
   <div class="slide">
-    <img src="assets/lab.jpg" alt="lab">
-    <div class="slide-text">Science backed formulations</div>
+    <img src="assets/lab.jpg" alt="Science-Backed Formulations Lab" loading="lazy">
+    <div class="slide-text">Science-Backed Formulations</div>
   </div>
   <div class="slide">
-    <img src="assets/wellness.jpg" alt="wellness">
-    <div class="slide-text"> Range of Herbal Nutraceuticals </div>
+    <img src="assets/wellness.jpg" alt="Herbal Nutraceuticals" loading="lazy">
+    <div class="slide-text">Range of Herbal Nutraceuticals</div>
   </div>
 </div>
+<div class="slideshow-controls">
+  <button onclick="toggleSlideshow()" aria-label="Pause slideshow">Pause</button>
+</div>
+<div class="dots">
+  <span class="dot" onclick="showSlides(0)" aria-label="Go to slide 1"></span>
+  <span class="dot" onclick="showSlides(1)" aria-label="Go to slide 2"></span>
+  <span class="dot" onclick="showSlides(2)" aria-label="Go to slide 3"></span>
+</div>
+    <script>
+      let slideIndex = 0;
+let isPaused = false;
+let slideshowInterval = setInterval(showSlides, 3000);
+
+function showSlides(index = null) {
+  const container = document.querySelector('.slideshow-container');
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  const slideTexts = document.querySelectorAll('.slide-text');
+
+  if (index !== null) {
+    slideIndex = index;
+    clearInterval(slideshowInterval); // Pause on manual navigation
+    if (!isPaused) {
+      slideshowInterval = setInterval(showSlides, 3000); // Restart if not paused
+    }
+  } else {
+    slideIndex++;
+  }
+
+  if (slideIndex > slides.length - 2) {
+    slideIndex = 0;
+  }
+  if (slideIndex < 0) {
+    slideIndex = slides.length - 2;
+  }
+
+  container.style.transform = `translateX(-${slideIndex * 50}%)`;
+
+  // Update active dot
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === slideIndex);
+  });
+
+  // Reset and replay text animation for visible slides
+  slideTexts.forEach((text, i) => {
+    if (i >= slideIndex && i < slideIndex + 2) {
+      text.style.animation = 'none';
+      text.offsetHeight; // Trigger reflow
+      text.style.animation = 'fadeInText 1s ease forwards';
+    }
+  });
+}
+
+function toggleSlideshow() {
+  isPaused = !isPaused;
+  const button = document.querySelector('.slideshow-controls button');
+  if (isPaused) {
+    clearInterval(slideshowInterval);
+    button.textContent = 'Play';
+    button.setAttribute('aria-label', 'Play slideshow');
+  } else {
+    slideshowInterval = setInterval(showSlides, 3000);
+    button.textContent = 'Pause';
+    button.setAttribute('aria-label', 'Pause slideshow');
+  }
+}
+
+// Initialize dots
+document.querySelectorAll('.dot').forEach((dot, i) => {
+  dot.addEventListener('click', () => showSlides(i));
+});  
+
+    </script>
 
     <section class="intro">
       <p>
@@ -677,24 +798,7 @@ footer {
         Headquartered in India and committed to excellence, we serve as your trusted export partner, offering curated Ayurvedic solutions crafted with care, science, and global vision.
       </p>
     </section>
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const track = document.querySelector(".slideshow-track");
-  const slides = document.querySelectorAll(".slideshow-slide");
-  let index = 0;
-
-  function showSlide() {
-    let slidesPerView = window.innerWidth <= 768 ? 1 : 2;
-    index++;
-    if (index > slides.length - slidesPerView) {
-      index = 0; // loop back smoothly
-    }
-    track.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
-  }
-
-  setInterval(showSlide, 3000); // change every 3s
-});
-    </script>
+    
 
     <section class="highlight">
       <div class="highlight-cards">
