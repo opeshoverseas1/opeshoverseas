@@ -523,15 +523,12 @@ footer {
     /* Slideshow Styling */
 .slideshow-container {
   display: flex;
-  width: 100%;
-  height: 50vh; /* half screen height */
-  overflow: hidden;
-  position: relative;
+  width: 400%;   /* 4 slides total */
+  transition: transform 0.5s ease-in-out;
 }
 
 .slide {
-  min-width: 50%; /* two slides visible at once */
-  position: relative;
+  flex: 0 0 25%; /* each slide = 25% of container */
 }
 
 .slide img {
@@ -655,18 +652,20 @@ footer {
 </div>
 <script>
 let slideIndex = 0;
+
 function showSlides() {
-  const container = document.querySelector('.slideshow-container');
   const slides = document.querySelectorAll('.slide');
+  const container = document.querySelector('.slideshow-container');
 
   slideIndex++;
-  if (slideIndex > Math.floor((slides.length - 1) / 2)) { 
+  if (slideIndex > Math.floor((slides.length - 1) / 2)) {
     slideIndex = 0; // reset after last pair
   }
 
   container.style.transform = `translateX(-${slideIndex * 100}%)`;
 }
-setInterval(showSlides, 3000); // change every 3 sec
+
+setInterval(showSlides, 3000);
 </script>
 
     <section class="intro">
