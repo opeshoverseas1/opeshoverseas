@@ -581,27 +581,6 @@ footer {
   background: #007acc;
 }
 
-.slideshow-controls {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.slideshow-controls button {
-  padding: 8px 16px;
-  background: #007acc;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: background 0.3s ease;
-}
-
-.slideshow-controls button:hover {
-  background: #005fa3;
-}
-
 @media screen and (max-width: 768px) {
   .slideshow-container {
     height: 40vh; /* Shorter for mobile */
@@ -621,10 +600,6 @@ footer {
     height: 8px;
     margin: 0 4px;
   }
-  .slideshow-controls button {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
 }
   
   </style>
@@ -640,14 +615,6 @@ footer {
     </div>
   </div>
   </header>
-
-  <!-- Optional navigation dots -->
-  <div class="dots">
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </div>
-  </div>
   <nav>
   <!-- Desktop Nav -->
   <div class="desktop-nav">
@@ -721,16 +688,15 @@ footer {
     <div class="slide-text">Range of Herbal Nutraceuticals</div>
   </div>
 </div>
-<div class="slideshow-controls">
-  <button onclick="toggleSlideshow()" aria-label="Pause slideshow">Pause</button>
-</div>
 <div class="dots">
   <span class="dot" onclick="showSlides(0)" aria-label="Go to slide 1"></span>
   <span class="dot" onclick="showSlides(1)" aria-label="Go to slide 2"></span>
   <span class="dot" onclick="showSlides(2)" aria-label="Go to slide 3"></span>
+  <span class="dot" onclick="showSlides(3)" aria-label="Go to slide 4"></span>
 </div>
-    <script>
-      let slideIndex = 0;
+
+<script>
+    let slideIndex = 0;
 let isPaused = false;
 let slideshowInterval;
 let totalSlides;
@@ -740,10 +706,9 @@ function initializeSlideshow() {
   const container = document.querySelector('.slideshow-container');
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.dot');
-  const button = document.querySelector('.slideshow-controls button');
 
   // Check for required elements
-  if (!container || slides.length < 1 || dots.length < 1 || !button) {
+  if (!container || slides.length < 1 || dots.length < 1) {
     console.warn('Slideshow initialization failed: missing elements.');
     return;
   }
@@ -751,53 +716,50 @@ function initializeSlideshow() {
   // Store total slides
   totalSlides = slides.length;
 
-  // Clone slides for seamless looping
-  const firstClone = slides[0].cloneNode(true);
-  const secondClone = slides[1] ? slides[1].cloneNode(true) : null;
-  container.appendChild(firstClone);
-  if (secondClone) container.appendChild(secondClone);
-
-  // Update slides after cloning
-  const allSlides = document.querySelectorAll('.slide');
+  // Clone all slides for seamless looping
+  slides.forEach(slide => {
+    const clone = slide.cloneNode(true);
+    container.appendChild(clone);
+  });
 
   function updateSlidesPerView() {
     slidesPerView = window.innerWidth <= 768 ? 1 : 2;
   }
 
   function showSlides(index = null) {
+    if (isPaused) return; // Skip if paused (e.g., on hover)
+
     updateSlidesPerView();
     const maxIndex = totalSlides - slidesPerView;
 
     if (index !== null) {
       slideIndex = Math.max(0, Math.min(index, maxIndex));
       clearInterval(slideshowInterval);
-      if (!isPaused) slideshowInterval = setInterval(showSlides, 4000);
+      slideshowInterval = setInterval(showSlides, 4000);
     } else {
       slideIndex++;
     }
 
-    // Calculate translation
-    const translateValue = slideIndex * (slidesPerView === 1 ? 100 : 50);
-
-    // Seamless loop: when reaching the last slide, jump to clones and reset
-    if (slideIndex >= totalSlides) {
-      container.style.transition = 'none'; // Disable transition for reset
+    // Seamless loop
+    if (slideIndex > maxIndex) {
       slideIndex = 0;
+      container.style.transition = 'none';
       container.style.transform = `translateX(0%)`;
       setTimeout(() => {
-        container.style.transition = 'transform 0.5s ease'; // Re-enable transition
-        showSlides(); // Continue sliding
+        container.style.transition = 'transform 0.5s ease';
+        showSlides();
       }, 50);
       return;
     }
 
-    // Apply translation
+    // Calculate translation
+    const translateValue = slideIndex * (slidesPerView === 1 ? 100 : 50);
     container.style.transform = `translateX(-${translateValue}%)`;
 
     // Update active dot
     dots.forEach((dot, i) => dot.classList.toggle('active', i === slideIndex));
 
-    // Reset and replay text animation for visible slides
+    // Reset and replay text animation
     const slideTexts = document.querySelectorAll('.slide-text');
     slideTexts.forEach((text, i) => {
       if (i >= slideIndex && i < slideIndex + slidesPerView) {
@@ -806,14 +768,6 @@ function initializeSlideshow() {
         text.style.animation = 'fadeInText 1s ease forwards';
       }
     });
-  }
-
-  function toggleSlideshow() {
-    isPaused = !isPaused;
-    button.textContent = isPaused ? 'Play' : 'Pause';
-    button.setAttribute('aria-label', isPaused ? 'Play slideshow' : 'Pause slideshow');
-    if (isPaused) clearInterval(slideshowInterval);
-    else slideshowInterval = setInterval(showSlides, 4000);
   }
 
   // Event listeners for dots
@@ -828,10 +782,40 @@ function initializeSlideshow() {
     dot.setAttribute('tabindex', '0');
   });
 
-  // Event listener for play/pause button
-  button.addEventListener('click', toggleSlideshow);
+  // Optional: Swipe support for mobile
+  container.addEventListener('touchstart', handleTouchStart, false);
+  container.addEventListener('touchmove', handleTouchMove, false);
 
-  // Handle resize to adjust slides per view
+  let xStart = null;
+  function handleTouchStart(e) {
+    xStart = e.touches[0].clientX;
+  }
+  function handleTouchMove(e) {
+    if (!xStart) return;
+    const xEnd = e.touches[0].clientX;
+    const diff = xStart - xEnd;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) showSlides(slideIndex + 1); // Swipe left
+      else showSlides(slideIndex - 1); // Swipe right
+      xStart = null;
+    }
+  }
+
+  // Optional: Pause on hover
+  container.addEventListener('mouseenter', () => {
+    if (!isPaused) {
+      isPaused = true;
+      clearInterval(slideshowInterval);
+    }
+  });
+  container.addEventListener('mouseleave', () => {
+    if (isPaused) {
+      isPaused = false;
+      slideshowInterval = setInterval(showSlides, 4000);
+    }
+  });
+
+  // Handle resize
   window.addEventListener('resize', () => {
     updateSlidesPerView();
     showSlides(slideIndex);
@@ -842,10 +826,9 @@ function initializeSlideshow() {
   slideshowInterval = setInterval(showSlides, 4000);
 }
 
-// Start slideshow on page load
+// Start slideshow
 document.addEventListener('DOMContentLoaded', initializeSlideshow);
-
-  </script>
+</script>
 
     <section class="intro">
       <p>
