@@ -520,6 +520,65 @@ footer {
     display: none;
   }
 }
+    .slideshow-section {
+  padding: 50px 20px;
+  background: #f8fbff;
+  text-align: center;
+}
+
+.slideshow-section .section-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #007acc;
+  margin-bottom: 20px;
+}
+
+.slideshow-container {
+  position: relative;
+  max-width: 1000px;
+  height: 500px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.slideshow-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.slide.active img {
+  opacity: 1;
+}
+
+.dots {
+  text-align: center;
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.6s ease;
+}
+
+.dot.active {
+  background-color: #007acc;
+    }
   </style>
 </head>
 <body>
@@ -533,6 +592,14 @@ footer {
     </div>
   </div>
   </header>
+
+  <!-- Optional navigation dots -->
+  <div class="dots">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+  </div>
   <nav>
   <!-- Desktop Nav -->
   <div class="desktop-nav">
@@ -587,7 +654,52 @@ footer {
   <h1>Welcome to Opésh Overseas</h1>
   <p>Where Fair Trade Practices Meets Global Expansion</p>
     </section>
+    <section class="slideshow-section">
+  <h2 class="section-title">Our World in Motion</h2>
+  
+  <div class="slideshow-container">
+    <div class="slide fade">
+      <img src="images/lab.jpg" alt="Lab">
+    </div>
+    <div class="slide fade">
+      <img src="images/ship.jpg" alt="Ship">
+    </div>
+    <div class="slide fade">
+      <img src="images/herbs.jpg" alt="Herbs">
+    </div>
 
+    <div class="dots">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+    </section>
+<script>
+let slideIndex = 0;
+let slides, dots;
+
+document.addEventListener("DOMContentLoaded", () => {
+  slides = document.querySelectorAll(".slide");
+  dots = document.querySelectorAll(".dot");
+  showSlides();
+});
+
+function showSlides() {
+  slides.forEach((slide, i) => {
+    slide.classList.remove("active");
+    dots[i].classList.remove("active");
+  });
+
+  slideIndex++;
+  if (slideIndex > slides.length) slideIndex = 1;
+
+  slides[slideIndex - 1].classList.add("active");
+  dots[slideIndex - 1].classList.add("active");
+
+  setTimeout(showSlides, 4000); // change every 4 sec
+}
+</script>
     <section class="intro">
       <p>
         Opésh Overseas isn’t just a company — it’s a bridge between timeless Indian Ayurvedic heritage and the world’s growing demand for clean, effective, plant-powered wellness.
