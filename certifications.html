@@ -3,249 +3,219 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Certifications | Opésh Overseas</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+  <title>Certifications - Opésh Overseas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-  body {
-    font-family: 'Playfair Display', serif;
-    background-color: #e6f0fa;
-    margin: 0;
-    padding: 0;
-    color: #1a1a1a;
-  }
+    body {
+      font-family: 'Playfair Display', serif;
+      background-color: #f0f8ff; 
+      margin: 0;
+      padding: 0;
+      color: #1a1a1a;
+    }
 
-  /* ==== HEADER (same as index) ==== */
-  header {
-    background-color: #d0eaff;
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 18px;
-    max-width: 1200px;
-    margin: 0 auto 0 20px;
-    position: relative;
-  }
-
-  header img {
-    height: 180px;
-    width: auto;
-    filter: drop-shadow(2px 2px 6px rgba(0,128,255,0.3));
-  }
-
-  .header-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .header-text h1 {
-    font-size: 34px;
-    margin: 0;
-    color: #000;
-  }
-
-  .header-text p {
-    font-size: 17px;
-    margin: 0;
-    font-style: italic;
-    color: #000;
-  }
-
-  /* ==== DESKTOP NAV ==== */
-  nav {
-    background-color: #a7d3f5;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    padding: 10px 0;
-    flex-wrap: wrap;
-  }
-
-  nav a {
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 16px;
-    color: #000;
-    position: relative;
-  }
-
-  nav a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    background: #007acc;
-    left: 0;
-    bottom: -3px;
-    transition: width 0.3s ease;
-  }
-
-  nav a:hover::after {
-    width: 100%;
-  }
-
-  nav a:hover {
-    color: #007acc;
-  }
-
-  /* ==== MOBILE NAV ==== */
-  .menu-toggle {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    font-size: 28px;
-    background: none;
-    border: none;
-    z-index: 1000;
-    cursor: pointer;
-    display: none; /* hidden on desktop */
-  }
-
-  .mobile-menu {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: #b3d1f0;
-    padding: 10px 0;
-    text-align: center;
-    z-index: 999;
-  }
-
-  .mobile-menu a {
-    padding: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 15px;
-    color: #1a1a1a;
-    display: block;
-  }
-
-  .mobile-menu a:hover {
-    background: #99c2e6;
-  }
-
-  @media screen and (max-width: 768px) {
-    nav { display: none; }          /* hide desktop nav */
-    .menu-toggle { display: block; } /* show hamburger */
+    /* ===== Header (index identical) ===== */
     header {
-      flex-direction: column;
+      background-color: #d0eaff;
+      padding: 20px;
+      position: relative;
+      text-align: left;
+    }
+
+    header > div {
+      display: flex;
       align-items: center;
-      margin-left: 0;
+      gap: 18px;
+      max-width: 1200px;
+      margin: 0 auto 0 20px;
     }
+
     header img {
-      height: 120px;
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 0 6px rgba(0,128,255,0.3));
     }
-    .header-text h1 { font-size: 26px; }
-    .header-text p { font-size: 15px; }
-  }
 
-  /* ==== PAGE CONTENT ==== */
-  section {
-    padding: 2rem;
-    max-width: 1000px;
-    margin: auto;
-  }
+    header h1 {
+      margin: 0;
+      font-size: 34px;
+      color: #000;
+    }
 
-  h2 {
-    margin-bottom: 1rem;
-    font-size: 1.8rem;
-    text-align: center;
-  }
+    header p {
+      margin: 0;
+      font-size: 17px;
+      font-style: italic;
+      color: #000;
+    }
 
-  p {
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 1.2rem;
-    text-align: center;
-  }
+    /* ===== Desktop Nav ===== */
+    .desktop-nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background-color: #a7d3f5;
+      padding: 10px 0;
+    }
 
-  .cert-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
+    .desktop-nav a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #000;
+      font-size: 16px;
+      position: relative;
+      padding: 5px 8px;
+    }
 
-  .cert-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    text-align: center;
-    transition: transform 0.2s ease;
-  }
+    .desktop-nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background-color: #007acc;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s ease;
+    }
 
-  .cert-card:hover {
-    transform: translateY(-4px);
-  }
+    .desktop-nav a:hover { color: #007acc; }
+    .desktop-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 
-  .cert-card img {
-    max-width: 80px;
-    margin-bottom: 1rem;
-  }
+    /* ===== Mobile Nav ===== */
+    .mobile-nav { display: none; }
 
-  .cert-title {
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-  }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 22px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 9999;
+    }
 
-  .cert-desc {
-    font-size: 0.95rem;
-    color: #555;
-  }
+    .menu-toggle span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: #000;
+      transition: 0.3s ease;
+    }
 
-  .note {
-    font-size: 0.85rem;
-    font-style: italic;
-    color: #555;
-    margin-top: 2rem;
-    text-align: center;
-  }
+    .menu-toggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
 
-  footer {
-    background-color: #d9ecff;
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 0.9rem;
-    margin-top: 3rem;
-  }
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      width: 100%;
+      background-color: #a7d3f5;
+    }
+
+    .nav-links a {
+      padding: 10px 20px;
+      font-weight: bold;
+      color: #000;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover { color: #007acc; }
+
+    .nav-links.show { max-height: 500px; }
+
+    /* ===== Page Content ===== */
+    section {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 { font-size: 1.8rem; margin-bottom: 1rem; text-align: center; }
+    p, li { font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.2rem; text-align: center; }
+    ul { padding-left: 1.2rem; }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .cert-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .cert-card:hover { transform: translateY(-4px); }
+
+    .cert-card img { max-width: 80px; margin-bottom: 1rem; }
+    .cert-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .cert-desc { font-size: 0.95rem; color: #555; }
+
+    .note { font-size: 0.85rem; font-style: italic; color: #555; margin-top: 2rem; }
+
+    footer {
+      background-color: #d9ecff;
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .desktop-nav { display: none; }
+      .mobile-nav { display: block; }
+
+      .menu-toggle { display: flex; }
+
+      header > div { flex-direction: column; text-align: center; gap: 8px; }
+      header img { height: 120px; }
+
+      section { padding: 1.5rem 1rem; }
+      h2 { font-size: 1.4rem; }
+      p, li { font-size: 1rem; }
+
+      footer { font-size: 0.85rem; padding: 1rem; }
+    }
   </style>
 </head>
 <body>
   <header>
-    <!-- Hamburger -->
-    <button class="menu-toggle">&#9776;</button>
-
-    <!-- Logo + Title -->
-    <img src="logo.png" alt="Opésh Overseas Logo" />
-    <div class="header-text">
-      <h1>Opésh Overseas</h1>
-      <p>~From India to the World</p>
-    </div>
-
-    <!-- Mobile dropdown -->
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
-      <a href="products.html">Products & Science</a>
-      <a href="certifications.html">Certifications</a>
-      <a href="export.html">Export</a>
-      <a href="partners.html">Partners</a>
-      <a href="careers.html">Careers</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
+    <span style="position:absolute;left:-9999px;">Opesh Overseas</span>
+    <div>
+      <img src="logo.png" alt="Opésh Overseas Logo">
+      <div>
+        <h1>Opésh Overseas</h1>
+        <p>~From India to the World~</p>
+      </div>
     </div>
   </header>
 
-  <!-- Desktop Navigation -->
-  <nav>
+  <!-- Desktop Nav -->
+  <div class="desktop-nav">
     <a href="index.html">Home</a>
     <a href="about.html">About Us</a>
     <a href="products.html">Products & Science</a>
@@ -253,9 +223,29 @@
     <a href="export.html">Export</a>
     <a href="partners.html">Partners</a>
     <a href="careers.html">Careers</a>
-    <a href="faq.html">FAQ</a>
+    <a href="faq.html">FAQs</a>
     <a href="contact.html">Contact</a>
-  </nav>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav">
+    <button class="menu-toggle" onclick="toggleMenu(this)">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="products.html">Products & Science</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="export.html">Export</a>
+      <a href="partners.html">Partners</a>
+      <a href="careers.html">Careers</a>
+      <a href="faq.html">FAQs</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
 
   <section>
     <h2>Global Certifications & Compliance Capabilities</h2>
@@ -268,7 +258,7 @@
         <div class="cert-desc">Government of India registered for credibility and business facilitation.</div>
       </div>
       <div class="cert-card">
-        <img src="images/iec-icon.png" alt="IEC Icon" style="transform: scale(1.5); transform-origin: left center; margin-right: 10px;">
+        <img src="images/iec-icon.png" alt="IEC Icon">
         <div class="cert-title">Import Export Code (IEC)</div>
         <div class="cert-desc">Authorized for global trade, enabling smooth customs clearance.</div>
       </div>
@@ -293,15 +283,16 @@
   </section>
 
   <footer>
-    © 2025 Opésh Overseas. A Sharma and Sons Ventures Co. All rights reserved.
+    © 2025 Opésh Overseas. All rights reserved. <br>
+    A Sharma and Sons Ventures Co.
   </footer>
 
   <script>
-    const toggle = document.querySelector('.menu-toggle');
-    const menu = document.getElementById('mobileMenu');
-    toggle.addEventListener('click', () => {
-      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-    });
+    function toggleMenu(btn) {
+      btn.classList.toggle('open');
+      const links = document.getElementById('navLinks');
+      if (links) links.classList.toggle('show');
+    }
   </script>
 </body>
 </html>
