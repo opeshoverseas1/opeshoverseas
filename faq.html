@@ -1,143 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FAQs - Opésh Overseas</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9fafd;
-      color: #333;
-      margin: 0;
-      padding: 0 20px;
-    }
-    header {
-      background-color: #0072bc;
-      color: white;
-      padding: 20px 0;
-      text-align: center;
-      font-size: 2rem;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    main {
-      max-width: 900px;
-      margin: 40px auto;
-      background: white;
-      border-radius: 8px;
-      padding: 30px 40px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-    h2 {
-      color: #0072bc;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #0072bc;
-      padding-bottom: 10px;
-    }
-    details {
-      margin-bottom: 18px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 15px 20px;
-      background: #f0f7ff;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    details[open] {
-      background: #dbeeff;
-    }
-    summary {
-      font-weight: 600;
-      font-size: 1.1rem;
-      outline: none;
-    }
-    summary::-webkit-details-marker {
-      display:none;
-    }
-    details summary::before {
-      content: "➤";
-      display: inline-block;
-      margin-right: 10px;
-      transition: transform 0.3s ease;
-    }
-    details[open] summary::before {
-      transform: rotate(90deg);
-    }
-    p {
-      margin-top: 10px;
-      line-height: 1.5;
-      font-size: 1rem;
-      color: #444;
-    }
-    @media (max-width: 600px) {
-      main {
-        padding: 20px;
-      }
-      header {
-        font-size: 1.5rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FAQs | Opésh Overseas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  body {
+    font-family: 'Playfair Display', serif;
+    background-color: #e6f0fa;
+    margin: 0;
+    padding: 0;
+    color: #1a1a1a;
+    line-height: 1.6;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background-color: #d0eaff;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    max-width: 1200px;
+    margin: 0 auto 0 20px;
+    position: relative;
+  }
+
+  header img {
+    height: 180px;
+    width: auto;
+    filter: drop-shadow(2px 2px 6px rgba(0,128,255,0.3));
+  }
+
+  .header-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .header-text h1 {
+    font-size: 34px;
+    margin: 0;
+    color: #000;
+  }
+
+  .header-text p {
+    font-size: 17px;
+    margin: 0;
+    font-style: italic;
+    color: #000;
+  }
+
+  /* ===== DESKTOP NAV ===== */
+  nav.desktop-nav {
+    background-color: #a7d3f5;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 10px 0;
+  }
+
+  nav.desktop-nav a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  nav.desktop-nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #007acc;
+    left: 0;
+    bottom: -3px;
+    transition: width 0.3s ease;
+  }
+
+  nav.desktop-nav a:hover::after { width: 100%; }
+  nav.desktop-nav a:hover { color: #007acc; }
+
+  /* ===== MOBILE NAV ===== */
+  .menu-toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #000;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .menu-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+  .menu-toggle.open span:nth-child(2) { opacity: 0; }
+  .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(6px,-6px); }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #a7d3f5;
+    padding: 10px 0;
+    text-align: center;
+    z-index: 999;
+  }
+
+  .mobile-menu a {
+    padding: 12px;
+    font-weight: bold;
+    font-size: 15px;
+    color: #000;
+    text-decoration: none;
+    display: block;
+  }
+
+  .mobile-menu a:hover { color: #007acc; background: #99c2e6; }
+
+  /* ===== CONTENT ===== */
+  main {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 20px;
+  }
+
+  h2 { text-align: center; font-size: 1.8rem; margin-bottom: 2rem; color: #003366; }
+
+  .faq-card {
+    background: #ffffff;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  details { cursor: pointer; }
+  summary {
+    font-weight: 600;
+    font-size: 1.1rem;
+    outline: none;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+  details summary::before {
+    content: "➤";
+    display: inline-block;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+    color: #004080;
+  }
+
+  details[open] summary::before { transform: rotate(90deg); }
+
+  details p {
+    margin-top: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background-color: #d9ecff;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.9rem;
+    margin-top: 3rem;
+  }
+
+  footer a { color: #004080; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ===== RESPONSIVE ===== */
+  @media screen and (max-width: 768px){
+    header { flex-direction: column; align-items: center; margin-left:0; }
+    header img { height: 120px; }
+    .header-text h1 { font-size: 26px; }
+    .header-text p { font-size: 15px; }
+
+    nav.desktop-nav { display: none; }
+    .menu-toggle { display: flex; }
+
+    .mobile-menu.show { display: flex; }
+  }
+</style>
 </head>
 <body>
-  <header>
-    FAQs - Opésh Overseas
-  </header>
-  <main>
-    <h2>Frequently Asked Questions</h2>
 
+<header>
+  <img src="logo.png" alt="Opésh Overseas Logo"/>
+  <div class="header-text">
+    <h1>Opésh Overseas</h1>
+    <p>~From India to the World</p>
+  </div>
+
+  <!-- Hamburger for Mobile -->
+  <button class="menu-toggle" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="products.html">Products & Science</a>
+    <a href="certifications.html">Certifications</a>
+    <a href="export.html">Export</a>
+    <a href="partners.html">Partners</a>
+    <a href="careers.html">Careers</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</header>
+
+<!-- Desktop Nav -->
+<nav class="desktop-nav">
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="products.html">Products & Science</a>
+  <a href="certifications.html">Certifications</a>
+  <a href="export.html">Export</a>
+  <a href="partners.html">Partners</a>
+  <a href="careers.html">Careers</a>
+  <a href="faq.html">FAQ</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<main>
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-card">
     <details>
       <summary>What products do you export?</summary>
       <p>We export high-quality Ayurvedic and herbal products, including nutraceuticals, dietary supplements, herbal powders, oils, and wellness items sourced from trusted Indian manufacturers.</p>
     </details>
+  </div>
 
+  <div class="faq-card">
     <details>
       <summary>What certifications do your products have?</summary>
       <p>Our products comply with GMP, ISO 22000, HACCP standards, and come with third-party lab test reports, Certificates of Analysis (COA), and Material Safety Data Sheets (MSDS). FDA registration is also available for exports to the USA.</p>
     </details>
+  </div>
 
+  <div class="faq-card">
     <details>
       <summary>Which countries do you export to?</summary>
       <p>Currently, we focus on markets in the USA, Europe, and the Middle East, with plans to expand globally.</p>
     </details>
+  </div>
 
+  <div class="faq-card">
     <details>
       <summary>What are your payment terms?</summary>
       <p>We generally accept payments via wire transfer (T/T) with a 30% advance and 70% before shipment. Terms can be customized based on buyer-supplier agreements.</p>
     </details>
+  </div>
 
+  <div class="faq-card">
     <details>
       <summary>How do you ensure product quality?</summary>
       <p>We partner with certified manufacturers and conduct rigorous quality checks including lab testing and compliance audits before shipment.</p>
     </details>
+  </div>
 
+  <div class="faq-card">
     <details>
       <summary>What is your typical lead time?</summary>
       <p>Order processing and packaging typically take 7-10 business days. Shipping duration varies by destination and mode of transport.</p>
     </details>
+  </div>
 
+  <div class="faq-card">
     <details>
       <summary>Can you provide customized packaging or private labeling?</summary>
       <p>Yes, we offer OEM and private label packaging solutions tailored to client requirements.</p>
     </details>
+  </div>
 
+  <div class="faq-card">
     <details>
       <summary>What is the minimum order quantity (MOQ)?</summary>
       <p>MOQs vary by product but generally start from 500 units. Please contact us for specific product MOQ details.</p>
     </details>
+  </div>
 
+  <div class="faq-card">
     <details>
       <summary>How do you handle shipping and logistics?</summary>
       <p>We coordinate with trusted freight forwarders and shipping agents to ensure timely delivery. We handle all export documentation for smooth customs clearance.</p>
     </details>
+  </div>
 
+  <div class="faq-card">
     <details>
       <summary>How do I place an order?</summary>
       <p>Please contact us via email or phone with your product requirements, and our sales team will assist you with quotations and order processing.</p>
     </details>
+  </div>
+</main>
 
-  </main>
+<footer>
+  © 2025 Opésh Overseas. All rights reserved. <br>
+  <a href="mailto:exports@opesh.com">exports@opesh.com</a> | 
+  <a href="contact.html">Contact Us</a> | 
+  <a href="https://linkedin.com/company/opesh-overseas" target="_blank">LinkedIn</a>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('show');
+  });
+</script>
+
 </body>
 </html>
