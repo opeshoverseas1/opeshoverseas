@@ -475,6 +475,7 @@ footer {
     background: none;
   }
 }
+
     /* Desktop Nav */
 .desktop-nav {
   display: flex;
@@ -518,6 +519,18 @@ footer {
 @media screen and (max-width: 768px) {
   .desktop-nav {
     display: none;
+  }
+}
+/* Hide nav strip on mobile */
+@media (max-width: 768px) {
+  nav {
+    background: transparent !important; /* removes blue strip */
+    padding: 0 !important; /* optional: remove extra padding if needed */
+  }
+
+  .nav-links {
+    top: 60px; /* adjust dropdown position if needed */
+    background: #a7d3f5; /* keep dropdown panel colored */
   }
 }
 
