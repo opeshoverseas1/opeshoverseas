@@ -1,0 +1,7 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Redirect all non-www and HTTP to https://www.opeshoverseas.com
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\.opeshoverseas\.com$ [NC]
+RewriteRule ^(.*)$ https://www.opeshoverseas.com/$1 [L,R=301]
