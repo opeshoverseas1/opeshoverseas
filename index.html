@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -351,6 +352,7 @@
     .slideshow-wrapper {
       position: relative;
       z-index: 2;
+      overflow: hidden;
     }
 
     /* Intro Section */
@@ -480,11 +482,6 @@
     }
 
     /* Slideshow */
-    .slideshow-wrapper {
-      overflow: hidden;
-      position: relative;
-    }
-
     .slideshow-container {
       display: flex;
       transition: transform 0.6s ease;
@@ -838,7 +835,7 @@
 
   <!-- Main Content -->
   <main>
-    <section class="hero">
+    <section class="hero" data-aos="fade-up">
       <h1>Welcome to Opésh Overseas</h1>
       <p>Where Fair Trade Practices Meets Global Expansion</p>
     </section>
@@ -867,29 +864,29 @@
     </div>
 
     <!-- Intro Section -->
-    <section class="intro">
+    <section class="intro" data-aos="fade-up">
       <p>Opésh Overseas isn’t just a company — it’s a bridge between timeless Indian Ayurvedic heritage and the world’s growing demand for clean, effective, plant-powered wellness.</p>
       <p>Headquartered in India and committed to excellence, we serve as your trusted export partner, offering curated Ayurvedic solutions crafted with care, science, and global vision.</p>
     </section>
 
     <!-- Highlight Section -->
-    <section class="highlight">
+    <section class="highlight" data-aos="fade-up">
       <div class="highlight-cards">
         <h2>What Sets Us Apart</h2>
         <div class="card-grid">
-          <div class="card">
+          <div class="card" data-aos="zoom-in">
             <h3>International-Grade Professionalism</h3>
             <p>World-class processes, clean documentation, and regulatory precision.</p>
           </div>
-          <div class="card">
+          <div class="card" data-aos="zoom-in">
             <h3>Science-Backed Formulations</h3>
             <p>Pure Ayurvedic ingredients, supported by research and integrity.</p>
           </div>
-          <div class="card">
+          <div class="card" data-aos="zoom-in">
             <h3>Export-Ready Compliance</h3>
             <p>All paperwork and approvals prepared with global regulations in mind.</p>
           </div>
-          <div class="card">
+          <div class="card" data-aos="zoom-in">
             <h3>Transparent Partnerships</h3>
             <p>We believe in scalable, long-term, and ethical collaborations.</p>
           </div>
@@ -898,14 +895,14 @@
     </section>
 
     <!-- Mission Call Section -->
-    <section class="mission-call">
+    <section class="mission-call" data-aos="fade-up">
       <p>As we continue building a globally respected Ayurvedic export house, we invite wellness brands, distributors, and innovators across the world to connect with us and discover what sets Opésh Overseas apart.</p>
       <a href="contact.html" class="button">Start a Conversation</a>
     </section>
 
     <!-- Enquiry Form -->
     <section class="enquiry">
-      <div class="enquiry-form">
+      <div class="enquiry-form" data-aos="fade-up">
         <h2>Send Us an Enquiry</h2>
         <form action="https://formsubmit.co/exports@opeshoverseas.com" method="POST">
           <label for="name">Name</label>
@@ -979,6 +976,13 @@
     <img src="whatsapp-icon.png" alt="Chat on WhatsApp">
   </a>
 
+  <!-- AOS Script -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- GSAP and ScrollTrigger CDNs -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
   <!-- Embedded JavaScript -->
   <script>
     // Initialize AOS
@@ -1029,10 +1033,18 @@
     const slides = document.querySelectorAll('.slide');
     const dotsContainer = document.querySelector('.dots');
     let currentIndex = 0;
-    const slideCount = slides.length;
+    const originalSlides = slides.length;
+    const clonesToAdd = 2; // Sufficient for max visible slides (2 on desktop)
 
     if (slideshowContainer && dotsContainer) {
-      for (let i = 0; i < slideCount; i++) {
+      // Add clones for seamless looping
+      for (let i = 0; i < clonesToAdd; i++) {
+        const clone = slides[i].cloneNode(true);
+        slideshowContainer.appendChild(clone);
+      }
+
+      // Create dots based on original slides
+      for (let i = 0; i < originalSlides; i++) {
         const dot = document.createElement('div');
         dot.classList.add('dot');
         if (i === 0) dot.classList.add('active');
@@ -1043,7 +1055,8 @@
       const dots = document.querySelectorAll('.dot');
 
       function updateSlideWidth() {
-        return window.innerWidth <= 768 ? slideshowContainer.offsetWidth : slideshowContainer.offsetWidth / 2;
+        const containerWidth = slideshowContainer.offsetWidth;
+        return window.innerWidth <= 768 ? containerWidth : containerWidth / 2;
       }
 
       function moveSlide() {
@@ -1052,7 +1065,7 @@
         slideshowContainer.style.transition = 'transform 0.6s ease';
         slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
 
-        if (currentIndex >= slideCount) {
+        if (currentIndex >= originalSlides) {
           setTimeout(() => {
             slideshowContainer.style.transition = 'none';
             slideshowContainer.style.transform = 'translateX(0px)';
@@ -1066,7 +1079,7 @@
 
       function updateDots() {
         dots.forEach(dot => dot.classList.remove('active'));
-        dots[currentIndex % slideCount].classList.add('active');
+        dots[currentIndex % originalSlides].classList.add('active');
       }
 
       function jumpToSlide(index) {
@@ -1086,21 +1099,20 @@
       });
     }
 
-    // GSAP Slide-Over Animation
+    // GSAP and ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-        pin: true,
-        pinSpacing: false,
-        markers: false
-      }
+    // Pin the hero section
+    ScrollTrigger.create({
+      trigger: ".hero",
+      start: "top top",
+      end: "bottom top",
+      pin: true,
+      pinSpacing: false,
+      markers: false
     });
 
+    // Move slideshow wrapper on scroll
     gsap.to(".slideshow-wrapper", {
       y: "-50vh",
       ease: "none",
@@ -1112,12 +1124,6 @@
       }
     });
   </script>
-
-  <!-- AOS Script -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-  <!-- GSAP and ScrollTrigger CDNs -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 </body>
 </html>
+```
