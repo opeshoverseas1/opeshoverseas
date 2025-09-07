@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,6 +27,8 @@
   <title>Opésh Overseas | Ayurvedic Exports</title>
   <link rel="canonical" href="https://opeshoverseas.com/" />
   <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preload" href="assets/logistics.jpg" as="image">
+  <link rel="preload" href="https://res.cloudinary.com/dpclwaw7u/video/upload/v1754383351/video_lm0obz.mp4" as="video">
 
   <!-- External Resources -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
@@ -87,9 +88,15 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Playfair Display', serif;
       background-color: #f0f8ff;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Utility Classes */
@@ -281,12 +288,15 @@
       height: 100vh;
       overflow: hidden;
       z-index: 1;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
     }
 
     .video-hero video {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
 
     .video-overlay {
@@ -321,6 +331,7 @@
       width: 100%;
       max-height: 500px;
       object-fit: cover;
+      display: block;
     }
 
     /* Hero Section */
@@ -330,10 +341,19 @@
       margin: 0 auto;
       max-width: 1100px;
       border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      box-shadow: none;
       text-align: center;
       position: relative;
       z-index: 1;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .hero {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
     }
 
     .hero h1 {
@@ -353,6 +373,108 @@
       position: relative;
       z-index: 2;
       overflow: hidden;
+      background: linear-gradient(135deg, rgba(0, 122, 204, 0.2), rgba(167, 211, 245, 0.2)); /* Subtle background gradient */
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .slideshow-container {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .slide {
+      flex: 0 0 50%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 50vh;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    }
+
+    .slide.active img {
+      transform: scale(1.05); /* Zoom effect for active slide */
+      opacity: 1;
+    }
+
+    .slide:not(.active) img {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+      opacity: 0.4;
+      transition: opacity 0.5s ease-in-out;
+      z-index: 1;
+    }
+
+    .slide.active::before {
+      opacity: 0.2; /* Lighter overlay for active slide */
+    }
+
+    .slide:hover::before {
+      opacity: 0.1; /* Brighten on hover */
+    }
+
+    .slide:hover img {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+
+    .slide-text {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+
+    .slide:hover .slide-text {
+      transform: translateY(-5px); /* Lift effect on hover */
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .dot.active {
+      background: #007acc;
+      transform: scale(1.2);
     }
 
     /* Intro Section */
@@ -371,7 +493,14 @@
       background: #e6f4ff;
       padding: 40px 30px;
       border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: none;
+      transition: box-shadow 0.3s ease;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .highlight-cards {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      }
     }
 
     .highlight-cards h2 {
@@ -436,8 +565,15 @@
       background: #fff;
       padding: 50px 40px;
       border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+      box-shadow: none;
       font-family: Arial, sans-serif;
+      transition: box-shadow 0.3s ease;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .enquiry-form {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+      }
     }
 
     .enquiry-form h2 {
@@ -479,55 +615,6 @@
 
     .enquiry-form button:hover {
       background-color: #005fa3;
-    }
-
-    /* Slideshow */
-    .slideshow-container {
-      display: flex;
-      transition: transform 0.6s ease;
-    }
-
-    .slide {
-      flex: 0 0 50%;
-      position: relative;
-    }
-
-    .slide img {
-      width: 100%;
-      height: 50vh;
-      object-fit: cover;
-    }
-
-    .slide-text {
-      position: absolute;
-      bottom: 15px;
-      left: 15px;
-      color: #fff;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-
-    .dots {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #ccc;
-      cursor: pointer;
-    }
-
-    .dot.active {
-      background: #007acc;
     }
 
     /* Footer */
@@ -627,6 +714,7 @@
       align-items: center;
       justify-content: center;
       transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      will-change: transform;
     }
 
     .whatsapp-float:hover {
@@ -716,6 +804,19 @@
 
       .slide img {
         height: 40vh;
+      }
+
+      .slide-text {
+        font-size: 1rem;
+      }
+
+      .slide.active img {
+        transform: scale(1.02); /* Reduced scale for mobile */
+      }
+
+      .slide:hover img,
+      .slide:hover .slide-text {
+        transform: none; /* Disable hover effects on mobile */
       }
 
       .enquiry {
@@ -818,7 +919,7 @@
 
   <!-- Video Hero -->
   <section class="video-hero">
-    <video autoplay muted loop playsinline>
+    <video autoplay muted loop playsinline poster="assets/video-poster.jpg">
       <source src="https://res.cloudinary.com/dpclwaw7u/video/upload/v1754383351/video_lm0obz.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
@@ -827,9 +928,6 @@
       <p>Exporting Ayurvedic Wellness Globally</p>
     </div>
   </section>
-
-  <!-- Banner -->
-
 
   <!-- Main Content -->
   <main>
@@ -842,19 +940,19 @@
     <div class="slideshow-wrapper">
       <div class="slideshow-container">
         <div class="slide">
-          <img src="assets/logistics.jpg" alt="Global Shipping">
+          <img src="assets/logistics.jpg" alt="Global Shipping" loading="lazy">
           <div class="slide-text">Global Shipping</div>
         </div>
         <div class="slide">
-          <img src="assets/team.jpg" alt="Dedicated Team">
+          <img src="assets/team.jpg" alt="Dedicated Team" loading="lazy">
           <div class="slide-text">Dedicated Team</div>
         </div>
         <div class="slide">
-          <img src="assets/lab.jpg" alt="Science-Backed Lab">
+          <img src="assets/lab.jpg" alt="Science-Backed Lab" loading="lazy">
           <div class="slide-text">Science-Backed Lab</div>
         </div>
         <div class="slide">
-          <img src="assets/wellness.jpg" alt="Herbal Products">
+          <img src="assets/wellness.jpg" alt="Herbal Products" loading="lazy">
           <div class="slide-text">Herbal Products</div>
         </div>
       </div>
@@ -985,9 +1083,12 @@
   <script>
     // Initialize AOS
     AOS.init({
-      duration: 800,
+      duration: 600,
       once: true,
-      easing: 'ease-in-out'
+      easing: 'ease-out',
+      disable: 'mobile',
+      startEvent: 'DOMContentLoaded',
+      throttleDelay: 100
     });
 
     // Mobile Menu Toggle
@@ -1032,16 +1133,16 @@
     const dotsContainer = document.querySelector('.dots');
     let currentIndex = 0;
     const originalSlides = slides.length;
-    const clonesToAdd = 2; // Sufficient for max visible slides (2 on desktop)
+    let slideshowInterval;
 
     if (slideshowContainer && dotsContainer) {
-      // Add clones for seamless looping
-      for (let i = 0; i < clonesToAdd; i++) {
-        const clone = slides[i].cloneNode(true);
+      // Clone all slides for seamless looping
+      slides.forEach(slide => {
+        const clone = slide.cloneNode(true);
         slideshowContainer.appendChild(clone);
-      }
+      });
 
-      // Create dots based on original slides
+      // Create dots
       for (let i = 0; i < originalSlides; i++) {
         const dot = document.createElement('div');
         dot.classList.add('dot');
@@ -1051,27 +1152,41 @@
       }
 
       const dots = document.querySelectorAll('.dot');
+      const allSlides = document.querySelectorAll('.slide'); // Includes clones
 
       function updateSlideWidth() {
         const containerWidth = slideshowContainer.offsetWidth;
         return window.innerWidth <= 768 ? containerWidth : containerWidth / 2;
       }
 
+      function updateActiveSlide() {
+        allSlides.forEach((slide, index) => {
+          slide.classList.remove('active');
+          if (index === currentIndex || (index >= originalSlides && index % originalSlides === currentIndex)) {
+            slide.classList.add('active');
+          }
+        });
+      }
+
       function moveSlide() {
         const width = updateSlideWidth();
         currentIndex++;
-        slideshowContainer.style.transition = 'transform 0.6s ease';
+
+        slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
         slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
+
+        updateActiveSlide();
+        updateDots();
 
         if (currentIndex >= originalSlides) {
           setTimeout(() => {
             slideshowContainer.style.transition = 'none';
-            slideshowContainer.style.transform = 'translateX(0px)';
             currentIndex = 0;
-            updateDots();
-          }, 600);
-        } else {
-          updateDots();
+            slideshowContainer.style.transform = `translateX(0px)`;
+            slideshowContainer.offsetHeight;
+            slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
+            updateActiveSlide();
+          }, 500);
         }
       }
 
@@ -1083,45 +1198,51 @@
       function jumpToSlide(index) {
         const width = updateSlideWidth();
         currentIndex = index;
-        slideshowContainer.style.transition = 'transform 0.6s ease';
+        slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
         slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
+        updateActiveSlide();
         updateDots();
       }
 
-      let slideshowInterval = setInterval(moveSlide, 3000);
+      // Initialize slideshow
+      updateActiveSlide(); // Set initial active slide
+      slideshowInterval = setInterval(moveSlide, 3000);
 
+      // Pause on hover
+      slideshowContainer.addEventListener('mouseenter', () => clearInterval(slideshowInterval));
+      slideshowContainer.addEventListener('mouseleave', () => {
+        slideshowInterval = setInterval(moveSlide, 3000);
+      });
+
+      // Debounced resize handler
+      let resizeTimer;
       window.addEventListener('resize', () => {
-        const width = updateSlideWidth();
-        slideshowContainer.style.transition = 'none';
-        slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          const width = updateSlideWidth();
+          slideshowContainer.style.transition = 'none';
+          slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
+          slideshowContainer.offsetHeight;
+          slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
+          updateActiveSlide();
+        }, 100);
       });
     }
 
     // GSAP and ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
+    gsap.ticker.lagSmoothing(0);
 
     // Pin the hero section
     ScrollTrigger.create({
-      trigger: ".hero",
-      start: "top top",
-      end: "bottom top",
+      trigger: '.hero',
+      start: 'top top',
+      end: '+=200px',
       pin: true,
       pinSpacing: false,
+      anticipatePin: 1,
       markers: false
-    });
-
-    // Move slideshow wrapper on scroll
-    gsap.to(".slideshow-wrapper", {
-      y: "-50vh",
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "bottom bottom",
-        end: "bottom top",
-        scrub: 1
-      }
     });
   </script>
 </body>
 </html>
-```
