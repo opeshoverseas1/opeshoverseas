@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Meta Tags -->
@@ -119,6 +158,8 @@
       gap: 18px;
       max-width: 1200px;
       margin: 0 auto 0 20px;
+      flex-wrap: wrap;
+      justify-content: space-between;
     }
 
     .header-content .logo {
@@ -138,6 +179,43 @@
       font-size: 17px;
       font-style: italic;
       color: #000;
+    }
+
+    /* Search Bar */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 20px;
+    }
+
+    .search-bar input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      width: 200px;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: #007acc;
+    }
+
+    .search-bar button {
+      padding: 10px 15px;
+      background-color: #007acc;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .search-bar button:hover {
+      background-color: #005fa3;
     }
 
     /* Navigation */
@@ -321,51 +399,64 @@
       font-size: 20px;
     }
 
-    /* Banner */
-    .banner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .banner img {
-      width: 100%;
-      max-height: 500px;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Hero Section */
-    .hero {
-      background-color: #e0f4ff;
-      padding: 60px 20px;
-      margin: 0 auto;
+    /* Our Products Section */
+    .our-products {
+      padding: 40px 20px;
       max-width: 1100px;
-      border-radius: 15px;
-      box-shadow: none;
+      margin: auto;
       text-align: center;
-      position: relative;
-      z-index: 1;
-      will-change: transform, opacity;
-      backface-visibility: hidden;
-      transition: box-shadow 0.3s ease;
+      background-color: #e0f4ff;
+      border-radius: 15px;
     }
 
-    @media (prefers-reduced-motion: no-preference) {
-      .hero {
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      }
+    .our-products h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #000;
     }
 
-    .hero h1 {
-      font-size: 42px;
-      font-weight: normal;
+    .our-products p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .our-products .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .our-products .product-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .our-products .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .our-products .product-card h3 {
+      font-size: 20px;
       margin-bottom: 10px;
     }
 
-    .hero p {
-      font-size: 20px;
-      font-style: italic;
-      color: #333;
+    .our-products .product-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .our-products .product-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
     }
 
     /* Slideshow */
@@ -373,7 +464,7 @@
       position: relative;
       z-index: 2;
       overflow: hidden;
-      background: linear-gradient(135deg, rgba(0, 122, 204, 0.2), rgba(167, 211, 245, 0.2)); /* Subtle background gradient */
+      background: linear-gradient(135deg, rgba(0, 122, 204, 0.2), rgba(167, 211, 245, 0.2));
       will-change: transform;
       backface-visibility: hidden;
     }
@@ -400,7 +491,7 @@
     }
 
     .slide.active img {
-      transform: scale(1.05); /* Zoom effect for active slide */
+      transform: scale(1.05);
       opacity: 1;
     }
 
@@ -423,11 +514,11 @@
     }
 
     .slide.active::before {
-      opacity: 0.2; /* Lighter overlay for active slide */
+      opacity: 0.2;
     }
 
     .slide:hover::before {
-      opacity: 0.1; /* Brighten on hover */
+      opacity: 0.1;
     }
 
     .slide:hover img {
@@ -450,7 +541,7 @@
     }
 
     .slide:hover .slide-text {
-      transform: translateY(-5px); /* Lift effect on hover */
+      transform: translateY(-5px);
     }
 
     .dots {
@@ -753,6 +844,10 @@
         height: 120px;
       }
 
+      .search-bar input {
+        width: 100%;
+      }
+
       .hero {
         padding: 40px 15px;
       }
@@ -787,7 +882,7 @@
       }
 
       .video-hero {
-        height: 60vh;
+        height: 70vh; /* Slightly longer video height for mobile */
       }
 
       .video-overlay h1 {
@@ -811,12 +906,12 @@
       }
 
       .slide.active img {
-        transform: scale(1.02); /* Reduced scale for mobile */
+        transform: scale(1.02);
       }
 
       .slide:hover img,
       .slide:hover .slide-text {
-        transform: none; /* Disable hover effects on mobile */
+        transform: none;
       }
 
       .enquiry {
@@ -825,6 +920,18 @@
 
       .card {
         min-height: 120px;
+      }
+
+      .our-products .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .our-products h2 {
+        font-size: 28px;
+      }
+
+      .our-products p {
+        font-size: 16px;
       }
     }
 
@@ -878,6 +985,10 @@
         <h1>Opésh Overseas</h1>
         <p>~From India to the World~</p>
       </div>
+      <form class="search-bar" action="search.html" method="GET">
+        <input type="text" name="query" placeholder="Search products..." aria-label="Search products">
+        <button type="submit">Search</button>
+      </form>
     </div>
   </header>
 
@@ -930,6 +1041,35 @@
   </section>
 
   <!-- Main Content -->
+  <main>
+    <!-- Our Products Section -->
+    <section class="our-products" data-aos="fade-up">
+      <h2>Our Products</h2>
+      <p>Discover our range of premium Ayurvedic and herbal products, crafted with pure ingredients and backed by science to promote holistic wellness.</p>
+      <div class="product-grid">
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+          <img src="assets/product1.jpg" alt="Ayurvedic Supplement" loading="lazy">
+          <h3>Ayurvedic Supplements</h3>
+          <p>High-potency supplements designed to support immunity, energy, and overall health.</p>
+        </div>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+          <img src="assets/product2.jpg" alt="Herbal Teas" loading="lazy">
+          <h3>Herbal Teas</h3>
+          <p>Soothing blends of organic herbs to promote relaxation and wellness.</p>
+        </div>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+          <img src="assets/product3.jpg" alt="Skincare Products" loading="lazy">
+          <h3>Skincare Products</h3>
+          <p>Natural, chemical-free skincare solutions for radiant and healthy skin.</p>
+        </div>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+          <img src="assets/product4.jpg" alt="Nutraceuticals" loading="lazy">
+          <h3>Nutraceuticals</h3>
+          <p>Science-backed formulations to enhance nutrition and vitality.</p>
+        </div>
+      </div>
+      <a href="products.html" class="button">Explore All Products</a>
+    </section>
 
     <!-- Slideshow -->
     <div class="slideshow-wrapper">
@@ -1070,9 +1210,8 @@
   <!-- AOS Script -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-  <!-- GSAP and ScrollTrigger CDNs -->
+  <!-- GSAP CDN -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
   <!-- Embedded JavaScript -->
   <script>
@@ -1200,7 +1339,7 @@
       }
 
       // Initialize slideshow
-      updateActiveSlide(); // Set initial active slide
+      updateActiveSlide();
       slideshowInterval = setInterval(moveSlide, 3000);
 
       // Pause on hover
@@ -1223,21 +1362,6 @@
         }, 100);
       });
     }
-
-    // GSAP and ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.ticker.lagSmoothing(0);
-
-    // Pin the hero section
-    ScrollTrigger.create({
-      trigger: '.hero',
-      start: 'top top',
-      end: '+=200px',
-      pin: true,
-      pinSpacing: false,
-      anticipatePin: 1,
-      markers: false
-    });
   </script>
 </body>
 </html>
