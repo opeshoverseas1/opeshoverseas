@@ -1,0 +1,1417 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Export premium Ayurvedic and Herbal products from India with Opesh Overseas. Global wellness, pure ingredients, and export-compliant formulations trusted worldwide.">
+  <meta name="keywords" content="Ayurvedic Exports, Herbal Products, Opesh Overseas, Ayurvedic Exporter India, Organic Herbs, Global Ayurveda Supplier, Herbal Remedies, Wellness Exports, Natural Healthcare, Nutraceuticals">
+  <meta name="theme-color" content="#d0eaff">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Opésh Overseas | Ayurvedic Exports">
+  <meta property="og:description" content="Premium Ayurvedic and Herbal exports from India to the world.">
+  <meta property="og:image" content="https://opeshoverseas.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://opeshoverseas.com/">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Opésh Overseas | Ayurvedic Exports">
+  <meta name="twitter:description" content="Premium Ayurvedic and Herbal exports from India to the world.">
+  <meta name="twitter:image" content="https://opeshoverseas.com/cover.png">
+
+  <!-- Other Meta -->
+  <title>Opésh Overseas | Ayurvedic Exports</title>
+  <link rel="canonical" href="https://opeshoverseas.com/" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preload" href="assets/logistics.jpg" as="image">
+  <link rel="preload" href="https://res.cloudinary.com/dpclwaw7u/video/upload/v1754383351/video_lm0obz.mp4" as="video">
+
+  <!-- External Resources -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N18R64Z12M"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-N18R64Z12M');
+  </script>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Opésh Overseas",
+      "alternateName": "Opesh Overseas",
+      "url": "https://opeshoverseas.com/",
+      "logo": "https://opeshoverseas.com/logo.png",
+      "description": "Opésh Overseas is a premium exporter of Ayurvedic and Herbal products from India, delivering pure, compliant, and science-backed formulations to global markets.",
+      "foundingDate": "2025",
+      "founder": {
+        "@type": "Person",
+        "name": "Pavitra Sharma"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN",
+        "addressLocality": "Gurgaon",
+        "addressRegion": "Haryana"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-7976529421",
+        "contactType": "Sales & Export Inquiries",
+        "areaServed": "Worldwide",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/opeshoverseas",
+        "https://www.instagram.com/opeshoverseas",
+        "https://wa.me/917976529421"
+      ]
+    }
+  </script>
+
+  <!-- Embedded CSS -->
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Playfair Display', serif;
+      background-color: #f0f8ff;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Utility Classes */
+    .sr-only {
+      position: absolute;
+      left: -9999px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: #d0eaff;
+      z-index: 1;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      max-width: 1200px;
+      margin: 0 auto 0 20px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .header-content .logo {
+      height: 180px;
+      width: auto;
+      filter: drop-shadow(0 0 6px rgba(0, 128, 255, 0.3));
+    }
+
+    .header-text h1 {
+      margin: 0;
+      font-size: 34px;
+      color: #000;
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 17px;
+      font-style: italic;
+      color: #000;
+    }
+
+    /* Search Bar */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 20px;
+    }
+
+    .search-bar input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      width: 200px;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: #007acc;
+    }
+
+    .search-bar button {
+      padding: 10px 15px;
+      background-color: #007acc;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .search-bar button:hover {
+      background-color: #005fa3;
+    }
+
+    /* Navigation */
+    nav {
+      background-color: #a7d3f5;
+      padding: 10px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .desktop-nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    .desktop-nav a {
+      position: relative;
+      text-decoration: none;
+      font-weight: bold;
+      color: #000;
+      font-size: 16px;
+      padding: 5px 8px;
+      transition: color 0.3s ease;
+    }
+
+    .desktop-nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background-color: #007acc;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s ease;
+    }
+
+    .desktop-nav a:hover {
+      color: #007acc;
+    }
+
+    .desktop-nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav {
+      display: none;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .menu-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background: transparent;
+      border: none;
+      z-index: 10000;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 28px;
+      height: 3px;
+      background: #000;
+      margin: 3px 0;
+      transition: all 0.4s ease-in-out;
+      border-radius: 2px;
+    }
+
+    .menu-toggle.open span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.open span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+
+    .nav-links {
+      position: fixed;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(135deg, rgba(167, 211, 245, 0.9), rgba(0, 122, 204, 0.7));
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.6s ease-in-out;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .nav-links.show {
+      transform: translateX(-100%);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #fff;
+      font-size: 24px;
+      padding: 15px;
+      transition: all 0.3s ease;
+      transform: translateX(50px);
+      opacity: 0;
+    }
+
+    .nav-links.show a {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .nav-links a:hover {
+      color: #d0eaff;
+      transform: scale(1.1);
+    }
+
+    .nav-links a::after {
+      content: none;
+    }
+
+    /* Video Hero */
+    .video-hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 1;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+    .video-hero video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 2;
+    }
+
+    .video-overlay h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .video-overlay p {
+      font-size: 20px;
+    }
+
+    /* Our Products Section */
+    .our-products {
+      padding: 40px 20px;
+      max-width: 1100px;
+      margin: auto;
+      text-align: center;
+      background-color: #e0f4ff;
+      border-radius: 15px;
+    }
+
+    .our-products h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    .our-products p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .our-products .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .our-products .product-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: none; /* Hidden by default; JS will show matches */
+    }
+
+    .our-products .product-card.show {
+      display: block;
+    }
+
+    .our-products .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .our-products .product-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .our-products .product-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .our-products .product-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    /* No results message */
+    .no-results {
+      display: none;
+      font-size: 18px;
+      color: #555;
+      margin-top: 20px;
+    }
+
+    /* Slideshow */
+    .slideshow-wrapper {
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(0, 122, 204, 0.2), rgba(167, 211, 245, 0.2));
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .slideshow-container {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .slide {
+      flex: 0 0 50%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 50vh;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    }
+
+    .slide.active img {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+
+    .slide:not(.active) img {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+      opacity: 0.4;
+      transition: opacity 0.5s ease-in-out;
+      z-index: 1;
+    }
+
+    .slide.active::before {
+      opacity: 0.2;
+    }
+
+    .slide:hover::before {
+      opacity: 0.1;
+    }
+
+    .slide:hover img {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+
+    .slide-text {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+
+    .slide:hover .slide-text {
+      transform: translateY(-5px);
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .dot.active {
+      background: #007acc;
+      transform: scale(1.2);
+    }
+
+    /* Intro Section */
+    .intro,
+    .highlight,
+    .mission-call {
+      padding: 30px 20px;
+      max-width: 900px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    /* Highlight Cards */
+    .highlight-cards {
+      background: #e6f4ff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: none;
+      transition: box-shadow 0.3s ease;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .highlight-cards {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    .highlight-cards h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 150px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      flex: 0 0 auto;
+    }
+
+    .card p {
+      flex: 1 0 auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Mission Call */
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #2a9d8f;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    /* Enquiry Form */
+    .enquiry {
+      padding: 50px 20px;
+      background-color: #f5faff;
+    }
+
+    .enquiry-form {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow: none;
+      font-family: Arial, sans-serif;
+      transition: box-shadow 0.3s ease;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .enquiry-form {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+      }
+    }
+
+    .enquiry-form h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 26px;
+      color: #000;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .enquiry-form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .enquiry-form input,
+    .enquiry-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .enquiry-form button {
+      width: 100%;
+      padding: 14px;
+      background-color: #007acc;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .enquiry-form button:hover {
+      background-color: #005fa3;
+    }
+
+    /* Footer */
+    footer {
+      background: url('banner.png') no-repeat center center/cover;
+      color: #fff;
+      position: relative;
+      font-family: Arial, sans-serif;
+    }
+
+    .footer-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .footer-content {
+      position: relative;
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .footer-content h3 {
+      margin-bottom: 15px;
+      font-size: 20px;
+      color: #d0eaff;
+    }
+
+    .footer-content p {
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    .social-icons {
+      margin-top: 10px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .social-icons img {
+      width: 24px;
+    }
+
+    .footer-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .footer-content ul li a {
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    .footer-content ul li a:hover,
+    .footer-bottom a:hover {
+      color: #66ccff;
+    }
+
+    .footer-bottom {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 12px;
+      text-align: center;
+      font-size: 13px;
+      color: #ccc;
+      margin-top: 30px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .footer-bottom a {
+      color: #ccc;
+      margin-right: 15px;
+      text-decoration: underline;
+    }
+
+    /* WhatsApp Floating Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 1000;
+      background-color: #25d366;
+      padding: 14px;
+      border-radius: 50%;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      will-change: transform;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      background-color: #1ebe5c;
+    }
+
+    .whatsapp-float img {
+      height: 28px;
+      width: 28px;
+    }
+
+    /* Media Queries */
+    @media screen and (max-width: 768px) {
+      .desktop-nav {
+        display: none;
+      }
+
+      .mobile-nav {
+        display: flex;
+      }
+
+      nav {
+        background: transparent;
+        padding: 0;
+      }
+
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+      }
+
+      .header-content .logo {
+        height: 120px;
+      }
+
+      .search-bar input {
+        width: 100%;
+      }
+
+      .hero {
+        padding: 40px 15px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .intro,
+      .highlight,
+      .mission-call {
+        padding: 20px 15px;
+        font-size: 16px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .card h3 {
+        font-size: 18px;
+      }
+
+      .card p {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .video-hero {
+        height: 70vh; /* Slightly longer video height for mobile */
+      }
+
+      .video-overlay h1 {
+        font-size: 26px;
+      }
+
+      .video-overlay p {
+        font-size: 16px;
+      }
+
+      .slide {
+        flex: 0 0 100%;
+      }
+
+      .slide img {
+        height: 40vh;
+      }
+
+      .slide-text {
+        font-size: 1rem;
+      }
+
+      .slide.active img {
+        transform: scale(1.02);
+      }
+
+      .slide:hover img,
+      .slide:hover .slide-text {
+        transform: none;
+      }
+
+      .enquiry {
+        padding: 30px 15px;
+      }
+
+      .card {
+        min-height: 120px;
+      }
+
+      .our-products .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .our-products h2 {
+        font-size: 28px;
+      }
+
+      .our-products p {
+        font-size: 16px;
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      .mobile-nav,
+      .menu-toggle {
+        display: none;
+      }
+
+      .nav-links {
+        display: flex;
+        max-height: none;
+        flex-direction: row;
+        gap: 30px;
+        background: none;
+        backdrop-filter: none;
+        box-shadow: none;
+        position: static;
+        opacity: 1;
+      }
+
+      .nav-links a {
+        color: #000;
+        font-size: 16px;
+        padding: 5px 8px;
+      }
+
+      .nav-links a:hover {
+        background: none;
+        transform: none;
+      }
+
+      .nav-links a::after {
+        bottom: -4px;
+        left: 0;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <span class="sr-only">Opesh Overseas</span>
+    <div class="header-content">
+      <img src="logo.png" alt="Opésh Overseas Logo" class="logo">
+      <div class="header-text">
+        <h1>Opésh Overseas</h1>
+        <p>~From India to the World~</p>
+      </div>
+      <form class="search-bar" id="searchForm">
+        <input type="text" id="searchInput" placeholder="Search products..." aria-label="Search products">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav>
+    <!-- Desktop Nav -->
+    <div class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="products.html">Products & Science</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="export.html">Export</a>
+      <a href="partners.html">Partners</a>
+      <a href="careers.html">Careers</a>
+      <a href="faq.html">FAQs</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav">
+      <button class="menu-toggle" aria-label="Toggle Menu" onclick="toggleMenu(this)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="products.html">Products & Science</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="export.html">Export</a>
+        <a href="partners.html">Partners</a>
+        <a href="careers.html">Careers</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Video Hero -->
+  <section class="video-hero">
+    <video autoplay muted loop playsinline poster="assets/video-poster.jpg">
+      <source src="https://res.cloudinary.com/dpclwaw7u/video/upload/v1754383351/video_lm0obz.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="video-overlay">
+      <h1>Welcome to Opésh Overseas</h1>
+      <p>Exporting Ayurvedic Wellness Globally</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Our Products Section -->
+    <section class="our-products" data-aos="fade-up">
+      <h2>Our Products</h2>
+      <p>Discover our range of premium Ayurvedic and herbal products, crafted with pure ingredients and backed by science to promote holistic wellness.</p>
+      <div class="product-grid">
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+          <img src="assets/product1.jpg" alt="Ayurvedic Supplement" loading="lazy">
+          <h3>Ayurvedic Supplements</h3>
+          <p>High-potency supplements designed to support immunity, energy, and overall health.</p>
+        </div>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+          <img src="assets/product2.jpg" alt="Herbal Teas" loading="lazy">
+          <h3>Herbal Teas</h3>
+          <p>Soothing blends of organic herbs to promote relaxation and wellness.</p>
+        </div>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+          <img src="assets/product3.jpg" alt="Skincare Products" loading="lazy">
+          <h3>Skincare Products</h3>
+          <p>Natural, chemical-free skincare solutions for radiant and healthy skin.</p>
+        </div>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+          <img src="assets/product4.jpg" alt="Nutraceuticals" loading="lazy">
+          <h3>Nutraceuticals</h3>
+          <p>Science-backed formulations to enhance nutrition and vitality.</p>
+        </div>
+      </div>
+      <p class="no-results">No products match your search.</p>
+      <a href="products.html" class="button">Explore All Products</a>
+    </section>
+
+    <!-- Slideshow -->
+    <div class="slideshow-wrapper">
+      <div class="slideshow-container">
+        <div class="slide">
+          <img src="assets/logistics.jpg" alt="Global Shipping" loading="lazy">
+          <div class="slide-text">Global Shipping</div>
+        </div>
+        <div class="slide">
+          <img src="assets/team.jpg" alt="Dedicated Team" loading="lazy">
+          <div class="slide-text">Dedicated Team</div>
+        </div>
+        <div class="slide">
+          <img src="assets/lab.jpg" alt="Science-Backed Lab" loading="lazy">
+          <div class="slide-text">Science-Backed Lab</div>
+        </div>
+        <div class="slide">
+          <img src="assets/wellness.jpg" alt="Herbal Products" loading="lazy">
+          <div class="slide-text">Herbal Products</div>
+        </div>
+      </div>
+      <div class="dots"></div>
+    </div>
+
+    <!-- Intro Section -->
+    <section class="intro" data-aos="fade-up">
+      <p>Opésh Overseas isn’t just a company — it’s a bridge between timeless Indian Ayurvedic heritage and the world’s growing demand for clean, effective, plant-powered wellness.</p>
+      <p>Headquartered in India and committed to excellence, we serve as your trusted export partner, offering curated Ayurvedic solutions crafted with care, science, and global vision.</p>
+    </section>
+
+    <!-- Highlight Section -->
+    <section class="highlight" data-aos="fade-up">
+      <div class="highlight-cards">
+        <h2>What Sets Us Apart</h2>
+        <div class="card-grid">
+          <div class="card" data-aos="zoom-in">
+            <h3>International-Grade Professionalism</h3>
+            <p>World-class processes, clean documentation, and regulatory precision.</p>
+          </div>
+          <div class="card" data-aos="zoom-in">
+            <h3>Science-Backed Formulations</h3>
+            <p>Pure Ayurvedic ingredients, supported by research and integrity.</p>
+          </div>
+          <div class="card" data-aos="zoom-in">
+            <h3>Export-Ready Compliance</h3>
+            <p>All paperwork and approvals prepared with global regulations in mind.</p>
+          </div>
+          <div class="card" data-aos="zoom-in">
+            <h3>Transparent Partnerships</h3>
+            <p>We believe in scalable, long-term, and ethical collaborations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Call Section -->
+    <section class="mission-call" data-aos="fade-up">
+      <p>As we continue building a globally respected Ayurvedic export house, we invite wellness brands, distributors, and innovators across the world to connect with us and discover what sets Opésh Overseas apart.</p>
+      <a href="contact.html" class="button">Start a Conversation</a>
+    </section>
+
+    <!-- Enquiry Form -->
+    <section class="enquiry">
+      <div class="enquiry-form" data-aos="fade-up">
+        <h2>Send Us an Enquiry</h2>
+        <form action="https://formsubmit.co/exports@opeshoverseas.com" method="POST">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+91 9876543210">
+
+          <label for="country">Country</label>
+          <input type="text" id="country" name="country" placeholder="e.g. India, UAE, USA">
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+
+          <input type="hidden" name="_next" value="https://opeshoverseas.com/thankyou.html">
+          <button type="submit">Send Enquiry</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-overlay"></div>
+    <div class="footer-content">
+      <!-- Map Column -->
+      <div>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.294614908744!2d77.02663831507965!3d28.46761898248627!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1b8f4a4e4c4f%3A0x4c4f2f2f2f2f2f2f!2sPitampura%2C%20Delhi%2C%20India!5e0!3m2!1sen!2sin!4v1681234567890!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <!-- Contact Column -->
+      <div>
+        <h3>Contact</h3>
+        <p>📍 37-B Uttari Pitampura, India</p>
+        <p>📞 +91 79765 29421</p>
+        <p>✉ exports@opeshoverseas.com</p>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/company/opeshoverseas" target="_blank"><img src="linkedin-icon.png" alt="LinkedIn"></a>
+          <a href="https://www.instagram.com/opeshoverseas" target="_blank"><img src="instagram-icon.png" alt="Instagram"></a>
+          <a href="https://wa.me/917976529421" target="_blank"><img src="whatsapp-icon.png" alt="WhatsApp"></a>
+        </div>
+      </div>
+
+      <!-- Quick Links Column -->
+      <div>
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="products.html">Products & Science</a></li>
+          <li><a href="certifications.html">Certifications</a></li>
+          <li><a href="partners.html">Partners</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <a href="legal.html" aria-label="View Terms and Policies">Terms & Policies</a>
+      <a href="faq.html" aria-label="View Frequently Asked Questions">FAQs</a>
+      <p>© 2025 Opésh Overseas. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/+917976529421" target="_blank" class="whatsapp-float">
+    <img src="whatsapp-icon.png" alt="Chat on WhatsApp">
+  </a>
+
+  <!-- AOS Script -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- GSAP CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <!-- Embedded JavaScript -->
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 600,
+      once: true,
+      easing: 'ease-out',
+      disable: 'mobile',
+      startEvent: 'DOMContentLoaded',
+      throttleDelay: 100
+    });
+
+    // Mobile Menu Toggle
+    function toggleMenu(button) {
+      const nav = document.getElementById('navLinks');
+      if (nav) {
+        const isOpen = nav.classList.contains('show');
+        nav.classList.toggle('show');
+        button.classList.toggle('open');
+
+        if (!isOpen) {
+          gsap.to('.nav-links a', {
+            x: 0,
+            opacity: 1,
+            stagger: 0.1,
+            duration: 0.5,
+            ease: 'power2.out'
+          });
+        } else {
+          gsap.to('.nav-links a', {
+            x: 50,
+            opacity: 0,
+            stagger: 0.05,
+            duration: 0.3,
+            ease: 'power2.in'
+          });
+        }
+      }
+    }
+
+    // Debug Footer Links
+    document.querySelectorAll('.footer-bottom a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        console.log('Footer link clicked:', link.href);
+        window.location.href = link.href;
+      });
+    });
+
+    // Slideshow
+    const slideshowContainer = document.querySelector('.slideshow-container');
+    const slides = document.querySelectorAll('.slide');
+    const dotsContainer = document.querySelector('.dots');
+    let currentIndex = 0;
+    const originalSlides = slides.length;
+    let slideshowInterval;
+
+    if (slideshowContainer && dotsContainer) {
+      // Clone all slides for seamless looping
+      slides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        slideshowContainer.appendChild(clone);
+      });
+
+      // Create dots
+      for (let i = 0; i < originalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => jumpToSlide(i));
+        dotsContainer.appendChild(dot);
+      }
+
+      const dots = document.querySelectorAll('.dot');
+      const allSlides = document.querySelectorAll('.slide'); // Includes clones
+
+      function updateSlideWidth() {
+        const containerWidth = slideshowContainer.offsetWidth;
+        return window.innerWidth <= 768 ? containerWidth : containerWidth / 2;
+      }
+
+      function updateActiveSlide() {
+        allSlides.forEach((slide, index) => {
+          slide.classList.remove('active');
+          if (index === currentIndex || (index >= originalSlides && index % originalSlides === currentIndex)) {
+            slide.classList.add('active');
+          }
+        });
+      }
+
+      function moveSlide() {
+        const width = updateSlideWidth();
+        currentIndex++;
+
+        slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
+        slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
+
+        updateActiveSlide();
+        updateDots();
+
+        if (currentIndex >= originalSlides) {
+          setTimeout(() => {
+            slideshowContainer.style.transition = 'none';
+            currentIndex = 0;
+            slideshowContainer.style.transform = `translateX(0px)`;
+            slideshowContainer.offsetHeight;
+            slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
+            updateActiveSlide();
+          }, 500);
+        }
+      }
+
+      function updateDots() {
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[currentIndex % originalSlides].classList.add('active');
+      }
+
+      function jumpToSlide(index) {
+        const width = updateSlideWidth();
+        currentIndex = index;
+        slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
+        slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
+        updateActiveSlide();
+        updateDots();
+      }
+
+      // Initialize slideshow
+      updateActiveSlide();
+      slideshowInterval = setInterval(moveSlide, 3000);
+
+      // Pause on hover
+      slideshowContainer.addEventListener('mouseenter', () => clearInterval(slideshowInterval));
+      slideshowContainer.addEventListener('mouseleave', () => {
+        slideshowInterval = setInterval(moveSlide, 3000);
+      });
+
+      // Debounced resize handler
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          const width = updateSlideWidth();
+          slideshowContainer.style.transition = 'none';
+          slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
+          slideshowContainer.offsetHeight;
+          slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
+          updateActiveSlide();
+        }, 100);
+      });
+    }
+
+    // Client-Side Search Functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchForm = document.getElementById('searchForm');
+      const searchInput = document.getElementById('searchInput');
+      const productCards = document.querySelectorAll('.product-card');
+      const noResults = document.querySelector('.no-results');
+
+      // Show all products initially
+      productCards.forEach(card => card.classList.add('show'));
+
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        performSearch();
+      });
+
+      searchInput.addEventListener('input', performSearch);
+
+      function performSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        let hasResults = false;
+
+        productCards.forEach(card => {
+          const title = card.querySelector('h3').textContent.toLowerCase();
+          const description = card.querySelector('p').textContent.toLowerCase();
+          if (title.includes(query) || description.includes(query)) {
+            card.classList.add('show');
+            hasResults = true;
+          } else {
+            card.classList.remove('show');
+          }
+        });
+
+        noResults.style.display = hasResults || !query ? 'none' : 'block';
+      }
+    });
+  </script>
+</body>
+</html>
