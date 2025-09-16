@@ -68,10 +68,15 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preload" href="assets/logistics.jpg" as="image">
   <link rel="preload" href="https://res.cloudinary.com/dpclwaw7u/video/upload/v1754383351/video_lm0obz.mp4" as="video">
+  <link rel="preload" href="assets/video-poster.jpg" as="image">
 
   <!-- External Resources -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Cookie Consent CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" onload="this.media='all'" />
+  <!-- Fallback for Cookie Consent CSS -->
+  <link rel="stylesheet" href="/css/cookieconsent.min.css" media="none" />
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N18R64Z12M"></script>
@@ -80,6 +85,48 @@
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-N18R64Z12M');
+  </script>
+
+  <!-- Cookie Consent Script with Fallback -->
+  <script defer src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" onerror="loadLocalCookieConsent()"></script>
+  <script defer src="/js/cookieconsent.min.js"></script>
+  <script>
+    function loadLocalCookieConsent() {
+      console.log('CookieConsent CDN failed, using local fallback');
+    }
+    window.addEventListener('load', function() {
+      if (typeof window.cookieconsent !== 'undefined') {
+        console.log('CookieConsent initialized');
+        window.cookieconsent.initialise({
+          "palette": {
+            "popup": { 
+              "background": "rgba(0, 0, 0, 0.6)", // Match video-overlay translucency
+              "text": "#fff"
+            },
+            "button": { 
+              "background": "linear-gradient(135deg, #007acc, #005fa3)",
+              "text": "#000" // Black text for Allow button
+            }
+          },
+          "position": "bottom-left",
+          "type": "opt-out",
+          "content": {
+            "message": "We use cookies to enhance your experience and provide personalized content. Manage your preferences below.",
+            "dismiss": "Accept All",
+            "allow": "Allow",
+            "deny": "Deny",
+            "link": "Privacy Policy",
+            "href": "https://opeshoverseas.com/legal.html",
+            "policy": "Cookie Policy"
+          },
+          "onStatusChange": function(status) {
+            console.log('Cookie status changed to: ' + status);
+          }
+        });
+      } else {
+        console.error('CookieConsent library not loaded');
+      }
+    });
   </script>
 
   <!-- Schema.org JSON-LD -->
@@ -144,41 +191,107 @@
       left: -9999px;
     }
 
-    /* Header */
+    /* Header with Video Background */
     header {
-      text-align: center;
-      padding: 20px;
-      background-color: #d0eaff;
+      position: relative;
+      width: 100%;
+      min-height: 90vh;
+      overflow: hidden;
       z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      background: linear-gradient(135deg, rgba(0, 122, 204, 0.5), rgba(167, 211, 245, 0.3));
+    }
+
+    .header-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.8);
     }
 
     .header-content {
+      padding: 15px;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      z-index: 2;
+      color: #fff;
       display: flex;
-      align-items: center;
-      gap: 18px;
-      max-width: 1200px;
-      margin: 0 auto 0 20px;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 90vw; /* Tighter constraint to prevent overflow */
+      width: 300px; /* Fixed width for consistency */
     }
 
     .header-content .logo {
-      height: 180px;
+      height: 80px;
       width: auto;
-      filter: drop-shadow(0 0 6px rgba(0, 128, 255, 0.3));
+      max-width: 100%; /* Prevent logo overflow */
+      filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.2s forwards;
     }
 
     .header-text h1 {
+      font-size: clamp(24px, 5vw, 32px); /* Responsive font size */
       margin: 0;
-      font-size: 34px;
-      color: #000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%; /* Prevent text overflow */
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.4s forwards;
     }
 
     .header-text p {
-      margin: 0;
-      font-size: 17px;
+      font-size: clamp(14px, 3vw, 16px);
       font-style: italic;
-      color: #000;
+      margin: 0;
+      max-width: 100%;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.6s forwards;
+    }
+
+    .video-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 12px;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 0.8s forwards;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .video-overlay h1 {
+      font-size: clamp(28px, 5vw, 36px);
+      margin-bottom: 10px;
+    }
+
+    .video-overlay p {
+      font-size: clamp(16px, 3vw, 20px);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Search Bar */
@@ -186,99 +299,143 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin: 10px 20px;
+      margin: 15px 0;
+      max-width: 90%;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 1s forwards;
     }
 
     .search-bar input {
-      padding: 10px;
-      border: 1px solid #ccc;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 8px;
-      font-size: 15px;
-      width: 200px;
-      transition: border-color 0.3s ease;
+      font-size: 16px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .search-bar input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
     }
 
     .search-bar input:focus {
       outline: none;
-      border-color: #007acc;
+      border-color: #fff;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
     }
 
     .search-bar button {
-      padding: 10px 15px;
-      background-color: #007acc;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #007acc, #005fa3);
       color: #fff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
-      transition: background 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .search-bar button:hover {
-      background-color: #005fa3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 122, 204, 0.3);
+    }
+
+    /* Search Results */
+    .search-results {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #e0f4ff;
+      border-radius: 15px;
+      display: none;
+    }
+
+    .search-results.active {
+      display: block;
+    }
+
+    .search-results h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    .search-results .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .search-results .result-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .search-results .result-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .search-results .result-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .search-results .result-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .search-results .result-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-results .no-results {
+      font-size: 16px;
+      color: #555;
+      text-align: center;
     }
 
     /* Navigation */
     nav {
-      background-color: #a7d3f5;
+      position: sticky;
+      top: 0;
+      background: rgba(167, 211, 245, 0.95);
+      backdrop-filter: blur(8px);
       padding: 10px 0;
-      display: flex;
-      justify-content: center;
+      z-index: 1000;
+      transition: box-shadow 0.3s ease;
+    }
+
+    nav.scrolled {
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .desktop-nav {
+      max-width: 1200px;
+      margin: auto;
+      position: relative;
       display: flex;
-      gap: 30px;
+      align-items: flex-start; /* Align to top */
+      justify-content: flex-end;
     }
 
-    .desktop-nav a {
-      position: relative;
-      text-decoration: none;
-      font-weight: bold;
-      color: #000;
-      font-size: 16px;
-      padding: 5px 8px;
-      transition: color 0.3s ease;
-    }
-
-    .desktop-nav a::after {
-      content: '';
+    .desktop-nav-toggle {
       position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 100%;
-      height: 2px;
-      background-color: #007acc;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.4s ease;
-    }
-
-    .desktop-nav a:hover {
-      color: #007acc;
-    }
-
-    .desktop-nav a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-
-    /* Mobile Navigation */
-    .mobile-nav {
-      display: none;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 0 20px;
-      position: relative;
-    }
-
-    .menu-toggle {
-      position: fixed;
-      top: 15px;
-      left: 15px;
+      top: 15px; /* Inside video box */
+      right: 15px;
       background: transparent;
       border: none;
-      z-index: 10000;
       cursor: pointer;
       width: 40px;
       height: 40px;
@@ -286,13 +443,130 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      z-index: 3;
+    }
+
+    .desktop-nav-toggle span {
+      display: block;
+      width: 28px;
+      height: 3px;
+      background: #fff; /* White for visibility on video */
+      margin: 3px 0;
+      transition: all 0.4s ease-in-out;
+      border-radius: 2px;
+    }
+
+    .desktop-nav-toggle.open span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+
+    .desktop-nav-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .desktop-nav-toggle.open span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+
+    .desktop-nav-links {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: rgba(167, 211, 245, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 20px;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transform: translateY(-20px);
+      opacity: 0;
+      visibility: hidden;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, visibility 0.4s;
+    }
+
+    .desktop-nav-links.show {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .desktop-nav-links a {
+      position: relative;
+      text-decoration: none;
+      font-weight: bold;
+      color: #000;
+      font-size: 16px;
+      padding: 10px 15px;
+      display: block;
+      transition: color 0.3s ease, transform 0.3s ease;
+      transform: translateX(20px);
+      opacity: 0;
+    }
+
+    .desktop-nav-links.show a {
+      transform: translateX(0);
+      opacity: 1;
+      transition-delay: calc(0.1s * var(--index));
+    }
+
+    .desktop-nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #007acc, #005fa3);
+      transition: width 0.4s ease;
+    }
+
+    .desktop-nav-links a:hover {
+      color: #007acc;
+      transform: translateX(5px);
+    }
+
+    .desktop-nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .desktop-nav-links a[aria-current="page"] {
+      color: #007acc;
+    }
+
+    .desktop-nav-links a[aria-current="page"]::after {
+      width: 100%;
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav {
+      display: none;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 15px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1001;
+    }
+
+    .menu-toggle {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1002;
     }
 
     .menu-toggle span {
       display: block;
       width: 28px;
       height: 3px;
-      background: #000;
+      background: #fff;
       margin: 3px 0;
       transition: all 0.4s ease-in-out;
       border-radius: 2px;
@@ -322,8 +596,8 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      transition: transform 0.6s ease-in-out;
-      z-index: 9999;
+      transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+      z-index: 1000;
       opacity: 0;
       pointer-events: none;
     }
@@ -357,46 +631,6 @@
 
     .nav-links a::after {
       content: none;
-    }
-
-    /* Video Hero */
-    .video-hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      z-index: 1;
-      will-change: transform, opacity;
-      backface-visibility: hidden;
-    }
-
-    .video-hero video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .video-overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #fff;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 20px;
-      border-radius: 10px;
-      z-index: 2;
-    }
-
-    .video-overlay h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-
-    .video-overlay p {
-      font-size: 20px;
     }
 
     /* Our Products Section */
@@ -455,8 +689,8 @@
     }
 
     .our-products .product-card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
     }
 
     /* Slideshow */
@@ -560,7 +794,7 @@
       border-radius: 50%;
       background: #ccc;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
 
     .dot.active {
@@ -629,8 +863,8 @@
     }
 
     .card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
 
     /* Mission Call */
@@ -638,10 +872,17 @@
       display: inline-block;
       margin-top: 20px;
       padding: 12px 24px;
-      background-color: #2a9d8f;
+      background: linear-gradient(135deg, #2a9d8f, #1e7a6e);
       color: #fff;
       text-decoration: none;
       border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-weight: bold;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(42, 157, 143, 0.3);
     }
 
     /* Enquiry Form */
@@ -657,7 +898,6 @@
       padding: 50px 40px;
       border-radius: 20px;
       box-shadow: none;
-      font-family: Arial, sans-serif;
       transition: box-shadow 0.3s ease;
     }
 
@@ -672,7 +912,6 @@
       margin-bottom: 30px;
       font-size: 26px;
       color: #000;
-      font-family: 'Playfair Display', serif;
     }
 
     .enquiry-form label {
@@ -689,23 +928,32 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 15px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .enquiry-form input:focus,
+    .enquiry-form textarea:focus {
+      outline: none;
+      border-color: #007acc;
+      box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.1);
     }
 
     .enquiry-form button {
       width: 100%;
       padding: 14px;
-      background-color: #007acc;
+      background: linear-gradient(135deg, #007acc, #005fa3);
       color: #fff;
       border: none;
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
       font-weight: bold;
-      transition: background 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .enquiry-form button:hover {
-      background-color: #005fa3;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 122, 204, 0.3);
     }
 
     /* Footer */
@@ -713,7 +961,6 @@
       background: url('banner.png') no-repeat center center/cover;
       color: #fff;
       position: relative;
-      font-family: Arial, sans-serif;
     }
 
     .footer-overlay {
@@ -755,6 +1002,11 @@
 
     .social-icons img {
       width: 24px;
+      transition: transform 0.3s ease;
+    }
+
+    .social-icons a:hover img {
+      transform: scale(1.2);
     }
 
     .footer-content ul {
@@ -767,6 +1019,7 @@
     .footer-content ul li a {
       color: #ddd;
       text-decoration: none;
+      transition: color 0.3s ease;
     }
 
     .footer-content ul li a:hover,
@@ -797,21 +1050,20 @@
       bottom: 25px;
       right: 25px;
       z-index: 1000;
-      background-color: #25d366;
+      background: linear-gradient(135deg, #25d366, #1ebe5c);
       padding: 14px;
       border-radius: 50%;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       will-change: transform;
     }
 
     .whatsapp-float:hover {
       transform: scale(1.1);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-      background-color: #1ebe5c;
     }
 
     .whatsapp-float img {
@@ -829,35 +1081,53 @@
         display: flex;
       }
 
-      nav {
-        background: transparent;
-        padding: 0;
-      }
-
       .header-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 8px;
+        padding: 10px;
+        top: 10px;
+        left: 10px;
+        max-width: 85vw;
+        width: 250px; /* Smaller fixed width for mobile */
       }
 
       .header-content .logo {
-        height: 120px;
+        height: 60px;
+      }
+
+      .header-text h1 {
+        font-size: clamp(20px, 4vw, 24px);
+      }
+
+      .header-text p {
+        font-size: clamp(12px, 2.5vw, 14px);
+      }
+
+      .video-overlay {
+        padding: 20px;
+      }
+
+      .video-overlay h1 {
+        font-size: clamp(24px, 4vw, 28px);
+      }
+
+      .video-overlay p {
+        font-size: clamp(14px, 2.5vw, 16px);
+      }
+
+      .search-bar {
+        margin: 10px 0;
+        max-width: 85%;
       }
 
       .search-bar input {
-        width: 100%;
+        font-size: 14px;
       }
 
-      .hero {
-        padding: 40px 15px;
+      .search-bar button {
+        padding: 10px 15px;
       }
 
-      .hero h1 {
-        font-size: 28px;
-      }
-
-      .hero p {
-        font-size: 16px;
+      .search-results .result-grid {
+        grid-template-columns: 1fr;
       }
 
       .intro,
@@ -879,18 +1149,6 @@
       .card p {
         font-size: 14px;
         line-height: 1.5;
-      }
-
-      .video-hero {
-        height: 70vh; /* Slightly longer video height for mobile */
-      }
-
-      .video-overlay h1 {
-        font-size: 26px;
-      }
-
-      .video-overlay p {
-        font-size: 16px;
       }
 
       .slide {
@@ -933,81 +1191,103 @@
       .our-products p {
         font-size: 16px;
       }
+
+      header {
+        min-height: 90vh;
+      }
     }
 
     @media screen and (min-width: 769px) {
-      .mobile-nav,
-      .menu-toggle {
+      .mobile-nav {
         display: none;
       }
 
-      .nav-links {
+      .desktop-nav-toggle {
         display: flex;
-        max-height: none;
-        flex-direction: row;
-        gap: 30px;
-        background: none;
-        backdrop-filter: none;
-        box-shadow: none;
-        position: static;
+      }
+
+      .desktop-nav-links a {
+        display: block;
+        margin: 10px 0;
+      }
+    }
+
+    /* Custom Cookie Consent Styles */
+    .cc-window {
+      border-radius: 12px !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+      overflow: hidden;
+      animation: slideInUp 0.5s ease-out !important;
+      background: rgba(0, 0, 0, 0.6) !important; /* Match video-overlay */
+      backdrop-filter: blur(8px) !important; /* Subtle blur for modern look */
+    }
+
+    .cc-message {
+      font-family: 'Playfair Display', serif !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      color: #fff !important;
+      background: transparent !important; /* Transparent to match video-overlay */
+      padding: 10px !important;
+    }
+
+    .cc-btn {
+      border-radius: 8px !important;
+      font-weight: bold !important;
+      transition: transform 0.2s ease !important;
+      padding: 10px 20px !important;
+      margin: 5px !important;
+    }
+
+    .cc-btn.cc-allow {
+      color: #000 !important; /* Black text for Allow button */
+    }
+
+    .cc-btn:hover {
+      transform: translateY(-1px) !important;
+    }
+
+    .cc-link {
+      color: #007acc !important;
+      text-decoration: underline !important;
+    }
+
+    @keyframes slideInUp {
+      from {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
         opacity: 1;
-      }
-
-      .nav-links a {
-        color: #000;
-        font-size: 16px;
-        padding: 5px 8px;
-      }
-
-      .nav-links a:hover {
-        background: none;
-        transform: none;
-      }
-
-      .nav-links a::after {
-        bottom: -4px;
-        left: 0;
-      }
-
-      .nav-links a:hover::after {
-        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <span class="sr-only">Opesh Overseas</span>
+  <!-- Header with Video Background and Welcome Overlay -->
+  <header aria-label="Main header with company logo and search">
+    <video class="header-video" autoplay muted loop playsinline poster="assets/video-poster.jpg" loading="lazy">
+      <source src="https://res.cloudinary.com/dpclwaw7u/video/upload/v1754383351/video_lm0obz.mp4" type="video/mp4">
+      <img src="assets/video-poster.jpg" alt="Ayurvedic wellness background">
+    </video>
     <div class="header-content">
+      <span class="sr-only">Opesh Overseas</span>
       <img src="logo.png" alt="Opésh Overseas Logo" class="logo">
       <div class="header-text">
         <h1>Opésh Overseas</h1>
-        <p>~From India to the World~</p>
+        <p>From India to the World</p>
       </div>
-      <form class="search-bar" action="search.html" method="GET">
-        <input type="text" name="query" placeholder="Search products..." aria-label="Search products">
+      <form class="search-bar" onsubmit="handleSearch(event)">
+        <input type="text" name="query" placeholder="Search products..." aria-label="Search products" required>
         <button type="submit">Search</button>
       </form>
     </div>
-  </header>
-
-  <!-- Navigation -->
-  <nav>
-    <!-- Desktop Nav -->
-    <div class="desktop-nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
-      <a href="products.html">Products & Science</a>
-      <a href="certifications.html">Certifications</a>
-      <a href="export.html">Export</a>
-      <a href="partners.html">Partners</a>
-      <a href="careers.html">Careers</a>
-      <a href="faq.html">FAQs</a>
-      <a href="contact.html">Contact</a>
+    <div class="video-overlay">
+      <h1>Welcome to Opésh Overseas</h1>
+      <p>Exporting Ayurvedic Wellness Globally</p>
     </div>
-
-    <!-- Mobile Nav -->
+    <!-- Mobile Navigation Toggle -->
     <div class="mobile-nav">
       <button class="menu-toggle" aria-label="Toggle Menu" onclick="toggleMenu(this)">
         <span></span>
@@ -1026,19 +1306,55 @@
         <a href="contact.html">Contact</a>
       </div>
     </div>
-  </nav>
-
-  <!-- Video Hero -->
-  <section class="video-hero">
-    <video autoplay muted loop playsinline poster="assets/video-poster.jpg">
-      <source src="https://res.cloudinary.com/dpclwaw7u/video/upload/v1754383351/video_lm0obz.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <div class="video-overlay">
-      <h1>Welcome to Opésh Overseas</h1>
-      <p>Exporting Ayurvedic Wellness Globally</p>
+    <!-- Desktop Navigation Toggle -->
+    <div class="desktop-nav">
+      <button class="desktop-nav-toggle" aria-label="Toggle Navigation" onclick="toggleDesktopMenu(this)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="desktop-nav-links" id="desktopNavLinks">
+        <a href="index.html" aria-current="page" style="--index: 0;">Home</a>
+        <a href="about.html" style="--index: 1;">About Us</a>
+        <a href="products.html" style="--index: 2;">Products & Science</a>
+        <a href="certifications.html" style="--index: 3;">Certifications</a>
+        <a href="export.html" style="--index: 4;">Export</a>
+        <a href="partners.html" style="--index: 5;">Partners</a>
+        <a href="careers.html" style="--index: 6;">Careers</a>
+        <a href="faq.html" style="--index: 7;">FAQs</a>
+        <a href="contact.html" style="--index: 8;">Contact</a>
+      </div>
     </div>
+  </header>
+
+  <!-- Search Results -->
+  <section class="search-results" id="searchResults">
+    <h2>Search Results for "<span id="searchQuery"></span>"</h2>
+    <div class="result-grid" id="resultGrid"></div>
+    <p class="no-results" id="noResults" style="display:none;">No results found. Try another term.</p>
   </section>
+
+  <!-- Desktop Navigation (Sticky) -->
+  <nav>
+    <div class="desktop-nav">
+      <button class="desktop-nav-toggle" aria-label="Toggle Navigation" onclick="toggleDesktopMenu(this)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="desktop-nav-links" id="desktopNavLinksSticky">
+        <a href="index.html" aria-current="page" style="--index: 0;">Home</a>
+        <a href="about.html" style="--index: 1;">About Us</a>
+        <a href="products.html" style="--index: 2;">Products & Science</a>
+        <a href="certifications.html" style="--index: 3;">Certifications</a>
+        <a href="export.html" style="--index: 4;">Export</a>
+        <a href="partners.html" style="--index: 5;">Partners</a>
+        <a href="careers.html" style="--index: 6;">Careers</a>
+        <a href="faq.html" style="--index: 7;">FAQs</a>
+        <a href="contact.html" style="--index: 8;">Contact</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- Main Content -->
   <main>
@@ -1137,20 +1453,15 @@
         <h2>Send Us an Enquiry</h2>
         <form action="https://formsubmit.co/exports@opeshoverseas.com" method="POST">
           <label for="name">Name</label>
-          <input type="text" id="name" name="name" required>
-
+          <input type="text" id="name" name="name" required aria-label="Your Name" aria-required="true">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
-
+          <input type="email" id="email" name="email" required aria-label="Your Email" aria-required="true">
           <label for="phone">Phone Number</label>
           <input type="tel" id="phone" name="phone" placeholder="+91 9876543210">
-
           <label for="country">Country</label>
           <input type="text" id="country" name="country" placeholder="e.g. India, UAE, USA">
-
           <label for="message">Message</label>
           <textarea id="message" name="message" rows="5" required></textarea>
-
           <input type="hidden" name="_next" value="https://opeshoverseas.com/thankyou.html">
           <button type="submit">Send Enquiry</button>
         </form>
@@ -1166,7 +1477,6 @@
       <div>
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.294614908744!2d77.02663831507965!3d28.46761898248627!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1b8f4a4e4c4f%3A0x4c4f2f2f2f2f2f2f!2sPitampura%2C%20Delhi%2C%20India!5e0!3m2!1sen!2sin!4v1681234567890!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-
       <!-- Contact Column -->
       <div>
         <h3>Contact</h3>
@@ -1179,7 +1489,6 @@
           <a href="https://wa.me/917976529421" target="_blank"><img src="whatsapp-icon.png" alt="WhatsApp"></a>
         </div>
       </div>
-
       <!-- Quick Links Column -->
       <div>
         <h3>Quick Links</h3>
@@ -1193,7 +1502,6 @@
         </ul>
       </div>
     </div>
-
     <!-- Bottom Bar -->
     <div class="footer-bottom">
       <a href="legal.html" aria-label="View Terms and Policies">Terms & Policies</a>
@@ -1225,6 +1533,12 @@
       throttleDelay: 100
     });
 
+    // Sticky Navigation Shadow
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
     // Mobile Menu Toggle
     function toggleMenu(button) {
       const nav = document.getElementById('navLinks');
@@ -1253,6 +1567,36 @@
       }
     }
 
+    // Desktop Menu Toggle
+    function toggleDesktopMenu(button) {
+      const nav = document.getElementById('desktopNavLinks');
+      const navSticky = document.getElementById('desktopNavLinksSticky');
+      if (nav && navSticky) {
+        const isOpen = nav.classList.contains('show');
+        nav.classList.toggle('show');
+        navSticky.classList.toggle('show');
+        button.classList.toggle('open');
+
+        if (!isOpen) {
+          gsap.to('.desktop-nav-links.show a', {
+            x: 0,
+            opacity: 1,
+            stagger: 0.1,
+            duration: 0.4,
+            ease: 'power3.out'
+          });
+        } else {
+          gsap.to('.desktop-nav-links a', {
+            x: 20,
+            opacity: 0,
+            stagger: 0.05,
+            duration: 0.3,
+            ease: 'power3.in'
+          });
+        }
+      }
+    }
+
     // Debug Footer Links
     document.querySelectorAll('.footer-bottom a').forEach(link => {
       link.addEventListener('click', (e) => {
@@ -1260,6 +1604,78 @@
         window.location.href = link.href;
       });
     });
+
+    // Search Functionality
+    const products = [
+      {
+        name: "Ayurvedic Supplements",
+        description: "High-potency supplements designed to support immunity, energy, and overall health.",
+        image: "assets/product1.jpg",
+        url: "products.html#supplements"
+      },
+      {
+        name: "Herbal Teas",
+        description: "Soothing blends of organic herbs to promote relaxation and wellness.",
+        image: "assets/product2.jpg",
+        url: "products.html#teas"
+      },
+      {
+        name: "Skincare Products",
+        description: "Natural, chemical-free skincare solutions for radiant and healthy skin.",
+        image: "assets/product3.jpg",
+        url: "products.html#skincare"
+      },
+      {
+        name: "Nutraceuticals",
+        description: "Science-backed formulations to enhance nutrition and vitality.",
+        image: "assets/product4.jpg",
+        url: "products.html#nutraceuticals"
+      }
+    ];
+
+    function handleSearch(event) {
+      event.preventDefault();
+      const query = event.target.querySelector('input[name="query"]').value.toLowerCase();
+      const searchResults = document.getElementById('searchResults');
+      const resultGrid = document.getElementById('resultGrid');
+      const noResults = document.getElementById('noResults');
+      const searchQuery = document.getElementById('searchQuery');
+
+      // Clear previous results
+      resultGrid.innerHTML = '';
+      noResults.style.display = 'none';
+      searchResults.classList.remove('active');
+
+      // Filter products
+      const results = products.filter(product => 
+        product.name.toLowerCase().includes(query) || 
+        product.description.toLowerCase().includes(query)
+      );
+
+      // Display results
+      if (results.length > 0) {
+        searchQuery.textContent = query;
+        results.forEach(result => {
+          const resultCard = document.createElement('div');
+          resultCard.className = 'result-card';
+          resultCard.innerHTML = `
+            <img src="${result.image}" alt="${result.name}" loading="lazy">
+            <h3>${result.name}</h3>
+            <p>${result.description}</p>
+            <a href="${result.url}" class="button">View Product</a>
+          `;
+          resultGrid.appendChild(resultCard);
+        });
+        searchResults.classList.add('active');
+      } else {
+        noResults.style.display = 'block';
+        searchQuery.textContent = query;
+        searchResults.classList.add('active');
+      }
+
+      // Scroll to results
+      searchResults.scrollIntoView({ behavior: 'smooth' });
+    }
 
     // Slideshow
     const slideshowContainer = document.querySelector('.slideshow-container');
@@ -1282,11 +1698,15 @@
         dot.classList.add('dot');
         if (i === 0) dot.classList.add('active');
         dot.addEventListener('click', () => jumpToSlide(i));
+        dot.setAttribute('tabindex', '0');
+        dot.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') jumpToSlide(i);
+        });
         dotsContainer.appendChild(dot);
       }
 
       const dots = document.querySelectorAll('.dot');
-      const allSlides = document.querySelectorAll('.slide'); // Includes clones
+      const allSlides = document.querySelectorAll('.slide');
 
       function updateSlideWidth() {
         const containerWidth = slideshowContainer.offsetWidth;
