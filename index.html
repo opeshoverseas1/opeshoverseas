@@ -100,16 +100,17 @@
         window.cookieconsent.initialise({
           "palette": {
             "popup": { 
-              "background": "rgba(0, 0, 0, 0.6)", // Match video-overlay translucency
+              "background": "rgba(0, 0, 0, 0.6)",
               "text": "#fff"
             },
             "button": { 
               "background": "linear-gradient(135deg, #007acc, #005fa3)",
-              "text": "#000" // Black text for Allow button
+              "text": "#000"
             }
           },
           "position": "bottom-left",
           "type": "opt-out",
+          "revokable": false,
           "content": {
             "message": "We use cookies to enhance your experience and provide personalized content. Manage your preferences below.",
             "dismiss": "Accept All",
@@ -204,55 +205,62 @@
       background: linear-gradient(135deg, rgba(0, 122, 204, 0.5), rgba(167, 211, 245, 0.3));
     }
 
-    .header-video {
+    .video-container {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      overflow: hidden;
+    }
+
+    .header-video {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       z-index: -1;
       filter: brightness(0.8);
+      display: block;
     }
 
     .header-content {
-      padding: 15px;
+      padding: 10px;
       position: absolute;
-      top: 15px;
-      left: 15px;
-      z-index: 2;
+      top: 10px;
+      left: 10px;
+      z-index: 3;
       color: #fff;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      max-width: 90vw; /* Tighter constraint to prevent overflow */
-      width: 300px; /* Fixed width for consistency */
+      max-width: calc(100% - 20px);
+      width: clamp(200px, 80vw, 280px);
     }
 
     .header-content .logo {
-      height: 80px;
-      width: auto;
-      max-width: 100%; /* Prevent logo overflow */
-      filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.8s ease-out 0.2s forwards;
-    }
+  max-height: 80px;   /* sets a limit for height */
+  width: auto;        /* keeps original aspect ratio */
+  max-width: 200px;   /* optional: prevent oversized logos */
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
+}
 
     .header-text h1 {
-      font-size: clamp(24px, 5vw, 32px); /* Responsive font size */
+      font-size: clamp(22px, 4.5vw, 30px);
       margin: 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 100%; /* Prevent text overflow */
+      max-width: 100%;
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 0.8s ease-out 0.4s forwards;
     }
 
     .header-text p {
-      font-size: clamp(14px, 3vw, 16px);
+      font-size: clamp(12px, 2.8vw, 14px);
       font-style: italic;
       margin: 0;
       max-width: 100%;
@@ -262,29 +270,43 @@
     }
 
     .video-overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #fff;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 30px;
-      border-radius: 12px;
-      z-index: 2;
-      opacity: 0;
-      animation: fadeInUp 0.8s ease-out 0.8s forwards;
-      width: 90%;
-      max-width: 600px;
-    }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 12px;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeInCenter 0.8s ease-out 0.8s forwards;
+  width: clamp(260px, 80vw, 500px);
+  max-width: calc(100% - 60px);
+  box-sizing: border-box;
+  margin: 0;
+}
+
+@keyframes fadeInCenter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
 
     .video-overlay h1 {
-      font-size: clamp(28px, 5vw, 36px);
-      margin-bottom: 10px;
+      font-size: clamp(24px, 4vw, 32px);
+      margin-bottom: 8px;
     }
 
     .video-overlay p {
-      font-size: clamp(16px, 3vw, 20px);
+      font-size: clamp(14px, 2.5vw, 16px);
     }
 
     @keyframes fadeInUp {
@@ -298,19 +320,19 @@
     .search-bar {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin: 15px 0;
-      max-width: 90%;
+      gap: 8px;
+      margin: 12px 0;
+      max-width: calc(100% - 20px);
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 0.8s ease-out 1s forwards;
     }
 
     .search-bar input {
-      padding: 12px;
+      padding: 10px;
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 14px;
       width: 100%;
       background: rgba(255, 255, 255, 0.1);
       color: #fff;
@@ -328,7 +350,7 @@
     }
 
     .search-bar button {
-      padding: 12px 20px;
+      padding: 10px 18px;
       background: linear-gradient(135deg, #007acc, #005fa3);
       color: #fff;
       border: none;
@@ -422,18 +444,13 @@
     }
 
     .desktop-nav {
-      max-width: 1200px;
-      margin: auto;
-      position: relative;
-      display: flex;
-      align-items: flex-start; /* Align to top */
-      justify-content: flex-end;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      z-index: 3;
     }
 
     .desktop-nav-toggle {
-      position: absolute;
-      top: 15px; /* Inside video box */
-      right: 15px;
       background: transparent;
       border: none;
       cursor: pointer;
@@ -443,14 +460,13 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 3;
     }
 
     .desktop-nav-toggle span {
       display: block;
       width: 28px;
       height: 3px;
-      background: #fff; /* White for visibility on video */
+      background: #fff;
       margin: 3px 0;
       transition: all 0.4s ease-in-out;
       border-radius: 2px;
@@ -480,7 +496,7 @@
       transform: translateY(-20px);
       opacity: 0;
       visibility: hidden;
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, visibility 0.4s;
+      transition: transform 0.4s ease, opacity 0.4s ease, visibility 0.4s;
     }
 
     .desktop-nav-links.show {
@@ -497,7 +513,7 @@
       font-size: 16px;
       padding: 10px 15px;
       display: block;
-      transition: color 0.3s ease, transform 0.3s ease;
+      transition: color 0.3s ease;
       transform: translateX(20px);
       opacity: 0;
     }
@@ -521,7 +537,6 @@
 
     .desktop-nav-links a:hover {
       color: #007acc;
-      transform: translateX(5px);
     }
 
     .desktop-nav-links a:hover::after {
@@ -1082,11 +1097,10 @@
       }
 
       .header-content {
-        padding: 10px;
-        top: 10px;
+        top: 50px;
         left: 10px;
-        max-width: 85vw;
-        width: 250px; /* Smaller fixed width for mobile */
+        max-width: calc(100% - 20px);
+        width: clamp(180px, 80vw, 240px);
       }
 
       .header-content .logo {
@@ -1094,36 +1108,38 @@
       }
 
       .header-text h1 {
-        font-size: clamp(20px, 4vw, 24px);
+        font-size: clamp(18px, 3.8vw, 22px);
       }
 
       .header-text p {
-        font-size: clamp(12px, 2.5vw, 14px);
+        font-size: clamp(10px, 2.5vw, 12px);
       }
 
       .video-overlay {
-        padding: 20px;
+        padding: 15px;
+        width: clamp(240px, 85vw, 460px);
+        max-width: calc(100% - 40px);
       }
 
       .video-overlay h1 {
-        font-size: clamp(24px, 4vw, 28px);
+        font-size: clamp(20px, 3.8vw, 24px);
       }
 
       .video-overlay p {
-        font-size: clamp(14px, 2.5vw, 16px);
+        font-size: clamp(12px, 2.3vw, 14px);
       }
 
       .search-bar {
         margin: 10px 0;
-        max-width: 85%;
+        max-width: calc(100% - 20px);
       }
 
       .search-bar input {
-        font-size: 14px;
+        font-size: 13px;
       }
 
       .search-bar button {
-        padding: 10px 15px;
+        padding: 8px 14px;
       }
 
       .search-results .result-grid {
@@ -1202,6 +1218,10 @@
         display: none;
       }
 
+      .desktop-nav {
+        display: block;
+      }
+
       .desktop-nav-toggle {
         display: flex;
       }
@@ -1218,8 +1238,8 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
       overflow: hidden;
       animation: slideInUp 0.5s ease-out !important;
-      background: rgba(0, 0, 0, 0.6) !important; /* Match video-overlay */
-      backdrop-filter: blur(8px) !important; /* Subtle blur for modern look */
+      background: rgba(0, 0, 0, 0.6) !important;
+      backdrop-filter: blur(8px) !important;
     }
 
     .cc-message {
@@ -1227,7 +1247,7 @@
       font-size: 14px !important;
       line-height: 1.5 !important;
       color: #fff !important;
-      background: transparent !important; /* Transparent to match video-overlay */
+      background: transparent !important;
       padding: 10px !important;
     }
 
@@ -1240,7 +1260,7 @@
     }
 
     .cc-btn.cc-allow {
-      color: #000 !important; /* Black text for Allow button */
+      color: #000 !important;
     }
 
     .cc-btn:hover {
@@ -1262,15 +1282,56 @@
         opacity: 1;
       }
     }
+
+    /* Fallback for Video Failure */
+    .header-video:not(:defined) + .video-fallback {
+      display: block;
+    }
+
+    .video-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+.cc-window.cc-invisible {
+  display: none !important;
+}
+
   </style>
 </head>
 <body>
   <!-- Header with Video Background and Welcome Overlay -->
   <header aria-label="Main header with company logo and search">
-    <video class="header-video" autoplay muted loop playsinline poster="assets/video-poster.jpg" loading="lazy">
-      <source src="https://res.cloudinary.com/dpclwaw7u/video/upload/v1754383351/video_lm0obz.mp4" type="video/mp4">
-      <img src="assets/video-poster.jpg" alt="Ayurvedic wellness background">
-    </video>
+    <div class="video-container">
+      <video class="header-video" autoplay muted loop playsinline poster="assets/video-poster.jpg" loading="lazy">
+        <source src="https://res.cloudinary.com/dpclwaw7u/video/upload/v1754383351/video_lm0obz.mp4" type="video/mp4">
+        <img src="assets/video-poster.jpg" alt="Ayurvedic wellness background" class="video-fallback">
+      </video>
+      <div class="video-overlay">
+        <h1>Welcome to Opésh Overseas</h1>
+        <p>Exporting Ayurvedic Wellness Globally</p>
+      </div>
+      <div class="desktop-nav">
+        <button class="desktop-nav-toggle" aria-label="Toggle Navigation" onclick="toggleDesktopMenu(this)">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="desktop-nav-links" id="desktopNavLinks">
+          <a href="index.html" aria-current="page" style="--index: 0;">Home</a>
+          <a href="about.html" style="--index: 1;">About Us</a>
+          <a href="products.html" style="--index: 2;">Products & Science</a>
+          <a href="certifications.html" style="--index: 3;">Certifications</a>
+          <a href="export.html" style="--index: 4;">Export</a>
+          <a href="partners.html" style="--index: 5;">Partners</a>
+          <a href="careers.html" style="--index: 6;">Careers</a>
+          <a href="faq.html" style="--index: 7;">FAQs</a>
+          <a href="contact.html" style="--index: 8;">Contact</a>
+        </div>
+      </div>
+    </div>
     <div class="header-content">
       <span class="sr-only">Opesh Overseas</span>
       <img src="logo.png" alt="Opésh Overseas Logo" class="logo">
@@ -1282,10 +1343,6 @@
         <input type="text" name="query" placeholder="Search products..." aria-label="Search products" required>
         <button type="submit">Search</button>
       </form>
-    </div>
-    <div class="video-overlay">
-      <h1>Welcome to Opésh Overseas</h1>
-      <p>Exporting Ayurvedic Wellness Globally</p>
     </div>
     <!-- Mobile Navigation Toggle -->
     <div class="mobile-nav">
@@ -1306,25 +1363,6 @@
         <a href="contact.html">Contact</a>
       </div>
     </div>
-    <!-- Desktop Navigation Toggle -->
-    <div class="desktop-nav">
-      <button class="desktop-nav-toggle" aria-label="Toggle Navigation" onclick="toggleDesktopMenu(this)">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <div class="desktop-nav-links" id="desktopNavLinks">
-        <a href="index.html" aria-current="page" style="--index: 0;">Home</a>
-        <a href="about.html" style="--index: 1;">About Us</a>
-        <a href="products.html" style="--index: 2;">Products & Science</a>
-        <a href="certifications.html" style="--index: 3;">Certifications</a>
-        <a href="export.html" style="--index: 4;">Export</a>
-        <a href="partners.html" style="--index: 5;">Partners</a>
-        <a href="careers.html" style="--index: 6;">Careers</a>
-        <a href="faq.html" style="--index: 7;">FAQs</a>
-        <a href="contact.html" style="--index: 8;">Contact</a>
-      </div>
-    </div>
   </header>
 
   <!-- Search Results -->
@@ -1336,24 +1374,7 @@
 
   <!-- Desktop Navigation (Sticky) -->
   <nav>
-    <div class="desktop-nav">
-      <button class="desktop-nav-toggle" aria-label="Toggle Navigation" onclick="toggleDesktopMenu(this)">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <div class="desktop-nav-links" id="desktopNavLinksSticky">
-        <a href="index.html" aria-current="page" style="--index: 0;">Home</a>
-        <a href="about.html" style="--index: 1;">About Us</a>
-        <a href="products.html" style="--index: 2;">Products & Science</a>
-        <a href="certifications.html" style="--index: 3;">Certifications</a>
-        <a href="export.html" style="--index: 4;">Export</a>
-        <a href="partners.html" style="--index: 5;">Partners</a>
-        <a href="careers.html" style="--index: 6;">Careers</a>
-        <a href="faq.html" style="--index: 7;">FAQs</a>
-        <a href="contact.html" style="--index: 8;">Contact</a>
-      </div>
-    </div>
+    <!-- No toggle here; rely on header's desktop-nav -->
   </nav>
 
   <!-- Main Content -->
@@ -1570,11 +1591,9 @@
     // Desktop Menu Toggle
     function toggleDesktopMenu(button) {
       const nav = document.getElementById('desktopNavLinks');
-      const navSticky = document.getElementById('desktopNavLinksSticky');
-      if (nav && navSticky) {
+      if (nav) {
         const isOpen = nav.classList.contains('show');
         nav.classList.toggle('show');
-        navSticky.classList.toggle('show');
         button.classList.toggle('open');
 
         if (!isOpen) {
@@ -1782,6 +1801,34 @@
         }, 100);
       });
     }
+
+    // Ensure video overlay stays centered on load and resize
+    window.addEventListener('load', () => {
+      const overlay = document.querySelector('.video-overlay');
+      if (overlay) {
+        overlay.style.transform = 'translate(-50%, -50%)';
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      const overlay = document.querySelector('.video-overlay');
+      if (overlay) {
+        overlay.style.transform = 'translate(-50%, -50%)';
+      }
+    });
   </script>
+<script>
+  window.addEventListener('load', function() {
+    const cc = document.querySelector('.cc-window');
+    if (cc) {
+      cc.addEventListener('click', function(e) {
+        if (e.target.classList.contains('cc-allow')) {
+          cc.classList.add('cc-invisible');
+        }
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
