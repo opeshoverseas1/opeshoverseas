@@ -109,7 +109,7 @@
             }
           },
           "position": "bottom-left",
-          "type": "opt-out",
+          "type": "opt-in",
           "revokable": false,
           "content": {
             "message": "We use cookies to enhance your experience and provide personalized content. Manage your preferences below.",
@@ -240,7 +240,7 @@
     .header-content .logo {
   max-height: 80px;   /* sets a limit for height */
   width: auto;        /* keeps original aspect ratio */
-  max-width: 200px;   /* optional: prevent oversized logos */
+  max-width: 160px;   /* optional: prevent oversized logos */
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
   opacity: 0;
   transform: translateY(20px);
@@ -554,7 +554,7 @@
     /* Mobile Navigation */
     .mobile-nav {
       display: none;
-      justify-content: flex-start;
+      justify-content: flex-end;
       align-items: center;
       padding: 0 15px;
       position: absolute;
@@ -1241,6 +1241,17 @@
       background: rgba(0, 0, 0, 0.6) !important;
       backdrop-filter: blur(8px) !important;
     }
+/* Hide the floating Cookie Consent "revoke" button/tab */
+.cc-revoke,
+.cc-revoke.cc-bottom,
+.cc-revoke.cc-left,
+.cc-revoke.cc-right,
+.cc-revoke.cc-top {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
 
     .cc-message {
       font-family: 'Playfair Display', serif !important;
@@ -1817,18 +1828,5 @@
       }
     });
   </script>
-<script>
-  window.addEventListener('load', function() {
-    const cc = document.querySelector('.cc-window');
-    if (cc) {
-      cc.addEventListener('click', function(e) {
-        if (e.target.classList.contains('cc-allow')) {
-          cc.classList.add('cc-invisible');
-        }
-      });
-    }
-  });
-</script>
-
 </body>
 </html>
