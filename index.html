@@ -1,3 +1,4 @@
+
 <script type="text/javascript">
         var gk_isXlsx = false;
         var gk_xlsxFileLookup = {};
@@ -1104,7 +1105,10 @@
       }
 
       .header-content .logo {
-        height: 60px;
+  max-height: 50px;   /* responsive cap */
+  width: auto;        /* keeps aspect ratio */
+  height: auto;       /* no distortion */
+  object-fit: contain;
       }
 
       .header-text h1 {
@@ -1349,11 +1353,6 @@
       <div class="header-text">
         <h1>Opésh Overseas</h1>
         <p>From India to the World</p>
-      </div>
-      <form class="search-bar" onsubmit="handleSearch(event)">
-        <input type="text" name="query" placeholder="Search products..." aria-label="Search products" required>
-        <button type="submit">Search</button>
-      </form>
     </div>
     <!-- Mobile Navigation Toggle -->
     <div class="mobile-nav">
@@ -1375,6 +1374,10 @@
       </div>
     </div>
   </header>
+   <form class="search-bar" onsubmit="handleSearch(event)">
+        <input type="text" name="query" placeholder="Search products..." aria-label="Search products" required>
+        <button type="submit">Search</button>
+        </form>
 
   <!-- Search Results -->
   <section class="search-results" id="searchResults">
@@ -1560,7 +1563,6 @@
       duration: 600,
       once: true,
       easing: 'ease-out',
-      disable: 'mobile',
       startEvent: 'DOMContentLoaded',
       throttleDelay: 100
     });
@@ -1829,4 +1831,5 @@
     });
   </script>
 </body>
+
 </html>
