@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Meta Tags -->
@@ -262,7 +301,23 @@
       align-items: center;
       justify-content: center;
       padding: 8px;
-      visibility: visible; /* Ensure button is always visible */
+      visibility: visible;
+    }
+
+    .dark-mode-toggle .dark-mode-icon {
+      display: block;
+    }
+
+    .dark-mode-toggle .light-mode-icon {
+      display: none;
+    }
+
+    body.dark-mode .dark-mode-toggle .dark-mode-icon {
+      display: none;
+    }
+
+    body.dark-mode .dark-mode-toggle .light-mode-icon {
+      display: block;
     }
 
     .dark-mode-toggle:hover {
@@ -271,22 +326,6 @@
 
     body.dark-mode .dark-mode-toggle {
       color: #fff;
-    }
-
-    .dark-mode-toggle .dark-mode-icon {
-      display: inline; /* Show moon in light mode */
-    }
-
-    .dark-mode-toggle .light-mode-icon {
-      display: none; /* Hide sun in light mode */
-    }
-
-    body.dark-mode .dark-mode-toggle .dark-mode-icon {
-      display: none; /* Hide moon in dark mode */
-    }
-
-    body.dark-mode .dark-mode-toggle .light-mode-icon {
-      display: inline; /* Show sun in dark mode */
     }
 
     /* Utility Classes */
@@ -362,9 +401,9 @@
     }
 
     .header-content .logo {
-      max-height: 80px;
+      max-height: 100px; /* Increased logo size for desktop */
       width: auto;
-      max-width: 160px;
+      max-width: 200px;
       filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
       opacity: 0;
       transform: translateY(20px);
@@ -869,7 +908,7 @@
     }
 
     .slide {
-      flex: 0 0 50%;
+      flex: 0 0 100%; /* Changed to 100% to ensure one slide per view */
       position: relative;
       overflow: hidden;
     }
@@ -1144,13 +1183,13 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.2); /* Reduced opacity for subtler glassmorphism */
+      backdrop-filter: blur(8px); /* Reduced blur for less intense glassmorphism */
     }
 
     body.dark-mode .footer-overlay {
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.3); /* Slightly adjusted for dark mode */
+      backdrop-filter: blur(8px);
     }
 
     .footer-content {
@@ -1274,15 +1313,17 @@
       }
 
       .header-content {
-        top: 10px;
-        left: 10px;
-        max-width: calc(100% - 20px);
+        top: 5px; /* Adjusted for proper top-left alignment */
+        left: 5px;
+        max-width: calc(100% - 10px);
         width: clamp(180px, 80vw, 240px);
+        z-index: 1003; /* Ensure logo is above other elements */
       }
 
       .header-content .logo {
-        max-height: 50px;
+        max-height: 70px; /* Increased logo size for mobile */
         width: auto;
+        max-width: 140px;
         height: auto;
         object-fit: contain;
       }
@@ -1349,7 +1390,7 @@
       }
 
       .slide {
-        flex: 0 0 100%;
+        flex: 0 0 100%; /* Ensure one slide per view in mobile */
       }
 
       .slide img {
@@ -1514,10 +1555,9 @@
       </div>
       <div class="desktop-nav">
         <button class="dark-mode-toggle" aria-label="Toggle Dark Mode" onclick="toggleDarkMode()">
-  <span class="dark-mode-icon">🌙</span>
-  <span class="light-mode-icon">☀️</span>
-</button>
-
+          <span class="dark-mode-icon">🌙</span>
+          <span class="light-mode-icon">☀️</span>
+        </button>
         <button class="desktop-nav-toggle" aria-label="Toggle Navigation" onclick="toggleDesktopMenu(this)">
           <span></span>
           <span></span>
@@ -1548,7 +1588,7 @@
     <div class="mobile-nav">
       <button class="dark-mode-toggle" aria-label="Toggle Dark Mode" onclick="toggleDarkMode()">
         <span class="dark-mode-icon">🌙</span>
-        <span class="light-mode-icon" style="display: none;">☀️</span>
+        <span class="light-mode-icon">☀️</span>
       </button>
       <button class="menu-toggle" aria-label="Toggle Menu" onclick="toggleMenu(this)">
         <span></span>
@@ -1839,16 +1879,37 @@
       body.classList.toggle('dark-mode');
       const isDarkMode = body.classList.contains('dark-mode');
       localStorage.setItem('darkMode', isDarkMode);
-      refreshAOS(); // Refresh AOS to ensure animations work
+
+      // Explicitly set icon visibility
+      const toggles = document.querySelectorAll('.dark-mode-toggle');
+      toggles.forEach(toggle => {
+        const darkIcon = toggle.querySelector('.dark-mode-icon');
+        const lightIcon = toggle.querySelector('.light-mode-icon');
+        darkIcon.style.display = isDarkMode ? 'none' : 'block';
+        lightIcon.style.display = isDarkMode ? 'block' : 'none';
+      });
+
+      refreshAOS();
     }
 
-    // Apply dark mode based on localStorage
+    // Apply dark mode and icon visibility on page load
     document.addEventListener('DOMContentLoaded', () => {
       const isDarkMode = localStorage.getItem('darkMode') === 'true';
+      const body = document.body;
+      const toggles = document.querySelectorAll('.dark-mode-toggle');
+
       if (isDarkMode) {
-        document.body.classList.add('dark-mode');
+        body.classList.add('dark-mode');
       }
-      refreshAOS(); // Ensure AOS animations are initialized
+
+      toggles.forEach(toggle => {
+        const darkIcon = toggle.querySelector('.dark-mode-icon');
+        const lightIcon = toggle.querySelector('.light-mode-icon');
+        darkIcon.style.display = isDarkMode ? 'none' : 'block';
+        lightIcon.style.display = isDarkMode ? 'block' : 'none';
+      });
+
+      refreshAOS();
     });
 
     // Header Video Parallax
@@ -1987,7 +2048,7 @@
         dots.forEach((dot, index) => {
           dot.classList.toggle('active', index === currentIndex);
         });
-        const offset = currentIndex * -50;
+        const offset = currentIndex * -100; // Use 100% offset for single slide view
         document.querySelector('.slideshow-container').style.transform = `translateX(${offset}%)`;
       }
 
