@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Meta Tags -->
@@ -77,6 +38,13 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" onload="this.media='all'" />
   <!-- Fallback for Cookie Consent CSS -->
   <link rel="stylesheet" href="/css/cookieconsent.min.css" media="none" />
+
+  <!-- GSAP and ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <!-- VanillaTilt.js for 3D Tilt Effects -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N18R64Z12M"></script>
@@ -220,10 +188,126 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode header {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(50, 50, 50, 0.5));
+    }
+
+    body.dark-mode .header-text h1,
+    body.dark-mode .header-text p,
+    body.dark-mode .video-overlay {
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .search-bar {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    body.dark-mode .search-bar input {
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .search-bar input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    body.dark-mode .search-results,
+    body.dark-mode .our-products,
+    body.dark-mode .highlight-cards,
+    body.dark-mode .enquiry {
+      background-color: #2a2a2a;
+    }
+
+    body.dark-mode .search-results .result-card,
+    body.dark-mode .our-products .product-card,
+    body.dark-mode .highlight .card,
+    body.dark-mode .enquiry-form {
+      background: #333;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .product-card,
+    body.dark-mode .card {
+      opacity: 1; /* Ensure cards remain visible for AOS */
+      transform: none; /* Prevent conflicts with AOS transforms */
+    }
+
+    body.dark-mode .footer-content p,
+    body.dark-mode .footer-content ul li a,
+    body.dark-mode .footer-bottom,
+    body.dark-mode .footer-bottom a {
+      color: #ccc;
+    }
+
+    body.dark-mode .footer-content h3 {
+      color: #66ccff;
+    }
+
+    .dark-mode-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: #fff;
+      margin-left: 10px;
+      transition: transform 0.3s ease, color 0.3s ease;
+      z-index: 1002;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      visibility: visible; /* Ensure button is always visible */
+    }
+
+    .dark-mode-toggle:hover {
+      transform: scale(1.2);
+    }
+
+    body.dark-mode .dark-mode-toggle {
+      color: #fff;
+    }
+
+    .dark-mode-toggle .dark-mode-icon {
+      display: inline; /* Show moon in light mode */
+    }
+
+    .dark-mode-toggle .light-mode-icon {
+      display: none; /* Hide sun in light mode */
+    }
+
+    body.dark-mode .dark-mode-toggle .dark-mode-icon {
+      display: none; /* Hide moon in dark mode */
+    }
+
+    body.dark-mode .dark-mode-toggle .light-mode-icon {
+      display: inline; /* Show sun in dark mode */
+    }
+
     /* Utility Classes */
     .sr-only {
       position: absolute;
       left: -9999px;
+    }
+
+    /* Skip Link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 10px;
+      background: #007acc;
+      color: #fff;
+      padding: 10px;
+      z-index: 10000;
+    }
+
+    .skip-link:focus {
+      top: 10px;
     }
 
     /* Header with Video Background */
@@ -255,6 +339,12 @@
       z-index: -1;
       filter: brightness(0.8);
       display: block;
+      transform: translateY(0);
+      transition: transform 0.1s linear;
+    }
+
+    .header-video.parallax {
+      transform: translateY(calc(var(--scroll-y) * 0.2));
     }
 
     .header-content {
@@ -350,11 +440,11 @@
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 0.8s ease-out 1s forwards;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
       border-radius: 50px;
       padding: 8px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
@@ -401,6 +491,10 @@
     .search-bar button:hover {
       transform: scale(1.05);
       background: linear-gradient(135deg, #005fa3, #007acc);
+    }
+
+    .search-bar button:focus {
+      box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.3);
     }
 
     /* Search Results */
@@ -483,6 +577,9 @@
       top: 15px;
       right: 15px;
       z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .desktop-nav-toggle {
@@ -523,8 +620,9 @@
       position: absolute;
       top: 100%;
       right: 0;
-      background: rgba(167, 211, 245, 0.95);
-      backdrop-filter: blur(8px);
+      background: rgba(167, 211, 245, 0.2);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       padding: 20px;
       border-radius: 0 0 10px 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -532,6 +630,11 @@
       opacity: 0;
       visibility: hidden;
       transition: transform 0.4s ease, opacity 0.4s ease, visibility 0.4s;
+    }
+
+    body.dark-mode .desktop-nav-links {
+      background: rgba(50, 50, 50, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
     .desktop-nav-links.show {
@@ -596,6 +699,7 @@
       top: 10px;
       right: 10px;
       z-index: 1001;
+      gap: 10px;
     }
 
     .menu-toggle {
@@ -639,8 +743,8 @@
       left: 100%;
       width: 100%;
       height: 100vh;
-      background: linear-gradient(135deg, rgba(167, 211, 245, 0.9), rgba(0, 122, 204, 0.7));
-      backdrop-filter: blur(10px);
+      background: linear-gradient(135deg, rgba(167, 211, 245, 0.3), rgba(0, 122, 204, 0.2));
+      backdrop-filter: blur(12px);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -649,6 +753,10 @@
       z-index: 1000;
       opacity: 0;
       pointer-events: none;
+    }
+
+    body.dark-mode .nav-links {
+      background: linear-gradient(135deg, rgba(50, 50, 50, 0.4), rgba(0, 0, 0, 0.3));
     }
 
     .nav-links.show {
@@ -717,6 +825,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
     }
 
     .our-products .product-card img {
@@ -851,6 +960,11 @@
       transform: scale(1.2);
     }
 
+    .dot:focus {
+      outline: 2px solid #007acc;
+      outline-offset: 2px;
+    }
+
     /* Intro Section */
     .intro,
     .highlight,
@@ -897,6 +1011,7 @@
       display: flex;
       flex-direction: column;
       min-height: 150px;
+      overflow: hidden;
     }
 
     .card h3 {
@@ -932,6 +1047,11 @@
     .button:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(42, 157, 143, 0.3);
+    }
+
+    .button:focus {
+      outline: 2px solid #007acc;
+      outline-offset: 2px;
     }
 
     /* Enquiry Form */
@@ -982,7 +1102,8 @@
 
     .enquiry-form input:focus,
     .enquiry-form textarea:focus {
-      outline: none;
+      outline: 2px solid #007acc;
+      outline-offset: 2px;
       border-color: #007acc;
       box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.1);
     }
@@ -1005,6 +1126,11 @@
       box-shadow: 0 6px 20px rgba(0, 122, 204, 0.3);
     }
 
+    .enquiry-form button:focus {
+      outline: 2px solid #007acc;
+      outline-offset: 2px;
+    }
+
     /* Footer */
     footer {
       background: url('banner.png') no-repeat center center/cover;
@@ -1018,7 +1144,13 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12px);
+    }
+
+    body.dark-mode .footer-overlay {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
     }
 
     .footer-content {
@@ -1076,6 +1208,12 @@
       color: #66ccff;
     }
 
+    .footer-content ul li a:focus,
+    .footer-bottom a:focus {
+      outline: 2px solid #007acc;
+      outline-offset: 2px;
+    }
+
     .footer-bottom {
       background: rgba(0, 0, 0, 0.8);
       padding: 12px;
@@ -1115,6 +1253,11 @@
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
     }
 
+    .whatsapp-float:focus {
+      outline: 2px solid #007acc;
+      outline-offset: 2px;
+    }
+
     .whatsapp-float img {
       height: 28px;
       width: 28px;
@@ -1151,17 +1294,6 @@
       .header-text p {
         font-size: clamp(10px, 2.5vw, 12px);
       }
-  .hero-top {
-    padding: 8px 12px;   /* or 0 for fully flush */
-  }
-
-  .hero-top img {
-    max-height: 45px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    margin: 0;
-  }
 
       .video-overlay {
         padding: 15px;
@@ -1268,7 +1400,7 @@
       }
 
       .desktop-nav {
-        display: block;
+        display: flex;
       }
 
       .desktop-nav-toggle {
@@ -1326,6 +1458,11 @@
       transform: translateY(-1px) !important;
     }
 
+    .cc-btn:focus {
+      outline: 2px solid #007acc !important;
+      outline-offset: 2px !important;
+    }
+
     .cc-link {
       color: #007acc !important;
       text-decoration: underline !important;
@@ -1361,8 +1498,11 @@
   </style>
 </head>
 <body>
+  <!-- Skip Link -->
+  <a href="#main" class="sr-only skip-link" tabindex="0">Skip to main content</a>
+
   <!-- Header with Video Background and Welcome Overlay -->
-  <header aria-label="Main header with company logo and search">
+  <header role="banner" aria-label="Main header with company logo and search">
     <div class="video-container">
       <video class="header-video" autoplay muted loop playsinline poster="assets/video-poster.jpg" loading="lazy">
         <source src="https://res.cloudinary.com/dpclwaw7u/video/upload/v1754383351/video_lm0obz.mp4" type="video/mp4">
@@ -1373,6 +1513,11 @@
         <p>Exporting Ayurvedic Wellness Globally</p>
       </div>
       <div class="desktop-nav">
+        <button class="dark-mode-toggle" aria-label="Toggle Dark Mode" onclick="toggleDarkMode()">
+  <span class="dark-mode-icon">🌙</span>
+  <span class="light-mode-icon">☀️</span>
+</button>
+
         <button class="desktop-nav-toggle" aria-label="Toggle Navigation" onclick="toggleDesktopMenu(this)">
           <span></span>
           <span></span>
@@ -1401,6 +1546,10 @@
     </div>
     <!-- Mobile Navigation Toggle -->
     <div class="mobile-nav">
+      <button class="dark-mode-toggle" aria-label="Toggle Dark Mode" onclick="toggleDarkMode()">
+        <span class="dark-mode-icon">🌙</span>
+        <span class="light-mode-icon" style="display: none;">☀️</span>
+      </button>
       <button class="menu-toggle" aria-label="Toggle Menu" onclick="toggleMenu(this)">
         <span></span>
         <span></span>
@@ -1432,12 +1581,12 @@
   </section>
 
   <!-- Desktop Navigation (Sticky) -->
-  <nav>
+  <nav role="navigation" aria-label="Main navigation">
     <!-- No toggle here; rely on header's desktop-nav -->
   </nav>
 
   <!-- Main Content -->
-  <main>
+  <main role="main" aria-label="Main content" id="main">
     <!-- Our Products Section -->
     <section class="our-products" data-aos="fade-up">
       <h2>Our Products</h2>
@@ -1501,19 +1650,19 @@
       <div class="highlight-cards">
         <h2>What Sets Us Apart</h2>
         <div class="card-grid">
-          <div class="card" data-aos="zoom-in">
+          <div class="card" data-aos="zoom-in" data-aos-delay="100">
             <h3>International-Grade Professionalism</h3>
             <p>World-class processes, clean documentation, and regulatory precision.</p>
           </div>
-          <div class="card" data-aos="zoom-in">
+          <div class="card" data-aos="zoom-in" data-aos-delay="200">
             <h3>Science-Backed Formulations</h3>
             <p>Pure Ayurvedic ingredients, supported by research and integrity.</p>
           </div>
-          <div class="card" data-aos="zoom-in">
+          <div class="card" data-aos="zoom-in" data-aos-delay="300">
             <h3>Export-Ready Compliance</h3>
             <p>All paperwork and approvals prepared with global regulations in mind.</p>
           </div>
-          <div class="card" data-aos="zoom-in">
+          <div class="card" data-aos="zoom-in" data-aos-delay="400">
             <h3>Transparent Partnerships</h3>
             <p>We believe in scalable, long-term, and ethical collaborations.</p>
           </div>
@@ -1528,20 +1677,25 @@
     </section>
 
     <!-- Enquiry Form -->
-    <section class="enquiry">
+    <section class="enquiry" role="region" aria-label="Enquiry form section">
       <div class="enquiry-form" data-aos="fade-up">
         <h2>Send Us an Enquiry</h2>
         <form action="https://formsubmit.co/exports@opeshoverseas.com" method="POST">
           <label for="name">Name</label>
-          <input type="text" id="name" name="name" required aria-label="Your Name" aria-required="true">
+          <input type="text" id="name" name="name" required aria-label="Your Name" aria-describedby="name-desc">
+          <span id="name-desc" class="sr-only">Please enter your full name.</span>
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" required aria-label="Your Email" aria-required="true">
+          <input type="email" id="email" name="email" required aria-label="Your Email" aria-describedby="email-desc">
+          <span id="email-desc" class="sr-only">Please enter a valid email address.</span>
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" placeholder="+91 9876543210">
+          <input type="tel" id="phone" name="phone" placeholder="+91 9876543210" aria-describedby="phone-desc">
+          <span id="phone-desc" class="sr-only">Please enter your phone number, including country code (optional).</span>
           <label for="country">Country</label>
-          <input type="text" id="country" name="country" placeholder="e.g. India, UAE, USA">
+          <input type="text" id="country" name="country" placeholder="e.g. India, UAE, USA" aria-describedby="country-desc">
+          <span id="country-desc" class="sr-only">Please enter your country name.</span>
           <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
+          <textarea id="message" name="message" rows="5" required aria-describedby="message-desc"></textarea>
+          <span id="message-desc" class="sr-only">Please enter your enquiry message.</span>
           <input type="hidden" name="_next" value="https://opeshoverseas.com/thankyou.html">
           <button type="submit">Send Enquiry</button>
         </form>
@@ -1550,7 +1704,7 @@
   </main>
 
   <!-- Footer -->
-  <footer>
+  <footer role="contentinfo" aria-label="Footer with contact and links">
     <div class="footer-overlay"></div>
     <div class="footer-content">
       <!-- Map Column -->
@@ -1598,11 +1752,11 @@
   <!-- AOS Script -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-  <!-- GSAP CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-
   <!-- Embedded JavaScript -->
   <script>
+    // Register GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
     // Initialize AOS
     AOS.init({
       duration: 600,
@@ -1611,6 +1765,11 @@
       startEvent: 'DOMContentLoaded',
       throttleDelay: 100
     });
+
+    // Refresh AOS on dark mode toggle to ensure animations
+    function refreshAOS() {
+      AOS.refresh();
+    }
 
     // Sticky Navigation Shadow
     window.addEventListener('scroll', () => {
@@ -1674,6 +1833,59 @@
       }
     }
 
+    // Dark Mode Toggle
+    function toggleDarkMode() {
+      const body = document.body;
+      body.classList.toggle('dark-mode');
+      const isDarkMode = body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode);
+      refreshAOS(); // Refresh AOS to ensure animations work
+    }
+
+    // Apply dark mode based on localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+      const isDarkMode = localStorage.getItem('darkMode') === 'true';
+      if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+      }
+      refreshAOS(); // Ensure AOS animations are initialized
+    });
+
+    // Header Video Parallax
+    window.addEventListener('scroll', () => {
+      const video = document.querySelector('.header-video');
+      if (video) {
+        const scrollY = window.scrollY;
+        video.style.setProperty('--scroll-y', `${scrollY}px`);
+        video.classList.add('parallax');
+      }
+    });
+
+    // Product Images Parallax
+    gsap.utils.toArray('.product-card img').forEach(img => {
+      gsap.to(img, {
+        y: () => window.innerHeight * 0.1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: img,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          scrub: 1,
+          markers: false
+        }
+      });
+    });
+
+    // Tilt Effect for Cards
+    document.addEventListener('DOMContentLoaded', () => {
+      VanillaTilt.init(document.querySelectorAll('.product-card, .card'), {
+        max: 15,
+        speed: 400,
+        glare: true,
+        'max-glare': 0.3
+      });
+    });
+
     // Debug Footer Links
     document.querySelectorAll('.footer-bottom a').forEach(link => {
       link.addEventListener('click', (e) => {
@@ -1712,167 +1924,86 @@
 
     function handleSearch(event) {
       event.preventDefault();
-      const query = event.target.querySelector('input[name="query"]').value.toLowerCase();
-      const searchResults = document.getElementById('searchResults');
+      const query = event.target.query.value.toLowerCase().trim();
       const resultGrid = document.getElementById('resultGrid');
+      const searchResults = document.getElementById('searchResults');
       const noResults = document.getElementById('noResults');
       const searchQuery = document.getElementById('searchQuery');
 
-      // Clear previous results
-      resultGrid.innerHTML = '';
-      noResults.style.display = 'none';
-      searchResults.classList.remove('active');
+      if (!resultGrid || !searchResults || !noResults || !searchQuery) return;
 
-      // Filter products
-      const results = products.filter(product => 
-        product.name.toLowerCase().includes(query) || 
+      searchQuery.textContent = query;
+      resultGrid.innerHTML = '';
+      searchResults.classList.add('active');
+
+      const filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(query) ||
         product.description.toLowerCase().includes(query)
       );
 
-      // Display results
-      if (results.length > 0) {
-        searchQuery.textContent = query;
-        results.forEach(result => {
-          const resultCard = document.createElement('div');
-          resultCard.className = 'result-card';
-          resultCard.innerHTML = `
-            <img src="${result.image}" alt="${result.name}" loading="lazy">
-            <h3>${result.name}</h3>
-            <p>${result.description}</p>
-            <a href="${result.url}" class="button">View Product</a>
-          `;
-          resultGrid.appendChild(resultCard);
-        });
-        searchResults.classList.add('active');
-      } else {
+      if (filteredProducts.length === 0) {
         noResults.style.display = 'block';
-        searchQuery.textContent = query;
-        searchResults.classList.add('active');
+        return;
       }
 
-      // Scroll to results
+      noResults.style.display = 'none';
+      filteredProducts.forEach(product => {
+        const card = document.createElement('div');
+        card.classList.add('result-card');
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" loading="lazy">
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          <a href="${product.url}" class="button">View Details</a>
+        `;
+        resultGrid.appendChild(card);
+      });
+
+      // Scroll to search results
       searchResults.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Slideshow
-    const slideshowContainer = document.querySelector('.slideshow-container');
-    const slides = document.querySelectorAll('.slide');
-    const dotsContainer = document.querySelector('.dots');
-    let currentIndex = 0;
-    const originalSlides = slides.length;
-    let slideshowInterval;
+    // Slideshow Functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.slide');
+      const dotsContainer = document.querySelector('.dots');
+      let currentIndex = 0;
 
-    if (slideshowContainer && dotsContainer) {
-      // Clone all slides for seamless looping
-      slides.forEach(slide => {
-        const clone = slide.cloneNode(true);
-        slideshowContainer.appendChild(clone);
-      });
-
-      // Create dots
-      for (let i = 0; i < originalSlides; i++) {
-        const dot = document.createElement('div');
-        dot.classList.add('dot');
-        if (i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => jumpToSlide(i));
-        dot.setAttribute('tabindex', '0');
-        dot.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') jumpToSlide(i);
-        });
-        dotsContainer.appendChild(dot);
-      }
-
-      const dots = document.querySelectorAll('.dot');
-      const allSlides = document.querySelectorAll('.slide');
-
-      function updateSlideWidth() {
-        const containerWidth = slideshowContainer.offsetWidth;
-        return window.innerWidth <= 768 ? containerWidth : containerWidth / 2;
-      }
-
-      function updateActiveSlide() {
-        allSlides.forEach((slide, index) => {
-          slide.classList.remove('active');
-          if (index === currentIndex || (index >= originalSlides && index % originalSlides === currentIndex)) {
-            slide.classList.add('active');
-          }
+      function createDots() {
+        slides.forEach((_, index) => {
+          const dot = document.createElement('div');
+          dot.classList.add('dot');
+          if (index === 0) dot.classList.add('active');
+          dot.addEventListener('click', () => goToSlide(index));
+          dotsContainer.appendChild(dot);
         });
       }
 
-      function moveSlide() {
-        const width = updateSlideWidth();
-        currentIndex++;
-
-        slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
-        slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
-
-        updateActiveSlide();
-        updateDots();
-
-        if (currentIndex >= originalSlides) {
-          setTimeout(() => {
-            slideshowContainer.style.transition = 'none';
-            currentIndex = 0;
-            slideshowContainer.style.transform = `translateX(0px)`;
-            slideshowContainer.offsetHeight;
-            slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
-            updateActiveSlide();
-          }, 500);
-        }
+      function updateSlides() {
+        slides.forEach((slide, index) => {
+          slide.classList.toggle('active', index === currentIndex);
+        });
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentIndex);
+        });
+        const offset = currentIndex * -50;
+        document.querySelector('.slideshow-container').style.transform = `translateX(${offset}%)`;
       }
 
-      function updateDots() {
-        dots.forEach(dot => dot.classList.remove('active'));
-        dots[currentIndex % originalSlides].classList.add('active');
-      }
-
-      function jumpToSlide(index) {
-        const width = updateSlideWidth();
+      function goToSlide(index) {
         currentIndex = index;
-        slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
-        slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
-        updateActiveSlide();
-        updateDots();
+        updateSlides();
       }
 
-      // Initialize slideshow
-      updateActiveSlide();
-      slideshowInterval = setInterval(moveSlide, 3000);
-
-      // Pause on hover
-      slideshowContainer.addEventListener('mouseenter', () => clearInterval(slideshowInterval));
-      slideshowContainer.addEventListener('mouseleave', () => {
-        slideshowInterval = setInterval(moveSlide, 3000);
-      });
-
-      // Debounced resize handler
-      let resizeTimer;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          const width = updateSlideWidth();
-          slideshowContainer.style.transition = 'none';
-          slideshowContainer.style.transform = `translateX(-${currentIndex * width}px)`;
-          slideshowContainer.offsetHeight;
-          slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
-          updateActiveSlide();
-        }, 100);
-      });
-    }
-
-    // Ensure video overlay stays centered on load and resize
-    window.addEventListener('load', () => {
-      const overlay = document.querySelector('.video-overlay');
-      if (overlay) {
-        overlay.style.transform = 'translate(-50%, -50%)';
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateSlides();
       }
-    });
 
-    window.addEventListener('resize', () => {
-      const overlay = document.querySelector('.video-overlay');
-      if (overlay) {
-        overlay.style.transform = 'translate(-50%, -50%)';
-      }
+      createDots();
+      updateSlides();
+      setInterval(nextSlide, 5000); // Auto-slide every 5 seconds
     });
   </script>
 </body>
