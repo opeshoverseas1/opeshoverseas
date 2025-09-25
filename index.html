@@ -395,13 +395,13 @@
       color: #fff;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0; /* Removed gap to place tagline directly under title */
       max-width: calc(100% - 20px);
       width: clamp(200px, 80vw, 280px);
     }
 
     .header-content .logo {
-      max-height: 100px; /* Increased logo size for desktop */
+      max-height: 100px;
       width: auto;
       max-width: 200px;
       filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
@@ -425,7 +425,7 @@
     .header-text p {
       font-size: clamp(12px, 2.8vw, 14px);
       font-style: italic;
-      margin: 0;
+      margin: 0; /* Ensure no margin for tight placement */
       max-width: 100%;
       opacity: 0;
       transform: translateY(20px);
@@ -908,7 +908,7 @@
     }
 
     .slide {
-      flex: 0 0 100%; /* Changed to 100% to ensure one slide per view */
+      flex: 0 0 50%; /* Default to 50% for desktop (two slides per view) */
       position: relative;
       overflow: hidden;
     }
@@ -1183,13 +1183,11 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.2); /* Reduced opacity for subtler glassmorphism */
-      backdrop-filter: blur(8px); /* Reduced blur for less intense glassmorphism */
+      background: rgba(0, 0, 0, 0.5); /* Removed glassmorphism, solid overlay */
     }
 
     body.dark-mode .footer-overlay {
-      background: rgba(0, 0, 0, 0.3); /* Slightly adjusted for dark mode */
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.7); /* Solid overlay for dark mode */
     }
 
     .footer-content {
@@ -1313,15 +1311,16 @@
       }
 
       .header-content {
-        top: 5px; /* Adjusted for proper top-left alignment */
+        top: 5px;
         left: 5px;
         max-width: calc(100% - 10px);
         width: clamp(180px, 80vw, 240px);
-        z-index: 1003; /* Ensure logo is above other elements */
+        z-index: 1003;
+        gap: 0; /* Ensure tagline is directly under title */
       }
 
       .header-content .logo {
-        max-height: 70px; /* Increased logo size for mobile */
+        max-height: 70px;
         width: auto;
         max-width: 140px;
         height: auto;
@@ -1334,6 +1333,7 @@
 
       .header-text p {
         font-size: clamp(10px, 2.5vw, 12px);
+        margin: 0; /* Ensure tight placement */
       }
 
       .video-overlay {
@@ -1390,7 +1390,7 @@
       }
 
       .slide {
-        flex: 0 0 100%; /* Ensure one slide per view in mobile */
+        flex: 0 0 100%; /* One slide per view in mobile */
       }
 
       .slide img {
@@ -2029,26 +2029,30 @@
       const slides = document.querySelectorAll('.slide');
       const dotsContainer = document.querySelector('.dots');
       let currentIndex = 0;
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+      const slidesPerView = isMobile ? 1 : 2; // 1 slide in mobile, 2 in desktop
+      const totalDots = Math.ceil(slides.length / slidesPerView);
 
       function createDots() {
-        slides.forEach((_, index) => {
+        dotsContainer.innerHTML = ''; // Clear existing dots
+        for (let i = 0; i < totalDots; i++) {
           const dot = document.createElement('div');
           dot.classList.add('dot');
-          if (index === 0) dot.classList.add('active');
-          dot.addEventListener('click', () => goToSlide(index));
+          if (i === 0) dot.classList.add('active');
+          dot.addEventListener('click', () => goToSlide(i));
           dotsContainer.appendChild(dot);
-        });
+        }
       }
 
       function updateSlides() {
         slides.forEach((slide, index) => {
-          slide.classList.toggle('active', index === currentIndex);
+          slide.classList.toggle('active', index >= currentIndex * slidesPerView && index < (currentIndex + 1) * slidesPerView);
         });
         const dots = document.querySelectorAll('.dot');
         dots.forEach((dot, index) => {
           dot.classList.toggle('active', index === currentIndex);
         });
-        const offset = currentIndex * -100; // Use 100% offset for single slide view
+        const offset = isMobile ? currentIndex * -100 : currentIndex * -100; // 100% offset for mobile, 100% for two slides in desktop
         document.querySelector('.slideshow-container').style.transform = `translateX(${offset}%)`;
       }
 
@@ -2058,13 +2062,22 @@
       }
 
       function nextSlide() {
-        currentIndex = (currentIndex + 1) % slides.length;
+        currentIndex = (currentIndex + 1) % totalDots;
         updateSlides();
       }
 
+      // Initialize dots and slides
       createDots();
       updateSlides();
       setInterval(nextSlide, 5000); // Auto-slide every 5 seconds
+
+      // Update on window resize
+      window.addEventListener('resize', () => {
+        const newIsMobile = window.matchMedia("(max-width: 768px)").matches;
+        if (newIsMobile !== isMobile) {
+          location.reload(); // Reload to adjust slidesPerView and dots
+        }
+      });
     });
   </script>
 </body>
