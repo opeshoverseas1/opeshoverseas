@@ -873,7 +873,7 @@
     }
 
     .slide {
-      flex: 0 0 100%; /* UPDATED: Always one slide per view for 4 dots */
+      flex: 0 0 50%; /* UPDATED: 2 slides on desktop */
       position: relative;
       overflow: hidden;
     }
@@ -1372,7 +1372,7 @@
       }
 
       .slide {
-        flex: 0 0 100%; /* One slide per view in mobile */
+        flex: 0 0 100%; /* UPDATED: 1 slide on mobile */
       }
 
       .slide img {
@@ -2030,13 +2030,14 @@
       searchResults.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // UPDATED: Slideshow Functionality - Unidirectional, 4 dots, one slide per view
+    // UPDATED: Slideshow Functionality - 2 slides desktop, 1 mobile, 4 dots, unidirectional
     document.addEventListener('DOMContentLoaded', () => {
       const slides = document.querySelectorAll('.slide');
       const dotsContainer = document.querySelector('.dots');
       let currentIndex = 0;
       const totalSlides = slides.length; // 4
       let autoSlideInterval;
+      let slidesPerView = window.innerWidth > 768 ? 2 : 1;
 
       // Create 4 dots (one per slide)
       function createDots() {
@@ -2051,25 +2052,30 @@
       }
 
       function updateSlides() {
+        // Activate slides based on currentIndex and slidesPerView
         slides.forEach((slide, index) => {
-          slide.classList.toggle('active', index === currentIndex);
+          const isActive = index >= currentIndex && index < currentIndex + slidesPerView;
+          slide.classList.toggle('active', isActive);
         });
         const dots = document.querySelectorAll('.dot');
+        // Active dot for the current starting slide
         dots.forEach((dot, index) => {
           dot.classList.toggle('active', index === currentIndex);
         });
-        document.querySelector('.slideshow-container').style.transform = `translateX(-${currentIndex * 100}%)`;
+        // Transform: slide by one slide width each time
+        const slideWidth = 100 / slidesPerView;
+        document.querySelector('.slideshow-container').style.transform = `translateX(-${currentIndex * slideWidth}%)`;
       }
 
       function goToSlide(index) {
-        if (index >= currentIndex) { // Only allow forward or stay
+        if (index >= currentIndex && index < totalSlides) {
           currentIndex = index;
           updateSlides();
         }
       }
 
       function nextSlide() {
-        if (currentIndex < totalSlides - 1) {
+        if (currentIndex + slidesPerView < totalSlides) {
           currentIndex++;
           updateSlides();
         } else {
@@ -2081,8 +2087,19 @@
       createDots();
       updateSlides();
 
-      // Start auto-slide (unidirectional)
+      // Start auto-slide (unidirectional, increment by 1 slide)
       autoSlideInterval = setInterval(nextSlide, 5000);
+
+      // Handle resize: reload for simplicity to adjust slidesPerView
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+          slidesPerView = 2;
+        } else {
+          slidesPerView = 1;
+        }
+        // Re-init on resize
+        location.reload();
+      });
     });
   </script>
 </body>
