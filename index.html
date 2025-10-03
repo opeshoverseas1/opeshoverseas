@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Meta Tags -->
@@ -225,6 +186,10 @@
       background-color: #f0f8ff;
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
+      /* NEW: Flexbox for sticky footer */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* Dark Mode Styles */
@@ -908,7 +873,7 @@
     }
 
     .slide {
-      flex: 0 0 50%; /* Default to 50% for desktop (two slides per view) */
+      flex: 0 0 100%; /* UPDATED: Always one slide per view for 4 dots */
       position: relative;
       overflow: hidden;
     }
@@ -1002,6 +967,16 @@
     .dot:focus {
       outline: 2px solid #007acc;
       outline-offset: 2px;
+    }
+
+    /* UPDATED: Progressive Image Loading */
+    img {
+      filter: blur(8px);
+      transition: filter 0.3s ease;
+    }
+
+    img.loaded {
+      filter: none;
     }
 
     /* Intro Section */
@@ -1170,11 +1145,18 @@
       outline-offset: 2px;
     }
 
+    /* NEW: Flex growth for main to push footer down */
+    main {
+      flex: 1;
+    }
+
     /* Footer */
     footer {
       background: url('banner.png') no-repeat center center/cover;
       color: #fff;
       position: relative;
+      /* NEW: No longer needs margin-top hack; flex pushes it */
+      margin-top: auto;
     }
 
     .footer-overlay {
@@ -1491,8 +1473,15 @@
       margin: 5px !important;
     }
 
+    /* UPDATED: Cookie buttons colors */
     .cc-btn.cc-allow {
-      color: #000 !important;
+      background: white !important;
+      color: black !important;
+    }
+
+    .cc-btn.cc-deny {
+      background: black !important;
+      color: white !important;
     }
 
     .cc-btn:hover {
@@ -1749,12 +1738,13 @@
     <div class="footer-content">
       <!-- Map Column -->
       <div>
+        <h3>Location</h3>
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.294614908744!2d77.02663831507965!3d28.46761898248627!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1b8f4a4e4c4f%3A0x4c4f2f2f2f2f2f2f!2sPitampura%2C%20Delhi%2C%20India!5e0!3m2!1sen!2sin!4v1681234567890!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
+      </div>
       <!-- Contact Column -->
       <div>
         <h3>Contact</h3>
-        <p>, India
+        <p>Gurgaon, Haryana, India</p>
         <p>📞 +91 79765 29421</p>
         <p>✉ exports@opeshoverseas.com</p>
         <div class="social-icons">
@@ -1810,6 +1800,22 @@
     function refreshAOS() {
       AOS.refresh();
     }
+
+    // UPDATED: Progressive Image Loading
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('img').forEach(img => {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', () => {
+            img.classList.add('loaded');
+          });
+          img.addEventListener('error', () => {
+            img.classList.add('loaded'); // Still remove blur on error
+          });
+        }
+      });
+    });
 
     // Sticky Navigation Shadow
     window.addEventListener('scroll', () => {
@@ -2024,18 +2030,18 @@
       searchResults.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Slideshow Functionality
+    // UPDATED: Slideshow Functionality - Unidirectional, 4 dots, one slide per view
     document.addEventListener('DOMContentLoaded', () => {
       const slides = document.querySelectorAll('.slide');
       const dotsContainer = document.querySelector('.dots');
       let currentIndex = 0;
-      const isMobile = window.matchMedia("(max-width: 768px)").matches;
-      const slidesPerView = isMobile ? 1 : 2; // 1 slide in mobile, 2 in desktop
-      const totalDots = Math.ceil(slides.length / slidesPerView);
+      const totalSlides = slides.length; // 4
+      let autoSlideInterval;
 
+      // Create 4 dots (one per slide)
       function createDots() {
-        dotsContainer.innerHTML = ''; // Clear existing dots
-        for (let i = 0; i < totalDots; i++) {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
           const dot = document.createElement('div');
           dot.classList.add('dot');
           if (i === 0) dot.classList.add('active');
@@ -2046,38 +2052,37 @@
 
       function updateSlides() {
         slides.forEach((slide, index) => {
-          slide.classList.toggle('active', index >= currentIndex * slidesPerView && index < (currentIndex + 1) * slidesPerView);
+          slide.classList.toggle('active', index === currentIndex);
         });
         const dots = document.querySelectorAll('.dot');
         dots.forEach((dot, index) => {
           dot.classList.toggle('active', index === currentIndex);
         });
-        const offset = isMobile ? currentIndex * -100 : currentIndex * -100; // 100% offset for mobile, 100% for two slides in desktop
-        document.querySelector('.slideshow-container').style.transform = `translateX(${offset}%)`;
+        document.querySelector('.slideshow-container').style.transform = `translateX(-${currentIndex * 100}%)`;
       }
 
       function goToSlide(index) {
-        currentIndex = index;
-        updateSlides();
+        if (index >= currentIndex) { // Only allow forward or stay
+          currentIndex = index;
+          updateSlides();
+        }
       }
 
       function nextSlide() {
-        currentIndex = (currentIndex + 1) % totalDots;
-        updateSlides();
+        if (currentIndex < totalSlides - 1) {
+          currentIndex++;
+          updateSlides();
+        } else {
+          clearInterval(autoSlideInterval); // Stop at end
+        }
       }
 
-      // Initialize dots and slides
+      // Initialize
       createDots();
       updateSlides();
-      setInterval(nextSlide, 5000); // Auto-slide every 5 seconds
 
-      // Update on window resize
-      window.addEventListener('resize', () => {
-        const newIsMobile = window.matchMedia("(max-width: 768px)").matches;
-        if (newIsMobile !== isMobile) {
-          location.reload(); // Reload to adjust slidesPerView and dots
-        }
-      });
+      // Start auto-slide (unidirectional)
+      autoSlideInterval = setInterval(nextSlide, 5000);
     });
   </script>
 </body>
