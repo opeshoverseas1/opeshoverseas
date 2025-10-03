@@ -2030,7 +2030,7 @@
       searchResults.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // UPDATED: Slideshow Functionality - 2 slides desktop, 1 mobile, 4 dots, unidirectional
+    // UPDATED: Slideshow Functionality - 2 slides desktop, 1 mobile, 4 dots, unidirectional, NO RELOAD on resize
     document.addEventListener('DOMContentLoaded', () => {
       const slides = document.querySelectorAll('.slide');
       const dotsContainer = document.querySelector('.dots');
@@ -2068,7 +2068,7 @@
       }
 
       function goToSlide(index) {
-        if (index >= currentIndex && index < totalSlides) {
+        if (index >= currentIndex && index < totalSlides - slidesPerView + 1) {
           currentIndex = index;
           updateSlides();
         }
@@ -2083,6 +2083,25 @@
         }
       }
 
+      // Handle resize without reload
+      function handleResize() {
+        const newSlidesPerView = window.innerWidth > 768 ? 2 : 1;
+        if (newSlidesPerView !== slidesPerView) {
+          slidesPerView = newSlidesPerView;
+          // Reset to start on mode change
+          currentIndex = 0;
+          // Update slide flex basis
+          slides.forEach(slide => {
+            slide.style.flex = `0 0 ${100 / slidesPerView}%`;
+          });
+          createDots(); // Recreate dots if needed
+          updateSlides();
+          // Restart auto-slide
+          if (autoSlideInterval) clearInterval(autoSlideInterval);
+          autoSlideInterval = setInterval(nextSlide, 5000);
+        }
+      }
+
       // Initialize
       createDots();
       updateSlides();
@@ -2090,15 +2109,11 @@
       // Start auto-slide (unidirectional, increment by 1 slide)
       autoSlideInterval = setInterval(nextSlide, 5000);
 
-      // Handle resize: reload for simplicity to adjust slidesPerView
+      // Listen for resize with debounce to avoid frequent calls
+      let resizeTimeout;
       window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-          slidesPerView = 2;
-        } else {
-          slidesPerView = 1;
-        }
-        // Re-init on resize
-        location.reload();
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(handleResize, 250); // Debounce 250ms
       });
     });
   </script>
